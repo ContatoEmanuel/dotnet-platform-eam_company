@@ -52,28 +52,5 @@ Auth: ASP.NET Core Identity (Roles & Claims)
 
 Design Patterns: Repository, Unit of Work, Dependency Injection, CQRS (Future).
 
-🚀 Getting Started
-Prerequisites
-.NET SDK 8.0+
-
-SQL Server (LocalDB or Docker)
-
-Visual Studio 2022 or VS Code
-
-Installation
-Clone the repository:
-
-Bash
-
-git clone [https://github.com/ContatoEmanuel/dotnet-platform-eam-company.git](https://github.com/ContatoEmanuel/dotnet-platform-eam-company.git)
-Configure the connection string in appsettings.Development.json (Note: This file is git-ignored for security).
-
-Apply Migrations:
-
-Bash
-
-dotnet ef database update --project src/2.Infrastructure/EAM.Infra.Data --startup-project src/3.Presentation/EAM.Web.API
-Run the Solution via Visual Studio.
-
 📄 License
 This project is proprietary software. Copyright © 2025 Emanuel Arrudas de Macêdo. All Rights Reserved. See LICENSE for details.
