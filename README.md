@@ -17,3 +17,68 @@ graph TD
     App --> Domain["Domain Layer (Entities & Rules)"]
     App --> Infra["Infrastructure (Data & IoC)"]
     Infra --> DB[("SQL Server")]
+📂 Solution Structure
+1. Core (The Heart)
+
+EAM.Core.Domain: Enterprise logic, Entities (POCOs), and Repository Interfaces. No external dependencies.
+
+EAM.Core.Application: Business logic, Services, DTOs, and Validators.
+
+2. Infrastructure
+
+EAM.Infra.Data: EF Core Context, Migrations, and Repository Implementations.
+
+EAM.Infra.IoC: Dependency Injection Native Injector.
+
+3. Presentation
+
+EAM.Web.Public: ASP.NET Core MVC (Institutional Site & SEO).
+
+EAM.Web.Portal: Blazor Server (Client Dashboard & SaaS Management).
+
+EAM.Web.API: RESTful API serving mobile apps and integrations.
+
+🛠️ Tech Stack
+Backend: C# 12, ASP.NET Core Web API
+
+Frontend A (Public): ASP.NET MVC, Razor Views, Bootstrap/Tailwind
+
+Frontend B (Private): Blazor Server
+
+Data: Entity Framework Core, SQL Server
+
+Auth: ASP.NET Core Identity (Roles & Claims)
+
+Design Patterns: Repository, Unit of Work, Dependency Injection, CQRS (Future).
+
+🚀 Getting Started
+Prerequisites
+.NET SDK 8.0+
+
+SQL Server (LocalDB or Docker)
+
+Visual Studio 2022 or VS Code
+
+Installation
+Clone the repository:
+
+Bash
+
+git clone [https://github.com/ContatoEmanuel/dotnet-platform-eam-company.git](https://github.com/ContatoEmanuel/dotnet-platform-eam-company.git)
+Configure the connection string in appsettings.Development.json (Note: This file is git-ignored for security).
+
+Apply Migrations:
+
+Bash
+
+dotnet ef database update --project src/2.Infrastructure/EAM.Infra.Data --startup-project src/3.Presentation/EAM.Web.API
+Run the Solution via Visual Studio.
+
+📄 License
+This project is proprietary software. Copyright © 2025 Emanuel Arrudas de Macêdo. All Rights Reserved. See LICENSE for details.
+
+
+### Dica Profissional:
+Perceba que incluí um bloco `mermaid` (gráfico) no README. O GitHub renderiza isso como um diagrama visual da sua arquitetura automaticamente. Isso impressiona muito quem visita o repositório.
+
+**Pronto para criar a estrutura de pastas e rodar o `git init`?**
