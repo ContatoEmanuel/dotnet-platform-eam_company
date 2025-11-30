@@ -11,9 +11,9 @@ This solution follows the **Clean Architecture** principles, enforcing strict se
 
 ```mermaid
 graph TD
-    User[User / Client] --> Web[Presentation Layer (MVC / Blazor)]
-    Web --> API[Central API]
-    API --> App[Application Layer (Use Cases)]
-    App --> Domain[Domain Layer (Entities & Rules)]
-    App --> Infra[Infrastructure (Data & IoC)]
-    Infra --> DB[(SQL Server)]
+    User["User / Client"] --> Web["Presentation Layer (MVC / Blazor)"]
+    Web --> API["Central API"]
+    API --> App["Application Layer (Use Cases)"]
+    App --> Domain["Domain Layer (Entities & Rules)"]
+    App --> Infra["Infrastructure (Data & IoC)"]
+    Infra --> DB[("SQL Server")]
