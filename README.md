@@ -17,6 +17,7 @@ graph TD
     App --> Domain["Domain Layer (Entities & Rules)"]
     App --> Infra["Infrastructure (Data & IoC)"]
     Infra --> DB[("SQL Server")]
+```
 📂 Solution Structure
 1. Core (The Heart)
 
@@ -76,9 +77,3 @@ Run the Solution via Visual Studio.
 
 📄 License
 This project is proprietary software. Copyright © 2025 Emanuel Arrudas de Macêdo. All Rights Reserved. See LICENSE for details.
-
-
-### Dica Profissional:
-Perceba que incluí um bloco `mermaid` (gráfico) no README. O GitHub renderiza isso como um diagrama visual da sua arquitetura automaticamente. Isso impressiona muito quem visita o repositório.
-
-**Pronto para criar a estrutura de pastas e rodar o `git init`?**
