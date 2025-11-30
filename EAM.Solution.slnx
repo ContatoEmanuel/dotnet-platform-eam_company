@@ -1,0 +1,19 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/1.Core/">
+    <Project Path="src/1.Core/EAM.Core.Application/EAM.Core.Application.csproj" />
+    <Project Path="src/1.Core/EAM.Core.Domain/EAM.Core.Domain.csproj" />
+  </Folder>
+  <Folder Name="/src/2.Infrastructure/">
+    <Project Path="src/2.Infrastructure/EAM.Infra.Data/EAM.Infra.Data.csproj" />
+    <Project Path="src/2.Infrastructure/EAM.Infra.IoC/EAM.Infra.IoC.csproj" />
+  </Folder>
+  <Folder Name="/src/3.Presentation/">
+    <Project Path="src/3.Presentation/EAM.Web.API/EAM.Web.API.csproj" />
+    <Project Path="src/3.Presentation/EAM.Web.Portal/EAM.Web.Portal.csproj" />
+    <Project Path="src/3.Presentation/EAM.Web.Public/EAM.Web.Public.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/EAM.Core.UnitTests/EAM.Core.UnitTests.csproj" />
+  </Folder>
+</Solution>
