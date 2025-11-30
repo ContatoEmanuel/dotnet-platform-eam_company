@@ -1,56 +1,95 @@
 # EAM Company - Enterprise Platform
 
-![.NET Version](https://img.shields.io/badge/.NET-8.0%20%7C%209.0-purple) ![Architecture](https://img.shields.io/badge/Architecture-Clean%20Arch%20%2B%20DDD-green) ![Status](https://img.shields.io/badge/Status-In%20Development-yellow)
+![.NET Version](https://img.shields.io/badge/.NET-10.0-purple) ![Architecture](https://img.shields.io/badge/Architecture-Clean%20Architecture-blue) ![Status](https://img.shields.io/badge/Status-Private-red)
 
-The official monolithic platform for **EAM Company**, orchestrating the Institutional Website, Client Portal, and Central API.
-Designed to showcase high-level software engineering capabilities using the full Microsoft Stack.
+Enterprise platform for **EAM Company** built with Clean Architecture principles.
 
-## 🏗️ Architectural Overview
+> ⚠️ **NOTICE**: This is proprietary software. Unauthorized use, reproduction, or distribution is strictly prohibited.
 
-This solution follows the **Clean Architecture** principles, enforcing strict separation of concerns and dependency rules.
+---
+
+## 🏗️ Architecture
+
+This solution follows **Clean Architecture** principles with strict separation of concerns:
 
 ```mermaid
 graph TD
-    User["User / Client"] --> Web["Presentation Layer (MVC / Blazor)"]
-    Web --> API["Central API"]
-    API --> App["Application Layer (Use Cases)"]
-    App --> Domain["Domain Layer (Entities & Rules)"]
-    App --> Infra["Infrastructure (Data & IoC)"]
-    Infra --> DB[("SQL Server")]
+    User["Client"] --> Presentation["Presentation Layer"]
+    Presentation --> Application["Application Layer"]
+    Application --> Domain["Domain Layer"]
+    Application --> Infrastructure["Infrastructure"]
+    Infrastructure --> Database[("Database")]
 ```
-📂 Solution Structure
-1. Core (The Heart)
 
-EAM.Core.Domain: Enterprise logic, Entities (POCOs), and Repository Interfaces. No external dependencies.
+---
 
-EAM.Core.Application: Business logic, Services, DTOs, and Validators.
+## 📂 Project Structure
 
-2. Infrastructure
+```
+dotnet-platform-eam-company/
+├── src/
+│   ├── 1.Core/
+│   │   ├── EAM.Core.Domain/
+│   │   └── EAM.Core.Application/
+│   ├── 2.Infrastructure/
+│   │   ├── EAM.Infra.Data/
+│   │   └── EAM.Infra.IoC/
+│   └── 3.Presentation/
+│       ├── EAM.Web.API/
+│       ├── EAM.Web.Public/
+│       └── EAM.Web.Portal/
+└── tests/
+    └── EAM.Core.UnitTests/
+```
 
-EAM.Infra.Data: EF Core Context, Migrations, and Repository Implementations.
+### Layers
 
-EAM.Infra.IoC: Dependency Injection Native Injector.
+#### 1. Core Layer
+- **Domain**: Business entities and domain logic
+- **Application**: Use cases and business rules
 
-3. Presentation
+#### 2. Infrastructure Layer
+- **Data**: Data access with Entity Framework Core
+- **IoC**: Dependency injection configuration
 
-EAM.Web.Public: ASP.NET Core MVC (Institutional Site & SEO).
+#### 3. Presentation Layer
+- **API**: RESTful web services
+- **Public**: Institutional website
+- **Portal**: Client area
 
-EAM.Web.Portal: Blazor Server (Client Dashboard & SaaS Management).
+---
 
-EAM.Web.API: RESTful API serving mobile apps and integrations.
+## 🛠️ Technology Stack
 
-🛠️ Tech Stack
-Backend: C# 12, ASP.NET Core Web API
+- **.NET 10.0** - Modern framework
+- **ASP.NET Core** - Web applications
+- **Blazor Server** - Interactive UI
+- **Entity Framework Core** - ORM
+- **SQL Server** - Database
+- **Docker** - Containerization
 
-Frontend A (Public): ASP.NET MVC, Razor Views, Bootstrap/Tailwind
+---
 
-Frontend B (Private): Blazor Server
+## 📄 License
 
-Data: Entity Framework Core, SQL Server
+**Copyright © 2025 Emanuel Arrudas de Macêdo - EAM Company**
 
-Auth: ASP.NET Core Identity (Roles & Claims)
+This is proprietary and confidential software. All rights reserved.
 
-Design Patterns: Repository, Unit of Work, Dependency Injection, CQRS (Future).
+Unauthorized copying, distribution, modification, or use of this software, 
+via any medium, is strictly prohibited without explicit written permission.
 
-📄 License
-This project is proprietary software. Copyright © 2025 Emanuel Arrudas de Macêdo. All Rights Reserved. See LICENSE for details.
+See [LICENSE](LICENSE) for full terms.
+
+---
+
+## 👨‍💻 Author
+
+**Emanuel - EAM Company**
+
+- Website: [eam-company.com.br](https://eam-company.com.br)
+- GitHub: [@ContatoEmanuel](https://github.com/ContatoEmanuel)
+
+---
+
+**🔒 Private Repository - Confidential Project**

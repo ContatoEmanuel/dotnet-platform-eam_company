@@ -1,10 +1,108 @@
-Copyright (c) 2025 Emanuel Arrudas de Macêdo (EAM Company). All Rights Reserved.
+# PROPRIETARY LICENSE
 
-NOTICE: The information contained herein is, and remains the property of Emanuel Arrudas de Macêdo. 
-The intellectual and technical concepts contained herein are proprietary to EAM Company and are protected by trade secret or copyright law.
+Copyright © 2025 Emanuel Arrudas de Macêdo (EAM Company). All Rights Reserved.
 
-Dissemination of this information or reproduction of this material is strictly forbidden unless prior written permission is obtained from Emanuel Arrudas de Macêdo.
+---
 
-TERMS OF USE FOR GITHUB VIEWERS:
-This repository is publicly accessible for portfolio demonstration and technical evaluation purposes only. 
-You may not clone, fork, or use this code for commercial purposes, nor for creating derivative works.
+## LEGAL NOTICE
+
+The information contained herein is, and remains the **exclusive property** of Emanuel Arrudas de Macêdo and EAM Company.
+
+The intellectual and technical concepts contained herein are proprietary and are protected by:
+- Copyright law
+- Trade secret law
+- Confidentiality agreements
+
+---
+
+## RESTRICTIONS
+
+### Strictly Prohibited:
+
+You **MAY NOT**, without prior written authorization:
+
+1. ❌ Clone, fork, or download this repository
+2. ❌ Use any code, in whole or in part, for any purpose
+3. ❌ Modify, adapt, or create derivative works
+4. ❌ Distribute, sell, rent, lease, or sublicense
+5. ❌ Reverse engineer, decompile, or disassemble
+6. ❌ Remove or alter any copyright notices
+7. ❌ Deploy or execute this software
+8. ❌ Extract data structures or algorithms
+
+### Permitted Use:
+
+You **MAY**, for non-commercial purposes only:
+
+1. ✅ View this repository for portfolio evaluation
+2. ✅ Review code quality for employment/client assessment
+3. ✅ Reference architectural patterns in academic discussion
+
+**Any use beyond viewing requires explicit written permission.**
+
+---
+
+## DATA PROTECTION WARNING
+
+This software processes and stores **confidential business data**, including but not limited to:
+
+- Proprietary client information
+- Sensitive API credentials
+- Private business logic
+- Confidential database schemas
+
+**Unauthorized access or use may violate data protection laws.**
+
+---
+
+## NO WARRANTY
+
+This software is provided "AS IS", without warranty of any kind, express or implied, including but not limited to the warranties of merchantability, fitness for a particular purpose, and noninfringement.
+
+In no event shall the author or copyright holders be liable for any claim, damages, or other liability arising from the use or inability to use this software.
+
+---
+
+## ENFORCEMENT
+
+Violation of these terms may result in:
+
+1. **Civil Action**: Legal proceedings for damages and injunctive relief
+2. **Criminal Prosecution**: Under applicable copyright and computer fraud laws
+3. **Financial Penalties**: Statutory and actual damages
+4. **Legal Costs**: Full reimbursement of legal fees and costs
+
+---
+
+## CONTACT FOR LICENSING
+
+For authorized use, licensing, or partnership inquiries:
+
+**EAM Company**  
+Email: contato@eam-company.com.br  
+Website: https://eam-company.com.br  
+
+**Emanuel Arrudas de Macêdo**  
+GitHub: [@ContatoEmanuel](https://github.com/ContatoEmanuel)
+
+---
+
+## ACKNOWLEDGMENT
+
+By accessing this repository, you acknowledge that:
+
+1. You have read and understood this license
+2. You agree to be bound by these terms
+3. You will not violate any restrictions stated herein
+4. You understand the legal consequences of unauthorized use
+
+---
+
+**Last Updated**: November 30, 2025  
+**Version**: 1.0  
+**Jurisdiction**: Brazil / International
+
+---
+
+**🔒 PROPRIETARY AND CONFIDENTIAL**  
+**EAM Company © 2025 - All Rights Reserved**

@@ -3,7 +3,7 @@ FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
 # Copy solution and project files
-COPY ["EAM.Solution.sln", "./"]
+COPY ["EAM.Solution.slnx", "./"]
 COPY ["src/1.Core/EAM.Core.Domain/EAM.Core.Domain.csproj", "src/1.Core/EAM.Core.Domain/"]
 COPY ["src/1.Core/EAM.Core.Application/EAM.Core.Application.csproj", "src/1.Core/EAM.Core.Application/"]
 COPY ["src/2.Infrastructure/EAM.Infra.Data/EAM.Infra.Data.csproj", "src/2.Infrastructure/EAM.Infra.Data/"]

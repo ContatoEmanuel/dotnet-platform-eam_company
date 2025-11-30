@@ -28,13 +28,29 @@ secrets.json
 *.mdf
 *.ldf
 migration_script.sql
+backup/
 
 ## Front-end (Node/NPM - caso use para buildar CSS/Tailwind)
 node_modules/
 npm-debug.log
 yarn-error.log
 
+## Documentation (CONFIDENCIAL - não versionar)
+docs/
+
+## Scripts de desenvolvimento (CONFIDENCIAL)
+run-*.sh
+*.sh
+docker-dev.sh
+
+## Guides e Documentação Sensível
+*-GUIDE.md
+*-README.md
+TESTING-*.md
+SECURITY-*.md
+
 ## OS Files
 .DS_Store
 Thumbs.db
+Desktop.ini
 desktop.ini
