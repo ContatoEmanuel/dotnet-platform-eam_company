@@ -1,5 +1,7 @@
 using EAM.Web.Portal.Components;
 using EAM.Infra.IoC;
+using Microsoft.AspNetCore.Identity;
+using EAM.Core.Domain.Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,15 +12,20 @@ builder.Services.AddRazorComponents()
 // Infrastructure (Database, Repositories, Identity)
 builder.Services.AddInfrastructure(builder.Configuration);
 
-// Cookie Authentication (já configurado pelo Identity)
-builder.Services.ConfigureApplicationCookie(options =>
-{
-    options.Cookie.HttpOnly = true;
-    options.ExpireTimeSpan = TimeSpan.FromHours(24);
-    options.LoginPath = "/Account/Login";
-    options.AccessDeniedPath = "/Account/AccessDenied";
-    options.SlidingExpiration = true;
-});
+// SignInManager para autenticação com cookies (necessário para MVC/Blazor)
+builder.Services.AddScoped<SignInManager<ApplicationUser>>();
+
+// Adiciona autenticação via cookies
+builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
+    .AddCookie(IdentityConstants.ApplicationScheme, options =>
+    {
+        options.Cookie.HttpOnly = true;
+        options.ExpireTimeSpan = TimeSpan.FromHours(24);
+        options.LoginPath = "/Account/Login";
+        options.AccessDeniedPath = "/Account/AccessDenied";
+        options.SlidingExpiration = true;
+    })
+    .AddCookie(IdentityConstants.ExternalScheme);
 
 var app = builder.Build();
 

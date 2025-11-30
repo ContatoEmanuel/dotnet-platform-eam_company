@@ -22,6 +22,14 @@ appsettings.Development.json
 appsettings.Production.json
 secrets.json
 *.pfx
+.env
+.env.local
+.env.*.local
+*.example
+
+## Docker - Arquivos locais
+docker-compose.override.yml
+docker-compose.*.local.yml
 
 ## Database & EF Core
 *.db
@@ -35,19 +43,15 @@ node_modules/
 npm-debug.log
 yarn-error.log
 
-## Documentation (CONFIDENCIAL - não versionar)
+## Documentation (CONFIDENCIAL - projeto privado)
 docs/
+*.md
+!README.md
 
 ## Scripts de desenvolvimento (CONFIDENCIAL)
 run-*.sh
 *.sh
 docker-dev.sh
-
-## Guides e Documentação Sensível
-*-GUIDE.md
-*-README.md
-TESTING-*.md
-SECURITY-*.md
 
 ## OS Files
 .DS_Store
