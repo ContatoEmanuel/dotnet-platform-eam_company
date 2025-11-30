@@ -1,5 +1,10 @@
 using Scalar.AspNetCore;
 using EAM.Infra.IoC;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using EAM.Core.Application.Services.Interfaces;
+using EAM.Web.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,8 +13,43 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
 
-// Infrastructure (Database, Repositories, etc.)
+// Infrastructure (Database, Repositories, Identity)
 builder.Services.AddInfrastructure(builder.Configuration);
+
+// HttpContextAccessor necessário para SignInManager
+builder.Services.AddHttpContextAccessor();
+
+// Adicionar SignInManager para AuthService
+builder.Services.AddScoped<Microsoft.AspNetCore.Identity.SignInManager<EAM.Core.Domain.Entities.ApplicationUser>>();
+
+// Application Services
+builder.Services.AddScoped<IAuthService, AuthService>();
+
+// JWT Authentication
+var jwtKey = builder.Configuration["Jwt:Key"] ?? throw new InvalidOperationException("JWT Key not configured");
+var jwtIssuer = builder.Configuration["Jwt:Issuer"] ?? throw new InvalidOperationException("JWT Issuer not configured");
+var jwtAudience = builder.Configuration["Jwt:Audience"] ?? throw new InvalidOperationException("JWT Audience not configured");
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = jwtIssuer,
+        ValidAudience = jwtAudience,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+    };
+});
+
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
@@ -21,6 +61,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication(); // ANTES de UseAuthorization
+app.UseAuthorization();
+
+app.MapControllers();
 
 var summaries = new[]
 {
