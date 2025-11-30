@@ -89,7 +89,3 @@ See [LICENSE](LICENSE) for full terms.
 
 - Website: [eam-company.com.br](https://eam-company.com.br)
 - GitHub: [@ContatoEmanuel](https://github.com/ContatoEmanuel)
-
----
-
-**🔒 Private Repository - Confidential Project**
