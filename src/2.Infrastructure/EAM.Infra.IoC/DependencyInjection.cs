@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using EAM.Infra.Data.Context;
 using EAM.Core.Domain.Entities;
+using Microsoft.AspNetCore.Http;
 
 namespace EAM.Infra.IoC;
 

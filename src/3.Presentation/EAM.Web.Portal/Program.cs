@@ -12,7 +12,8 @@ builder.Services.AddRazorComponents()
 // Infrastructure (Database, Repositories, Identity)
 builder.Services.AddInfrastructure(builder.Configuration);
 
-// SignInManager para autenticação com cookies (necessário para MVC/Blazor)
+// HttpContextAccessor e SignInManager para autenticação
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<SignInManager<ApplicationUser>>();
 
 // Adiciona autenticação via cookies
