@@ -1,50 +1,99 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - EAM.Web.Public</title>
-    <script type="importmap"></script>
+    <meta name="description" content="EAM Company - Emanuel A Macêdo | Senior Software Engineer especializado em Dynamics 365, Power Platform, .NET C# e Azure." />
+    <meta name="keywords" content="Emanuel Macêdo, Dynamics 365, Power Platform, Software Engineer, .NET, Azure, Microsoft" />
+    <meta name="author" content="Emanuel A Macêdo" />
+    <meta name="robots" content="index, follow" />
+    
+    <title>@ViewData["Title"] - EAM Company</title>
+    
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/EAM.Web.Public.styles.css" asp-append-version="true" />
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">EAM.Web.Public</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm navbar-blur">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-4" asp-controller="Home" asp-action="Index">
+                <span class="text-primary">EAM Company</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link smooth-scroll" href="#hero">Início</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link smooth-scroll" href="#about">Sobre</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link smooth-scroll" href="#projects">Projetos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link smooth-scroll" href="#experience">Experiência</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link smooth-scroll" href="#contact">Contato</a>
+                    </li>
+                    <li class="nav-item ms-lg-3">
+                        <a class="btn btn-primary text-white btn-sm px-3" href="http://localhost:5002">
+                            Portal do Cliente
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main role="main">
+        @RenderBody()
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5 class="fw-bold">EAM Company</h5>
+                    <p class="text-muted small">Soluções Microsoft para grandes empresas</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <div class="mb-3">
+                        <a href="https://github.com/ContatoEmanuel" target="_blank" class="text-light me-3 social-link">
+                            <i class="bi bi-github fs-4"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/emanuel-arrudas-macedo/" target="_blank" class="text-light me-3 social-link">
+                            <i class="bi bi-linkedin fs-4"></i>
+                        </a>
+                        <a href="https://www.youtube.com/channel/UCQbZlecPawGlx0F6Oo56LDw" target="_blank" class="text-light social-link">
+                            <i class="bi bi-youtube fs-4"></i>
+                        </a>
+                    </div>
+                    <p class="text-muted small mb-0">&copy; @DateTime.Now.Year EAM Company - Todos os direitos reservados</p>
+                    <p class="text-muted small">Desenvolvido com ASP.NET Core & Bootstrap</p>
                 </div>
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2025 - EAM.Web.Public - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="btn btn-primary back-to-top" style="display: none;">
+        <i class="bi bi-arrow-up"></i>
+    </button>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <!-- TypeScript compilado -->
+    <script type="module" src="~/js/app.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

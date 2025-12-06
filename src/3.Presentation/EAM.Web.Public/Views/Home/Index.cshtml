@@ -1,8 +1,347 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+@{
+    ViewData["Title"] = "Início";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<!-- Hero Section -->
+<section id="hero" class="min-vh-100 d-flex align-items-center" style="background: linear-gradient(135deg, #EFF6FF 0%, #E0E7FF 100%); padding-top: 80px;">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-12 text-center">
+                <!-- Profile Image -->
+                <div class="mb-4 animate-fade-in">
+                    <div class="d-inline-block position-relative">
+                        <div class="profile-image-placeholder rounded-circle bg-gradient d-inline-flex align-items-center justify-content-center border border-4 border-white shadow-lg" 
+                             style="width: 192px; height: 192px; background: linear-gradient(135deg, #3B82F6 0%, #6366F1 100%);">
+                            <span class="display-3 fw-bold text-white">EM</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Badge -->
+                <div class="mb-3 animate-fade-in">
+                    <span class="badge bg-warning text-dark px-3 py-2 fs-6">
+                        🚀 Disponível para novos projetos
+                    </span>
+                </div>
+
+                <!-- Heading -->
+                <h1 class="display-3 fw-bold mb-3 animate-fade-in">
+                    Emanuel A Macêdo
+                </h1>
+                <h2 class="display-6 text-primary mb-4 animate-fade-in">
+                    Senior Software Engineer
+                </h2>
+                <p class="lead text-muted mb-4 animate-fade-in">
+                    Dynamics 365 • Power Platform • .NET C# • Azure
+                </p>
+
+                <!-- Social Links -->
+                <div class="d-flex flex-wrap gap-2 justify-content-center mb-4 animate-fade-in">
+                    <a href="https://github.com/ContatoEmanuel" target="_blank" class="btn btn-dark">
+                        <i class="bi bi-github"></i> GitHub
+                    </a>
+                    <a href="https://www.linkedin.com/in/emanuel-arrudas-macedo/" target="_blank" class="btn btn-primary">
+                        <i class="bi bi-linkedin"></i> LinkedIn
+                    </a>
+                    <a href="https://www.youtube.com/channel/UCQbZlecPawGlx0F6Oo56LDw" target="_blank" class="btn btn-danger">
+                        <i class="bi bi-youtube"></i> YouTube
+                    </a>
+                    <a href="https://linktr.ee/ContatoEmanuel" target="_blank" class="btn btn-success">
+                        <i class="bi bi-link-45deg"></i> Linktree
+                    </a>
+                    <a href="https://www.credly.com/users/emanuel-a-macedo/badges" target="_blank" class="btn btn-warning text-dark">
+                        <i class="bi bi-award"></i> Credly
+                    </a>
+                    <a href="https://learn.microsoft.com/pt-br/users/emanuelarrudasmacedo-1105/" target="_blank" class="btn btn-info text-white">
+                        <i class="bi bi-microsoft"></i> MS Learn
+                    </a>
+                </div>
+
+                <!-- CTA Buttons -->
+                <div class="d-flex flex-wrap gap-3 justify-content-center animate-fade-in">
+                    <a href="#about" class="btn btn-primary btn-lg px-5 smooth-scroll">
+                        Conheça mais
+                    </a>
+                    <a href="/resume.html" target="_blank" class="btn btn-outline-primary btn-lg px-5">
+                        Download CV
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="py-5 bg-white">
+    <div class="container py-5">
+        <h2 class="text-center display-5 fw-bold mb-5">Sobre Mim</h2>
+        
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <p class="lead text-center text-muted mb-5">
+                    Senior Software Engineer com foco no ecossistema Microsoft. Especializado em customização 
+                    de Dynamics 365, desenvolvimento com Power Platform e integração de sistemas em Azure.
+                </p>
+            </div>
+        </div>
+
+        <!-- Principais Clientes -->
+        <div class="row mb-5">
+            <div class="col-lg-10 mx-auto">
+                <h3 class="text-center h4 mb-4">Experiência com Grandes Players</h3>
+                <div class="row g-3">
+                    @foreach (var client in new[] { 
+                        new { Name = "Gerdau", Sector = "Metalurgia" },
+                        new { Name = "Suzano", Sector = "Papel e Celulose" },
+                        new { Name = "Alesat", Sector = "Varejo" },
+                        new { Name = "Cogna", Sector = "Educação" }
+                    })
+                    {
+                        <div class="col-6 col-md-3">
+                            <div class="card h-100 shadow-sm hover-card" style="border: 2px solid #E5E7EB;">
+                                <div class="card-body text-center" style="background: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 100%);">
+                                    <h5 class="card-title fw-bold mb-1">@client.Name</h5>
+                                    <p class="card-text small text-muted mb-0">@client.Sector</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Expertise -->
+        <div class="row mb-5">
+            <div class="col-lg-10 mx-auto">
+                <h3 class="text-center h4 mb-4">Principais Competências</h3>
+                <div class="row g-4">
+                    @foreach (var expertise in new[] {
+                        new { Icon = "⚙️", Title = "Desenvolvimento Dynamics 365", Description = "Customização e extensão da plataforma utilizando C# .NET para Plugins e Workflows, além de JavaScript para scripts client-side." },
+                        new { Icon = "⚡", Title = "Power Platform & Mobilidade", Description = "Criação de aplicações robustas com Power Apps (Canvas com capacidade offline e Model-Driven) e automação via Power Automate." },
+                        new { Icon = "☁️", Title = "Integração & Azure", Description = "Orquestração de dados e processos entre sistemas utilizando Azure Logic Apps, Data Factory e consumo de APIs REST/SOAP." },
+                        new { Icon = "🔒", Title = "Dados & Segurança", Description = "Modelagem de dados em Dataverse/SQL Server e implementação de controles de acesso, roles e segurança em camadas." }
+                    })
+                    {
+                        <div class="col-md-6">
+                            <div class="card h-100 border-0 shadow-sm hover-card">
+                                <div class="card-body">
+                                    <div class="d-flex align-items-start">
+                                        <div class="fs-1 me-3">@expertise.Icon</div>
+                                        <div>
+                                            <h5 class="card-title fw-bold">@expertise.Title</h5>
+                                            <p class="card-text text-muted small">@expertise.Description</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Tech Stack -->
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <h3 class="text-center h4 mb-4">Stack Tecnológico</h3>
+                <div class="d-flex flex-wrap justify-content-center gap-2">
+                    @foreach (var tech in new[] { "Dynamics 365", "Power Apps", "Power Automate", "C# .NET", "Azure", 
+                        "Dataverse", "SQL Server", "TypeScript", "React", "Azure DevOps", "Logic Apps", "API Management" })
+                    {
+                        <span class="badge px-3 py-2" style="background-color: #EFF6FF; color: #1E40AF; border: 1px solid #BFDBFE;">@tech</span>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Projects Section -->
+<section id="projects" class="py-5 bg-light">
+    <div class="container py-5">
+        <h2 class="text-center display-5 fw-bold mb-3">Portfólio de Projetos</h2>
+        <p class="text-center text-muted mb-5 col-lg-8 mx-auto">
+            Soluções desenvolvidas utilizando o ecossistema Microsoft, focadas em integração, 
+            automação e modernização de processos empresariais.
+        </p>
+
+        <div class="row g-4">
+            <!-- Featured Project -->
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-lg hover-card">
+                    <div class="position-relative" style="background: linear-gradient(135deg, #DBEAFE 0%, #E0E7FF 100%); height: 200px; display: flex; align-items: center; justify-content: center;">
+                        <div class="position-absolute top-0 end-0 m-3">
+                            <span class="badge bg-warning text-dark">⭐ Destaque</span>
+                        </div>
+                        <div class="fs-1">💬</div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">Dynamics 365 WhatsApp Connector</h5>
+                        <p class="card-text text-muted small">
+                            Extensão Chrome para integração automática entre WhatsApp Web e Microsoft Dynamics 365. 
+                            Permite criar contatos e leads diretamente do WhatsApp com autenticação Azure AD.
+                        </p>
+                        <div class="d-flex flex-wrap gap-2 mb-3">
+                            @foreach (var tech in new[] { "TypeScript", "Chrome Extension", "Azure AD", "Dynamics 365", "React" })
+                            {
+                                <span class="badge bg-primary-subtle text-primary">@tech</span>
+                            }
+                        </div>
+                        <a href="https://github.com/ContatoEmanuel/react-extension-dynamics_whatsapp" target="_blank" class="btn btn-dark btn-sm">
+                            <i class="bi bi-github"></i> Ver no GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other Project -->
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-lg hover-card">
+                    <div class="position-relative" style="background: linear-gradient(135deg, #DBEAFE 0%, #E0E7FF 100%); height: 200px; display: flex; align-items: center; justify-content: center;">
+                        <div class="position-absolute top-0 end-0 m-3">
+                            <span class="badge bg-warning text-dark">⭐ Destaque</span>
+                        </div>
+                        <div class="fs-1">🌐</div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">React Portfolio Website</h5>
+                        <p class="card-text text-muted small">
+                            Website profissional desenvolvido com React, TypeScript e Tailwind CSS. 
+                            Deploy automatizado na Vercel com domínio customizado e HTTPS.
+                        </p>
+                        <div class="d-flex flex-wrap gap-2 mb-3">
+                            @foreach (var tech in new[] { "React", "TypeScript", "Tailwind CSS", "Vite", "Vercel" })
+                            {
+                                <span class="badge bg-primary-subtle text-primary">@tech</span>
+                            }
+                        </div>
+                        <div class="d-flex gap-2">
+                            <a href="https://eam-company.com.br" target="_blank" class="btn btn-primary btn-sm">
+                                🔗 Ver Projeto
+                            </a>
+                            <a href="https://github.com/ContatoEmanuel/react-front-portfolio" target="_blank" class="btn btn-dark btn-sm">
+                                <i class="bi bi-github"></i> GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Experience Section -->
+<section id="experience" class="py-5 bg-white">
+    <div class="container py-5">
+        <h2 class="text-center display-5 fw-bold mb-5">Experiência Profissional</h2>
+        
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <div class="position-relative" style="border-left: 3px solid #3B82F6; padding-left: 2rem;">
+                    <!-- Experience Item -->
+                    <div class="mb-5 position-relative">
+                        <div class="position-absolute start-0 translate-middle-x bg-primary text-white rounded-circle d-flex align-items-center justify-center" 
+                             style="width: 48px; height: 48px; margin-left: -2rem;">
+                            <span class="fw-bold">1</span>
+                        </div>
+                        <div class="card border-0 shadow-sm hover-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                    <div>
+                                        <h5 class="card-title fw-bold mb-1">Microsoft Dynamics 365 Consultant</h5>
+                                        <p class="text-primary fw-semibold mb-1">Tecno IT Group</p>
+                                        <p class="text-muted small">Grande Vitória e Região, Espírito Santo, Brasil • Cliente: Gerdau</p>
+                                    </div>
+                                    <span class="badge bg-light text-muted">mar/2023 - atualmente</span>
+                                </div>
+                                <p class="card-text text-muted">
+                                    Desenvolvimento e customização de soluções Dynamics 365 para processos empresariais complexos.
+                                </p>
+                                <div class="d-flex flex-wrap gap-2">
+                                    @foreach (var tech in new[] { "Dynamics 365", "C# .NET", "JavaScript", "Power Platform", "Azure" })
+                                    {
+                                        <span class="badge" style="background-color: #EFF6FF; color: #1E40AF; border: 1px solid #BFDBFE;">@tech</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="py-5 text-white" style="background: linear-gradient(135deg, #3B82F6 0%, #6366F1 100%);">
+    <div class="container py-5">
+        <h2 class="text-center display-5 fw-bold mb-4">Entre em Contato</h2>
+        <p class="text-center lead mb-5">
+            Vamos conversar sobre projetos, ideias ou parcerias? Escolha o melhor canal!
+        </p>
+
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-5">
+                <div class="card h-100 shadow-lg hover-card" style="border: 2px solid #10B981;">
+                    <div class="card-body text-center p-4">
+                        <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" 
+                             style="width: 64px; height: 64px;">
+                            <i class="bi bi-whatsapp fs-2"></i>
+                        </div>
+                        <h3 class="h5 fw-bold text-dark mb-2">WhatsApp</h3>
+                        <p class="text-muted mb-3">+55 38 98860-1152</p>
+                        <a href="https://wa.me/5538988601152" target="_blank" class="btn btn-success w-100">
+                            <i class="bi bi-whatsapp"></i> Iniciar Conversa
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="card h-100 shadow-lg hover-card" style="border: 2px solid #8B5CF6;">
+                    <div class="card-body text-center p-4">
+                        <div class="rounded-circle d-inline-flex align-items-center justify-content-center mb-3 text-white" 
+                             style="width: 64px; height: 64px; background-color: #8B5CF6;">
+                            <i class="bi bi-envelope fs-2"></i>
+                        </div>
+                        <h3 class="h5 fw-bold text-dark mb-2">Email</h3>
+                        <p class="text-muted small mb-3 text-break">contato.emanuel97@gmail.com</p>
+                        <a href="mailto:contato.emanuel97@gmail.com" class="btn w-100 text-white" style="background-color: #8B5CF6;">
+                            <i class="bi bi-envelope"></i> Enviar Email
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <style>
+        .animate-fade-in {
+            animation: fadeIn 1s ease-in;
+        }
+
+        @@keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hover-card {
+            transition: all 0.3s ease;
+        }
+
+        .hover-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important;
+        }
+
+        .social-link {
+            transition: transform 0.2s ease;
+            display: inline-block;
+        }
+
+        .social-link:hover {
+            transform: scale(1.1);
+        }
+    </style>
+}

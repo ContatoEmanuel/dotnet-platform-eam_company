@@ -1,0 +1,23 @@
+{
+  "name": "eam-web-public",
+  "version": "1.0.0",
+  "description": "EAM Company - Site Institucional com TypeScript",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "build:prod": "tsc && npm run minify",
+    "minify": "terser wwwroot/js/site.js -o wwwroot/js/site.min.js --compress --mangle"
+  },
+  "devDependencies": {
+    "@types/bootstrap": "^5.2.10",
+    "terser": "^5.36.0",
+    "typescript": "^5.7.2"
+  },
+  "keywords": [
+    "typescript",
+    "aspnet",
+    "bootstrap"
+  ],
+  "author": "Emanuel A Macêdo",
+  "license": "MIT"
+}

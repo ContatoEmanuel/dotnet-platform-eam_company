@@ -2,6 +2,10 @@
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
+# Install Node.js para compilar TypeScript
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs
+
 # Copy solution and project files
 COPY ["EAM.Solution.slnx", "./"]
 COPY ["src/1.Core/EAM.Core.Domain/EAM.Core.Domain.csproj", "src/1.Core/EAM.Core.Domain/"]
@@ -16,8 +20,11 @@ RUN dotnet restore "src/3.Presentation/EAM.Web.Public/EAM.Web.Public.csproj"
 # Copy source code
 COPY . .
 
-# Build
+# Build TypeScript
 WORKDIR "/src/src/3.Presentation/EAM.Web.Public"
+RUN npm install && npm run build
+
+# Build .NET
 RUN dotnet build "EAM.Web.Public.csproj" -c Release -o /app/build
 
 # Publish Stage

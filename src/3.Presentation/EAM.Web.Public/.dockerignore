@@ -1,0 +1,39 @@
+# Ignorar node_modules - será reinstalado no build
+node_modules/
+
+# Ignorar arquivos JS compilados - serão regenerados
+wwwroot/js/app.js
+wwwroot/js/app.js.map
+wwwroot/js/app.d.ts
+wwwroot/js/app.d.ts.map
+wwwroot/js/components/
+wwwroot/js/interfaces/
+wwwroot/js/utils/
+
+# Ignorar backup
+wwwroot/js/*.backup
+
+# Manter arquivos TypeScript source
+!TypeScript/
+!package.json
+!package-lock.json
+!tsconfig.json
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vs/
+.vscode/
+*.suo
+*.user
+
+# Build artifacts
+bin/
+obj/
+
+# Outros
+.DS_Store
+Thumbs.db
+*.log

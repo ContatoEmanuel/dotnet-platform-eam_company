@@ -1,0 +1,24 @@
+# Dependências
+node_modules/
+package-lock.json
+yarn.lock
+
+# Build TypeScript
+*.js.map
+*.d.ts.map
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
