@@ -5,7 +5,7 @@ using EAM.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 
-namespace EAM.Web.Public.Services;
+namespace EAM.Web.API.Services;
 
 public class ProjectService : IProjectService
 {

@@ -24,6 +24,7 @@ builder.Services.AddScoped<Microsoft.AspNetCore.Identity.SignInManager<EAM.Core.
 
 // Application Services
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IProjectService, ProjectService>();
 
 // JWT Authentication
 var jwtKey = builder.Configuration["Jwt:Key"] ?? throw new InvalidOperationException("JWT Key not configured");
