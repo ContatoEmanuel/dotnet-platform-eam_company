@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Currículo - Emanuel A Macêdo | Senior Software Engineer especializado em Dynamics 365, Power Platform, .NET C# e Azure">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Currículo - Emanuel A Macêdo</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 3px solid #3B82F6;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #1E40AF;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            color: #6B7280;
+            margin-bottom: 15px;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-size: 0.95em;
+            color: #4B5563;
+        }
+
+        .contact-info a {
+            color: #3B82F6;
+            text-decoration: none;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        .section {
+            margin-bottom: 35px;
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            color: #1E40AF;
+            border-bottom: 2px solid #BFDBFE;
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+        }
+
+        .summary {
+            text-align: justify;
+            color: #4B5563;
+            font-size: 1.05em;
+            line-height: 1.8;
+        }
+
+        .experience-item, .education-item, .certification-item {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .experience-item:last-child, .education-item:last-child, .certification-item:last-child {
+            border-bottom: none;
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .job-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #1F2937;
+        }
+
+        .company {
+            font-size: 1.1em;
+            color: #3B82F6;
+            font-weight: 600;
+        }
+
+        .period {
+            font-size: 0.95em;
+            color: #6B7280;
+            white-space: nowrap;
+        }
+
+        .location {
+            color: #6B7280;
+            font-size: 0.95em;
+            margin-bottom: 5px;
+        }
+
+        .client {
+            color: #6366F1;
+            font-size: 0.95em;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            margin: 10px 0;
+            color: #4B5563;
+            text-align: justify;
+            line-height: 1.7;
+        }
+
+        .responsibilities {
+            margin: 10px 0;
+        }
+
+        .responsibilities-title {
+            font-weight: 600;
+            color: #1F2937;
+            margin-bottom: 8px;
+        }
+
+        .responsibilities ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .responsibilities li {
+            padding-left: 20px;
+            margin-bottom: 6px;
+            position: relative;
+            color: #4B5563;
+        }
+
+        .responsibilities li:before {
+            content: "▸";
+            color: #3B82F6;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .technologies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .tech-badge {
+            background: #EFF6FF;
+            color: #1E40AF;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 500;
+            border: 1px solid #BFDBFE;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .skill-category {
+            background: #F9FAFB;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #E5E7EB;
+        }
+
+        .skill-category h4 {
+            color: #1E40AF;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            padding: 5px 0;
+            color: #4B5563;
+            position: relative;
+            padding-left: 18px;
+        }
+
+        .skill-list li:before {
+            content: "•";
+            color: #3B82F6;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .certification-code {
+            background: #FEF3C7;
+            color: #92400E;
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-size: 0.85em;
+            font-family: 'Courier New', monospace;
+            display: inline-block;
+            margin: 5px 0;
+        }
+
+        .languages {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .language-item {
+            background: #F3F4F6;
+            padding: 15px 25px;
+            border-radius: 8px;
+            border-left: 4px solid #3B82F6;
+        }
+
+        .language-name {
+            font-weight: 600;
+            color: #1F2937;
+        }
+
+        .language-level {
+            color: #6B7280;
+            font-size: 0.95em;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+
+            .experience-item, .education-item, .certification-item {
+                page-break-inside: avoid;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .subtitle {
+                font-size: 1em;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .experience-header {
+                flex-direction: column;
+            }
+
+            .period {
+                margin-top: 5px;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Emanuel A Macêdo</h1>
+            <p class="subtitle">Senior Software Engineer | Dynamics 365 | Power Platform | .NET C# | Azure</p>
+            <div class="contact-info">
+                <span>📧 <a href="mailto:contato.emanuel97@gmail.com">contato.emanuel97@gmail.com</a></span>
+                <span>🌐 <a href="https://eam-company.com.br" target="_blank">eam-company.com.br</a></span>
+                <span>💼 <a href="https://www.linkedin.com/in/emanuel-arrudas-macedo/" target="_blank">LinkedIn</a></span>
+                <span>💻 <a href="https://github.com/ContatoEmanuel" target="_blank">GitHub</a></span>
+            </div>
+        </header>
+
+        <div class="section">
+            <h3 class="section-title">Resumo Profissional</h3>
+            <p class="summary">
+                Engenheiro de Software Sênior com mais de 5 anos de experiência especializada no ecossistema Microsoft, 
+                incluindo Dynamics 365, Power Platform e Azure. Histórico comprovado no desenvolvimento de soluções 
+                empresariais complexas para grandes corporações dos setores financeiro, seguros, telecomunicações e educação. 
+                Expertise em arquitetura de soluções, customizações avançadas, integrações de sistemas e automação de processos. 
+                Experiência em ambientes ágeis, liderança técnica e mentoria de equipes.
+            </p>
+        </div>
+
+        <div class="section">
+            <h3 class="section-title">Experiência Profissional</h3>
+            
+            <div class="experience-item">
+                <div class="experience-header">
+                    <div>
+                        <div class="job-title">Senior Software Engineer I</div>
+                        <div class="company">Solutis Tecnologias</div>
+                    </div>
+                    <div class="period">abril/2025 - Atual</div>
+                </div>
+                <div class="location">📍 Salvador, BA</div>
+                <div class="client">🏢 Cliente: Bradesco Seguros</div>
+                <p class="description">
+                    Especialista técnico responsável por projetos e sustentação em ambientes Dynamics 2016 (On-Premise v. 8.2). 
+                    Foco em estabilidade da plataforma e evolução de funcionalidades através de customizações complexas, 
+                    gerenciamento de segurança e automação de processos de negócio.
+                </p>
+                <div class="responsibilities">
+                    <div class="responsibilities-title">Principais Responsabilidades:</div>
+                    <ul>
+                        <li>Desenvolvimento e manutenção de componentes back-end em .NET C#, incluindo Plugins e Workflows</li>
+                        <li>Criação de scripts client-side em JavaScript para validações e manipulação dinâmica de formulários</li>
+                        <li>Gestão de perfis de segurança com configuração de Security Roles e Unidades de Negócio</li>
+                    </ul>
+                </div>
+                <div class="technologies">
+                    <span class="tech-badge">Dynamics 2016</span>
+                    <span class="tech-badge">.NET C#</span>
+                    <span class="tech-badge">JavaScript</span>
+                    <span class="tech-badge">SQL Server</span>
+                    <span class="tech-badge">Visual Studio</span>
+                </div>
+            </div>
+
+            <div class="experience-item">
+                <div class="experience-header">
+                    <div>
+                        <div class="job-title">Analista de Automação de Processos III</div>
+                        <div class="company">GFT Technologies Brasil</div>
+                    </div>
+                    <div class="period">nov/2024 - mar/2025</div>
+                </div>
+                <div class="location">📍 Barueri, SP</div>
+                <div class="client">🏢 Cliente: Alesat Combustíveis S.A.</div>
+                <p class="description">
+                    Projeto de escopo fechado para digitalização e gerenciamento de dados de campo. Responsável pela 
+                    arquitetura e implementação de solução completa com Power Platform e Azure, desde coleta de dados 
+                    até integração e visualização gerencial.
+                </p>
+                <div class="responsibilities">
+                    <div class="responsibilities-title">Principais Responsabilidades:</div>
+                    <ul>
+                        <li>Desenvolvimento de Canvas App com capacidade offline para coleta de dados em campo</li>
+                        <li>Construção de Model-Driven App para gerenciamento e aprovação centralizada</li>
+                        <li>Orquestração de automações com Azure Logic Apps</li>
+                        <li>Implementação de pipelines de integração com Azure Data Factory</li>
+                    </ul>
+                </div>
+                <div class="technologies">
+                    <span class="tech-badge">Power Apps</span>
+                    <span class="tech-badge">Dataverse</span>
+                    <span class="tech-badge">Azure Logic Apps</span>
+                    <span class="tech-badge">Azure Data Factory</span>
+                    <span class="tech-badge">JavaScript</span>
+                </div>
+            </div>
+
+            <div class="experience-item">
+                <div class="experience-header">
+                    <div>
+                        <div class="job-title">Analista de Sistemas PL</div>
+                        <div class="company">BRQ Digital Solutions</div>
+                    </div>
+                    <div class="period">nov/2023 - out/2024</div>
+                </div>
+                <div class="location">📍 São Paulo, SP</div>
+                <div class="client">🏢 Cliente: Itaú Unibanco</div>
+                <p class="description">
+                    Desenvolvimento e manutenção de soluções no Dynamics 365 com foco em customizações de back-end e 
+                    otimização de processos. Tradução de requisitos de negócio em implementações técnicas em ambiente 
+                    financeiro de alta demanda.
+                </p>
+                <div class="responsibilities">
+                    <div class="responsibilities-title">Principais Responsabilidades:</div>
+                    <ul>
+                        <li>Desenvolvimento de Plugins e Custom Workflow Activities em C#</li>
+                        <li>Criação de Web Resources (JavaScript, HTML, CSS) para formulários interativos</li>
+                        <li>Automação de processos com Workflows, Business Rules e Power Automate</li>
+                        <li>Desenvolvimento de Model-Driven Apps no Dataverse</li>
+                    </ul>
+                </div>
+                <div class="technologies">
+                    <span class="tech-badge">Dynamics 365</span>
+                    <span class="tech-badge">C#</span>
+                    <span class="tech-badge">JavaScript</span>
+                    <span class="tech-badge">Power Automate</span>
+                    <span class="tech-badge">Dataverse</span>
+                </div>
+            </div>
+
+            <div class="experience-item">
+                <div class="experience-header">
+                    <div>
+                        <div class="job-title">Desenvolvedor II</div>
+                        <div class="company">Cogna Educação</div>
+                    </div>
+                    <div class="period">mar/2022 - out/2023</div>
+                </div>
+                <div class="location">📍 Valinhos, SP</div>
+                <div class="client">🏢 Projetos Internos (Holding)</div>
+                <p class="description">
+                    Desenvolvimento de soluções de automação e engajamento de clientes com Power Platform integrada ao 
+                    Dynamics 365. Criação de soluções omnichannel para otimização da comunicação. Evolução de 
+                    Desenvolvedor I para Desenvolvedor II durante o período (1 ano e 8 meses).
+                </p>
+                <div class="responsibilities">
+                    <div class="responsibilities-title">Principais Responsabilidades:</div>
+                    <ul>
+                        <li>Desenvolvimento de soluções low-code com Power Apps</li>
+                        <li>Criação de fluxos de automação com Power Automate</li>
+                        <li>Desenvolvimento e integração de Chatbot com Power Virtual Agents</li>
+                        <li>Criação de dashboards analíticos em Power BI</li>
+                    </ul>
+                </div>
+                <div class="technologies">
+                    <span class="tech-badge">Power Apps</span>
+                    <span class="tech-badge">Power Automate</span>
+                    <span class="tech-badge">Power Virtual Agents</span>
+                    <span class="tech-badge">Power BI</span>
+                    <span class="tech-badge">Dataverse</span>
+                </div>
+            </div>
+
+            <div class="experience-item">
+                <div class="experience-header">
+                    <div>
+                        <div class="job-title">Desenvolvedor Júnior</div>
+                        <div class="company">RBA Digital</div>
+                    </div>
+                    <div class="period">out/2020 - fev/2022</div>
+                </div>
+                <div class="location">📍 Joinville, SC</div>
+                <div class="client">🏢 Consultoria para Diversos Clientes</div>
+                <p class="description">
+                    Primeira imersão profissional no ecossistema Dynamics 365. Participação em todo o ciclo de vida do 
+                    desenvolvimento de software, desde levantamento de requisitos até implementação e testes. Evolução de 
+                    Estagiário para Desenvolvedor Júnior durante o período (1 ano e 5 meses).
+                </p>
+                <div class="responsibilities">
+                    <div class="responsibilities-title">Principais Responsabilidades:</div>
+                    <ul>
+                        <li>Modelagem de processos de negócio com diagramas UML</li>
+                        <li>Desenvolvimento de aplicações Power Apps (Canvas e Model-Driven)</li>
+                        <li>Criação de fluxos automatizados com Power Automate</li>
+                        <li>Atuação em ambiente ágil (Scrum e Kanban)</li>
+                    </ul>
+                </div>
+                <div class="technologies">
+                    <span class="tech-badge">Power Apps</span>
+                    <span class="tech-badge">Power Automate</span>
+                    <span class="tech-badge">Dataverse</span>
+                    <span class="tech-badge">Scrum</span>
+                    <span class="tech-badge">UML</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3 class="section-title">Competências Técnicas</h3>
+            <div class="skills-grid">
+                <div class="skill-category">
+                    <h4>Microsoft Dynamics 365</h4>
+                    <ul class="skill-list">
+                        <li>Dynamics 365 CE (2016, Sales, Customer Service)</li>
+                        <li>Plugin Development (C# .NET)</li>
+                        <li>Custom Workflow Activities</li>
+                        <li>Web Resources (JavaScript, HTML, CSS)</li>
+                        <li>Security Roles & Business Units</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h4>Power Platform</h4>
+                    <ul class="skill-list">
+                        <li>Power Apps (Canvas & Model-Driven)</li>
+                        <li>Power Automate (Cloud Flows)</li>
+                        <li>Power Virtual Agents</li>
+                        <li>Power BI (Dashboards & Reports)</li>
+                        <li>Dataverse (CDS)</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h4>Azure & Cloud</h4>
+                    <ul class="skill-list">
+                        <li>Azure Logic Apps</li>
+                        <li>Azure Data Factory</li>
+                        <li>Azure Functions</li>
+                        <li>Azure DevOps (CI/CD)</li>
+                        <li>API Management</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h4>Desenvolvimento</h4>
+                    <ul class="skill-list">
+                        <li>C# .NET Framework/Core</li>
+                        <li>JavaScript/TypeScript</li>
+                        <li>React.js</li>
+                        <li>REST APIs & Web Services</li>
+                        <li>SQL Server & T-SQL</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3 class="section-title">Formação Acadêmica</h3>
+            <div class="education-item">
+                <div class="experience-header">
+                    <div>
+                        <div class="job-title">Curso Superior de Tecnologia (CST) em Análise e Desenvolvimento de Sistemas</div>
+                        <div class="company">Universidade de Franca</div>
+                    </div>
+                    <div class="period">ago/2024 - jul/2026</div>
+                </div>
+                <div class="location">📚 Em andamento</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3 class="section-title">Certificações</h3>
+            
+            <div class="certification-item">
+                <div class="experience-header">
+                    <div>
+                        <div class="job-title">Microsoft Applied Skills: Criar e gerenciar aplicativos baseados em modelo</div>
+                        <div class="company">Microsoft</div>
+                    </div>
+                    <div class="period">jan/2025</div>
+                </div>
+                <div class="certification-code">🔐 Código: C8FF6F7BA37C5B36</div>
+                <p class="description">
+                    Criar e gerenciar aplicativos baseados em modelo com o Power Apps e o Dataverse.
+                </p>
+                <div class="technologies">
+                    <span class="tech-badge">Dataverse</span>
+                    <span class="tech-badge">Microsoft Dynamics 365</span>
+                    <span class="tech-badge">Power Apps</span>
+                </div>
+            </div>
+
+            <div class="certification-item">
+                <div class="experience-header">
+                    <div>
+                        <div class="job-title">Microsoft Applied Skills: Criar e gerenciar processos automatizados</div>
+                        <div class="company">Microsoft</div>
+                    </div>
+                    <div class="period">dez/2024</div>
+                </div>
+                <div class="certification-code">🔐 Código: 2DD0B21C91F261F8</div>
+                <p class="description">
+                    Criar e gerenciar processos automatizados usando o Power Automate.
+                </p>
+                <div class="technologies">
+                    <span class="tech-badge">Microsoft Power Automate</span>
+                </div>
+            </div>
+
+            <div class="certification-item">
+                <div class="experience-header">
+                    <div>
+                        <div class="job-title">Microsoft Applied Skills: Criar e gerenciar aplicativos de tela</div>
+                        <div class="company">Microsoft</div>
+                    </div>
+                    <div class="period">out/2024</div>
+                </div>
+                <div class="certification-code">🔐 Código: C1693C7A38490D4A</div>
+                <p class="description">
+                    Criar e gerenciar aplicativos de tela com o Power Apps.
+                </p>
+                <div class="technologies">
+                    <span class="tech-badge">Microsoft Power Apps</span>
+                </div>
+            </div>
+
+            <div class="certification-item">
+                <div class="experience-header">
+                    <div>
+                        <div class="job-title">Microsoft Certified: Dynamics 365 Fundamentals (CRM)</div>
+                        <div class="company">Microsoft</div>
+                    </div>
+                    <div class="period">dez/2022</div>
+                </div>
+                <div class="certification-code">🔐 Código: 6DDFF53C4C7BE301</div>
+                <p class="description">
+                    Fundamentos da plataforma Microsoft Dynamics 365 Customer Engagement.
+                </p>
+                <div class="technologies">
+                    <span class="tech-badge">Microsoft Dynamics 365</span>
+                    <span class="tech-badge">Microsoft CRM</span>
+                    <span class="tech-badge">Microsoft Power Platform</span>
+                </div>
+            </div>
+
+            <div class="certification-item">
+                <div class="experience-header">
+                    <div>
+                        <div class="job-title">Microsoft Certified: Power Platform Fundamentals</div>
+                        <div class="company">Microsoft</div>
+                    </div>
+                    <div class="period">ago/2022</div>
+                </div>
+                <div class="certification-code">🔐 Código: AFA32BEF041EA6E5</div>
+                <p class="description">
+                    Fundamentos da Microsoft Power Platform incluindo Power Apps, Power Automate, Power BI e Power Virtual Agents.
+                </p>
+                <div class="technologies">
+                    <span class="tech-badge">Microsoft Power Automate</span>
+                    <span class="tech-badge">Microsoft Power Virtual Agents</span>
+                    <span class="tech-badge">Microsoft Power Platform</span>
+                    <span class="tech-badge">Microsoft Power BI</span>
+                </div>
+            </div>
+
+            <div class="certification-item">
+                <div class="experience-header">
+                    <div>
+                        <div class="job-title">Microsoft Certified: Azure Fundamentals</div>
+                        <div class="company">Microsoft</div>
+                    </div>
+                    <div class="period">abr/2022</div>
+                </div>
+                <div class="certification-code">🔐 Código: 74EDD934A9DDB798</div>
+                <p class="description">
+                    Fundamentos da plataforma Microsoft Azure incluindo serviços de nuvem, DevOps e Functions.
+                </p>
+                <div class="technologies">
+                    <span class="tech-badge">Azure DevOps</span>
+                    <span class="tech-badge">Azure Functions</span>
+                    <span class="tech-badge">Windows Azure</span>
+                </div>
+            </div>
+
+            <div class="certification-item">
+                <div class="experience-header">
+                    <div>
+                        <div class="job-title">CEFR Level A1</div>
+                        <div class="company">EF English Live</div>
+                    </div>
+                    <div class="period">abr/2023</div>
+                </div>
+                <p class="description">
+                    Certificação de proficiência em inglês como segunda língua - Nível A1 (Iniciante).
+                </p>
+                <div class="technologies">
+                    <span class="tech-badge">ESL (Inglês como segunda língua)</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3 class="section-title">Idiomas</h3>
+            <div class="languages">
+                <div class="language-item">
+                    <div class="language-name">Português</div>
+                    <div class="language-level">Nativo</div>
+                </div>
+                <div class="language-item">
+                    <div class="language-name">Inglês</div>
+                    <div class="language-level">Básico (A1 - CEFR)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
