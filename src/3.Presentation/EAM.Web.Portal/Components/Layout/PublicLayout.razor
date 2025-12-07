@@ -1,0 +1,156 @@
+@inherits LayoutComponentBase
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <style>
+        /* Public Layout Styles */
+        .public-layout {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .public-header {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .public-header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            color: #1e293b;
+        }
+
+        .brand-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #3b82f6, #1e40af);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .brand-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .public-nav {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .public-nav a {
+            color: #64748b;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .public-nav a:hover {
+            color: #3b82f6;
+        }
+
+        .public-content {
+            flex: 1;
+        }
+
+        .public-footer {
+            background: #1e293b;
+            color: white;
+            padding: 3rem 0 1.5rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.875rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="public-layout">
+        <!-- Header -->
+        <header class="public-header">
+            <div class="container">
+                <a href="/" class="brand">
+                    <div class="brand-icon">E</div>
+                    <span class="brand-text">EAM Solutions</span>
+                </a>
+                <nav class="public-nav">
+                    <a href="/#produtos">Produtos</a>
+                    <a href="https://github.com/ContatoEmanuel" target="_blank">
+                        <i class="bi bi-github"></i> GitHub
+                    </a>
+                    <a href="/admin" class="btn btn-primary btn-sm">
+                        <i class="bi bi-shield-lock me-1"></i>
+                        Admin
+                    </a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Content -->
+        <main class="public-content">
+            @Body
+        </main>
+
+        <!-- Footer -->
+        <footer class="public-footer">
+            <div class="container">
+                <div class="footer-content">
+                    <div class="footer-links">
+                        <a href="/#produtos">Produtos</a>
+                        <a href="https://github.com/ContatoEmanuel" target="_blank">GitHub</a>
+                        <a href="https://linkedin.com/in/emanuelcontato" target="_blank">LinkedIn</a>
+                    </div>
+                    <div class="footer-bottom">
+                        <p class="mb-0">&copy; @DateTime.Now.Year EAM Solutions. Especialistas em Microsoft Dynamics 365.</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>
