@@ -41,6 +41,7 @@ app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages:
 app.UseHttpsRedirection();
 
 app.UseAuthentication(); // ANTES de UseAuthorization e Antiforgery
+app.UseAuthorization(); // Autorização necessária para [Authorize]
 app.UseAntiforgery();
 
 app.MapStaticAssets();

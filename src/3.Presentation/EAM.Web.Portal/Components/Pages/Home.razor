@@ -1,7 +1,101 @@
-﻿@page "/"
+@page "/"
+@attribute [Microsoft.AspNetCore.Authorization.Authorize]
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Dashboard - EAM Portal</PageTitle>
 
-<h1>Hello, world!</h1>
+<div class="dashboard">
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="stat-card stat-card-primary">
+                <div class="stat-icon">
+                    <i class="bi bi-folder"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 class="stat-value">7</h3>
+                    <p class="stat-label">Projetos</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card stat-card-success">
+                <div class="stat-icon">
+                    <i class="bi bi-person-lines-fill"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 class="stat-value">1</h3>
+                    <p class="stat-label">Leads</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card stat-card-warning">
+                <div class="stat-icon">
+                    <i class="bi bi-exclamation-circle"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 class="stat-value">1</h3>
+                    <p class="stat-label">Aguardando Contato</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-card stat-card-info">
+                <div class="stat-icon">
+                    <i class="bi bi-people"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 class="stat-value">1</h3>
+                    <p class="stat-label">Usuários Ativos</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-Welcome to your new app.
+    <div class="row g-4">
+        <div class="col-lg-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="bi bi-clock-history me-2"></i>
+                        Atividades Recentes
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon bg-success">
+                                <i class="bi bi-person-plus"></i>
+                            </div>
+                            <div class="activity-content">
+                                <p class="activity-text">Novo lead recebido: <strong>João Silva</strong></p>
+                                <small class="activity-time text-muted">Hoje às 19:52</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">
+                        <i class="bi bi-lightning me-2"></i>
+                        Ações Rápidas
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-grid gap-2">
+                        <a href="/projects" class="btn btn-outline-primary">
+                            <i class="bi bi-plus-circle me-2"></i>
+                            Novo Projeto
+                        </a>
+                        <a href="/leads" class="btn btn-outline-success">
+                            <i class="bi bi-eye me-2"></i>
+                            Ver Leads
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

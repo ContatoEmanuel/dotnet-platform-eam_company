@@ -1,23 +1,81 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page">
-    <div class="sidebar">
+<div class="admin-wrapper">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <span class="logo-icon">E</span>
+                <span class="logo-text">EAM Portal</span>
+            </div>
+        </div>
         <NavMenu />
-    </div>
+    </aside>
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Navigation Bar -->
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="btn-menu-toggle" onclick="document.querySelector('.admin-wrapper').classList.toggle('sidebar-collapsed')">
+                    <i class="bi bi-list"></i>
+                </button>
+                <h1 class="page-title">@PageTitle</h1>
+            </div>
+            <div class="topbar-right">
+                <AuthorizeView>
+                    <Authorized>
+                        <div class="user-menu">
+                            <div class="user-info">
+                                <span class="user-name">@context.User.Identity?.Name</span>
+                                <span class="user-role badge bg-primary">Admin</span>
+                            </div>
+                            <div class="user-avatar">
+                                <i class="bi bi-person-circle"></i>
+                            </div>
+                        </div>
+                        <a href="/Account/Logout" class="btn btn-outline-danger btn-sm ms-3">
+                            <i class="bi bi-box-arrow-right"></i> Sair
+                        </a>
+                    </Authorized>
+                    <NotAuthorized>
+                        <a href="/Account/Login" class="btn btn-primary btn-sm">
+                            <i class="bi bi-box-arrow-in-right"></i> Entrar
+                        </a>
+                    </NotAuthorized>
+                </AuthorizeView>
+            </div>
+        </header>
+
+        <!-- Page Content -->
+        <div class="content-wrapper">
+            <article class="content">
+                @Body
+            </article>
         </div>
 
-        <article class="content px-4">
-            @Body
-        </article>
-    </main>
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <span>&copy; @DateTime.Now.Year EAM Company. Todos os direitos reservados.</span>
+                <span class="text-muted">v1.0.0</span>
+            </div>
+        </footer>
+    </div>
 </div>
 
 <div id="blazor-error-ui" data-nosnippet>
-    An unhandled error has occurred.
-    <a href="." class="reload">Reload</a>
-    <span class="dismiss">🗙</span>
+    <div class="error-content">
+        <i class="bi bi-exclamation-triangle"></i>
+        <span>Ocorreu um erro inesperado.</span>
+        <a href="." class="reload">Recarregar</a>
+        <button class="dismiss">×</button>
+    </div>
 </div>
+
+@code {
+    [CascadingParameter]
+    private HttpContext? HttpContext { get; set; }
+
+    private string PageTitle => "Dashboard";
+}
