@@ -7,6 +7,7 @@ obj/
 *.user
 *.suo
 *.userprefs
+*.sln
 
 ## Visual Studio Code
 .vscode/*

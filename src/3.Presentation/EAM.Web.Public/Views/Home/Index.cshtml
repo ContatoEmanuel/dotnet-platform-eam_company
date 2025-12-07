@@ -37,17 +37,17 @@
 
                 <!-- Social Links -->
                 <div class="d-flex flex-wrap gap-2 justify-content-center mb-4 animate-fade-in">
-                    <a href="https://github.com/ContatoEmanuel" target="_blank" class="btn btn-dark">
-                        <i class="bi bi-github"></i> GitHub
+                    <a href="https://linktr.ee/emanuel.macedo" target="_blank" class="btn btn-success">
+                        <i class="bi bi-link-45deg"></i> Linktree
                     </a>
                     <a href="https://www.linkedin.com/in/emanuel-arrudas-macedo/" target="_blank" class="btn btn-primary">
                         <i class="bi bi-linkedin"></i> LinkedIn
                     </a>
+                    <a href="https://github.com/ContatoEmanuel" target="_blank" class="btn btn-dark">
+                        <i class="bi bi-github"></i> GitHub
+                    </a>
                     <a href="https://www.youtube.com/channel/UCQbZlecPawGlx0F6Oo56LDw" target="_blank" class="btn btn-danger">
                         <i class="bi bi-youtube"></i> YouTube
-                    </a>
-                    <a href="https://linktr.ee/ContatoEmanuel" target="_blank" class="btn btn-success">
-                        <i class="bi bi-link-45deg"></i> Linktree
                     </a>
                     <a href="https://www.credly.com/users/emanuel-a-macedo/badges" target="_blank" class="btn btn-warning text-dark">
                         <i class="bi bi-award"></i> Credly
@@ -78,9 +78,15 @@
         
         <div class="row">
             <div class="col-lg-8 mx-auto">
-                <p class="lead text-center text-muted mb-5">
-                    Senior Software Engineer com foco no ecossistema Microsoft. Especializado em customização 
-                    de Dynamics 365, desenvolvimento com Power Platform e integração de sistemas em Azure.
+                <p class="lead text-center text-muted mb-3">
+                    Engenheiro de Software Sênior especializado no ecossistema Microsoft, com sólida trajetória 
+                    no desenvolvimento e sustentação de soluções críticas para grandes players dos setores 
+                    <strong>financeiro, varejista e educacional</strong> (como Itaú, Bradesco Seguros, Alesat e Cogna).
+                </p>
+                <p class="text-center text-muted mb-5">
+                    Minha expertise combina o desenvolvimento técnico avançado (Pro-Code) com a agilidade da 
+                    Power Platform, permitindo-me atuar desde a arquitetura de soluções em nuvem até a 
+                    manutenção de ambientes legados complexos (On-Premise).
                 </p>
             </div>
         </div>
@@ -91,8 +97,8 @@
                 <h3 class="text-center h4 mb-4">Experiência com Grandes Players</h3>
                 <div class="row g-3">
                     @foreach (var client in new[] { 
-                        new { Name = "Gerdau", Sector = "Metalurgia" },
-                        new { Name = "Suzano", Sector = "Papel e Celulose" },
+                        new { Name = "Itaú", Sector = "Financeiro" },
+                        new { Name = "Bradesco Seguros", Sector = "Seguros" },
                         new { Name = "Alesat", Sector = "Varejo" },
                         new { Name = "Cogna", Sector = "Educação" }
                     })
@@ -116,10 +122,11 @@
                 <h3 class="text-center h4 mb-4">Principais Competências</h3>
                 <div class="row g-4">
                     @foreach (var expertise in new[] {
-                        new { Icon = "⚙️", Title = "Desenvolvimento Dynamics 365", Description = "Customização e extensão da plataforma utilizando C# .NET para Plugins e Workflows, além de JavaScript para scripts client-side." },
-                        new { Icon = "⚡", Title = "Power Platform & Mobilidade", Description = "Criação de aplicações robustas com Power Apps (Canvas com capacidade offline e Model-Driven) e automação via Power Automate." },
-                        new { Icon = "☁️", Title = "Integração & Azure", Description = "Orquestração de dados e processos entre sistemas utilizando Azure Logic Apps, Data Factory e consumo de APIs REST/SOAP." },
-                        new { Icon = "🔒", Title = "Dados & Segurança", Description = "Modelagem de dados em Dataverse/SQL Server e implementação de controles de acesso, roles e segurança em camadas." }
+                        new { Icon = "⚙️", Title = "Desenvolvimento Dynamics 365", Description = "Domínio na customização e extensão da plataforma (Sales, Customer Service) utilizando C# .NET para Plugins e Workflows, além de JavaScript para scripts client-side e validações complexas." },
+                        new { Icon = "⚡", Title = "Power Platform & Mobilidade", Description = "Criação de aplicações de negócio robustas com Power Apps (Canvas com capacidade offline e Model-Driven) e automação avançada de processos via Power Automate." },
+                        new { Icon = "☁️", Title = "Integração & Azure", Description = "Experiência na orquestração de dados e processos entre sistemas heterogêneos utilizando Azure Logic Apps, Data Factory e consumo de APIs REST/SOAP." },
+                        new { Icon = "🔒", Title = "Dados & Segurança", Description = "Modelagem de dados no Dataverse, criação de dashboards em Power BI e gestão granular de perfis de segurança e acessos." },
+                        new { Icon = "🎯", Title = "Metodologia Ágil", Description = "Atuação consistente em ambientes ágeis (Scrum/Kanban), com foco em entregas de valor e melhoria contínua." }
                     })
                     {
                         <div class="col-md-6">
@@ -145,8 +152,11 @@
             <div class="col-lg-10 mx-auto">
                 <h3 class="text-center h4 mb-4">Stack Tecnológico</h3>
                 <div class="d-flex flex-wrap justify-content-center gap-2">
-                    @foreach (var tech in new[] { "Dynamics 365", "Power Apps", "Power Automate", "C# .NET", "Azure", 
-                        "Dataverse", "SQL Server", "TypeScript", "React", "Azure DevOps", "Logic Apps", "API Management" })
+                    @foreach (var tech in new[] { 
+                        "Microsoft Dynamics 365", "Microsoft Power Platform", "ASP.NET Core", "C# .NET", "JavaScript", 
+                        "Azure Cloud", "Power Apps", "Power Automate", "Power BI", "Azure Logic Apps", 
+                        "Data Factory", "Dataverse", "SQL Server", "TypeScript", "React", "Azure DevOps" 
+                    })
                     {
                         <span class="badge px-3 py-2" style="background-color: #EFF6FF; color: #1E40AF; border: 1px solid #BFDBFE;">@tech</span>
                     }
@@ -194,6 +204,33 @@
                 </div>
             </div>
 
+            <!-- .NET Platform Project -->
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-lg hover-card">
+                    <div class="position-relative" style="background: linear-gradient(135deg, #DBEAFE 0%, #E0E7FF 100%); height: 200px; display: flex; align-items: center; justify-content: center;">
+                        <div class="position-absolute top-0 end-0 m-3">
+                            <span class="badge bg-warning text-dark">⭐ Destaque</span>
+                        </div>
+                        <div class="fs-1">🏗️</div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">.NET Platform EAM Company</h5>
+                        <p class="card-text text-muted small">
+                            Plataforma corporativa multi-projeto com Clean Architecture, Docker, API REST, site institucional MVC e portal Blazor. Configuração completa para ambientes Linux.
+                        </p>
+                        <div class="d-flex flex-wrap gap-2 mb-3">
+                            @foreach (var tech in new[] { "ASP.NET Core", "Docker", "TypeScript", "Blazor", "Clean Architecture" })
+                            {
+                                <span class="badge bg-primary-subtle text-primary">@tech</span>
+                            }
+                        </div>
+                        <a href="https://github.com/ContatoEmanuel/dotnet-platform-eam_company" target="_blank" class="btn btn-dark btn-sm">
+                            <i class="bi bi-github"></i> Ver no GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+
             <!-- Other Project -->
             <div class="col-md-6">
                 <div class="card h-100 border-0 shadow-lg hover-card">
@@ -227,38 +264,130 @@
                 </div>
             </div>
         </div>
+
+        <!-- Outros Projetos -->
+        <h3 class="text-center h4 mt-5 mb-4">Outros Projetos</h3>
+        <div class="row g-4">
+            <!-- Dynamics 365 Custom Plugins -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow hover-card">
+                    <div class="card-body text-center">
+                        <div class="fs-1 mb-3">🔌</div>
+                        <h6 class="card-title fw-bold">Dynamics 365 Custom Plugins</h6>
+                        <p class="card-text small text-muted">
+                            Coleção de plugins customizados para Dynamics 365, incluindo validações complexas, integrações com APIs externas e automações de processos de negócio.
+                        </p>
+                        <div class="d-flex flex-wrap gap-1 justify-content-center mb-2">
+                            <span class="badge bg-secondary-subtle text-secondary small">C# .NET</span>
+                            <span class="badge bg-secondary-subtle text-secondary small">Dynamics 365</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Power Platform Solutions -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow hover-card">
+                    <div class="card-body text-center">
+                        <div class="fs-1 mb-3">⚡</div>
+                        <h6 class="card-title fw-bold">Power Platform Solutions</h6>
+                        <p class="card-text small text-muted">
+                            Soluções enterprise desenvolvidas com Power Apps (Canvas e Model-Driven), Power Automate para automação de processos e Power BI para dashboards executivos.
+                        </p>
+                        <div class="d-flex flex-wrap gap-1 justify-content-center mb-2">
+                            <span class="badge bg-secondary-subtle text-secondary small">Power Apps</span>
+                            <span class="badge bg-secondary-subtle text-secondary small">Power Automate</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Azure Integration Services -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow hover-card">
+                    <div class="card-body text-center">
+                        <div class="fs-1 mb-3">☁️</div>
+                        <h6 class="card-title fw-bold">Azure Integration Services</h6>
+                        <p class="card-text small text-muted">
+                            Arquitetura de integração utilizando Azure Logic Apps, Azure Functions e Service Bus para orquestração de processos entre Dynamics 365 e sistemas legados.
+                        </p>
+                        <div class="d-flex flex-wrap gap-1 justify-content-center mb-2">
+                            <span class="badge bg-secondary-subtle text-secondary small">Azure Logic Apps</span>
+                            <span class="badge bg-secondary-subtle text-secondary small">Azure Functions</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CRM Analytics Dashboard -->
+            <div class="col-md-6 col-lg-3">
+                <div class="card h-100 border-0 shadow hover-card">
+                    <div class="card-body text-center">
+                        <div class="fs-1 mb-3">📊</div>
+                        <h6 class="card-title fw-bold">CRM Analytics Dashboard</h6>
+                        <p class="card-text small text-muted">
+                            Dashboard interativo em Power BI conectado ao Dynamics 365 para análise de vendas, pipeline e performance de equipes comerciais em tempo real.
+                        </p>
+                        <div class="d-flex flex-wrap gap-1 justify-content-center mb-2">
+                            <span class="badge bg-secondary-subtle text-secondary small">Power BI</span>
+                            <span class="badge bg-secondary-subtle text-secondary small">DAX</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="https://github.com/ContatoEmanuel" target="_blank" class="btn btn-outline-primary">
+                Ver todos os projetos no GitHub
+            </a>
+        </div>
     </div>
 </section>
 
 <!-- Experience Section -->
 <section id="experience" class="py-5 bg-white">
     <div class="container py-5">
-        <h2 class="text-center display-5 fw-bold mb-5">Experiência Profissional</h2>
+        <h2 class="text-center display-5 fw-bold mb-3">Experiência Profissional</h2>
+        <p class="text-center text-muted mb-5">
+            Trajetória sólida no desenvolvimento de soluções Microsoft para grandes empresas dos setores financeiro, seguros, varejo e educação.
+        </p>
         
         <div class="row">
             <div class="col-lg-10 mx-auto">
                 <div class="position-relative" style="border-left: 3px solid #3B82F6; padding-left: 2rem;">
-                    <!-- Experience Item -->
+                    
+                    <!-- Experience 1: Solutis (Bradesco Seguros) -->
                     <div class="mb-5 position-relative">
-                        <div class="position-absolute start-0 translate-middle-x bg-primary text-white rounded-circle d-flex align-items-center justify-center" 
+                        <div class="position-absolute start-0 translate-middle-x bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" 
                              style="width: 48px; height: 48px; margin-left: -2rem;">
                             <span class="fw-bold">1</span>
                         </div>
                         <div class="card border-0 shadow-sm hover-card">
                             <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
                                     <div>
-                                        <h5 class="card-title fw-bold mb-1">Microsoft Dynamics 365 Consultant</h5>
-                                        <p class="text-primary fw-semibold mb-1">Tecno IT Group</p>
-                                        <p class="text-muted small">Grande Vitória e Região, Espírito Santo, Brasil • Cliente: Gerdau</p>
+                                        <h5 class="card-title fw-bold mb-1">Senior Software Engineer I</h5>
+                                        <p class="text-primary fw-semibold mb-1">Solutis Tecnologias</p>
+                                        <p class="text-muted small mb-0">Salvador, BA • Cliente: Bradesco Seguros</p>
                                     </div>
-                                    <span class="badge bg-light text-muted">mar/2023 - atualmente</span>
+                                    <span class="badge bg-success">abril de 2025 - Atual</span>
                                 </div>
-                                <p class="card-text text-muted">
-                                    Desenvolvimento e customização de soluções Dynamics 365 para processos empresariais complexos.
+                                <p class="card-text text-muted small mt-2">
+                                    Especialista técnico responsável por projetos e sustentação em ambientes Dynamics 2016 (On-Premise v. 8.2). 
+                                    Foco em estabilidade da plataforma e evolução de funcionalidades através de customizações complexas, 
+                                    gerenciamento de segurança e automação de processos de negócio.
                                 </p>
+                                <div class="mt-2">
+                                    <p class="small fw-semibold mb-1">Principais Responsabilidades:</p>
+                                    <ul class="small text-muted mb-2">
+                                        <li>Desenvolvimento e manutenção de componentes back-end em .NET C#, incluindo Plugins e Workflows</li>
+                                        <li>Criação de scripts client-side em JavaScript para validações e manipulação dinâmica de formulários</li>
+                                        <li>Gestão de perfis de segurança com configuração de Security Roles e Unidades de Negócio</li>
+                                    </ul>
+                                </div>
                                 <div class="d-flex flex-wrap gap-2">
-                                    @foreach (var tech in new[] { "Dynamics 365", "C# .NET", "JavaScript", "Power Platform", "Azure" })
+                                    @foreach (var tech in new[] { "Dynamics 2016", ".NET C#", "JavaScript", "SQL Server", "Visual Studio" })
                                     {
                                         <span class="badge" style="background-color: #EFF6FF; color: #1E40AF; border: 1px solid #BFDBFE;">@tech</span>
                                     }
@@ -266,6 +395,184 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Experience 2: GFT (Alesat) -->
+                    <div class="mb-5 position-relative">
+                        <div class="position-absolute start-0 translate-middle-x bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" 
+                             style="width: 48px; height: 48px; margin-left: -2rem;">
+                            <span class="fw-bold">2</span>
+                        </div>
+                        <div class="card border-0 shadow-sm hover-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
+                                    <div>
+                                        <h5 class="card-title fw-bold mb-1">Analista de Automação de Processos III</h5>
+                                        <p class="text-primary fw-semibold mb-1">GFT Technologies Brasil</p>
+                                        <p class="text-muted small mb-0">Barueri, SP • Cliente: Alesat Combustíveis S.A.</p>
+                                    </div>
+                                    <span class="badge bg-light text-muted">nov/2024 - mar/2025</span>
+                                </div>
+                                <p class="card-text text-muted small mt-2">
+                                    Projeto de escopo fechado para digitalização e gerenciamento de dados de campo. Responsável pela 
+                                    arquitetura e implementação de solução completa com Power Platform e Azure, desde coleta de dados 
+                                    até integração e visualização gerencial.
+                                </p>
+                                <div class="mt-2">
+                                    <p class="small fw-semibold mb-1">Principais Responsabilidades:</p>
+                                    <ul class="small text-muted mb-2">
+                                        <li>Desenvolvimento de Canvas App com capacidade offline para coleta de dados em campo</li>
+                                        <li>Construção de Model-Driven App para gerenciamento e aprovação centralizada</li>
+                                        <li>Orquestração de automações com Azure Logic Apps</li>
+                                        <li>Implementação de pipelines de integração com Azure Data Factory</li>
+                                    </ul>
+                                </div>
+                                <div class="d-flex flex-wrap gap-2">
+                                    @foreach (var tech in new[] { "Power Apps", "Dataverse", "Azure Logic Apps", "Azure Data Factory", "JavaScript" })
+                                    {
+                                        <span class="badge" style="background-color: #EFF6FF; color: #1E40AF; border: 1px solid #BFDBFE;">@tech</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Experience 3: BRQ (Itaú) -->
+                    <div class="mb-5 position-relative">
+                        <div class="position-absolute start-0 translate-middle-x bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" 
+                             style="width: 48px; height: 48px; margin-left: -2rem;">
+                            <span class="fw-bold">3</span>
+                        </div>
+                        <div class="card border-0 shadow-sm hover-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
+                                    <div>
+                                        <h5 class="card-title fw-bold mb-1">Analista de Sistemas PL</h5>
+                                        <p class="text-primary fw-semibold mb-1">BRQ Digital Solutions</p>
+                                        <p class="text-muted small mb-0">São Paulo, SP • Cliente: Itaú</p>
+                                    </div>
+                                    <span class="badge bg-light text-muted">nov/2023 - out/2024</span>
+                                </div>
+                                <p class="card-text text-muted small mt-2">
+                                    Desenvolvimento e manutenção de soluções no Dynamics 365 com foco em customizações de back-end e 
+                                    otimização de processos. Tradução de requisitos de negócio em implementações técnicas em ambiente 
+                                    financeiro de alta demanda.
+                                </p>
+                                <div class="mt-2">
+                                    <p class="small fw-semibold mb-1">Principais Responsabilidades:</p>
+                                    <ul class="small text-muted mb-2">
+                                        <li>Desenvolvimento de Plugins e Custom Workflow Activities em C#</li>
+                                        <li>Criação de Web Resources (JavaScript, HTML, CSS) para formulários interativos</li>
+                                        <li>Automação de processos com Workflows, Business Rules e Power Automate</li>
+                                        <li>Desenvolvimento de Model-Driven Apps no Dataverse</li>
+                                    </ul>
+                                </div>
+                                <div class="d-flex flex-wrap gap-2">
+                                    @foreach (var tech in new[] { "Dynamics 365", "C#", "JavaScript", "Power Automate", "Dataverse" })
+                                    {
+                                        <span class="badge" style="background-color: #EFF6FF; color: #1E40AF; border: 1px solid #BFDBFE;">@tech</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Experience 4: Cogna -->
+                    <div class="mb-5 position-relative">
+                        <div class="position-absolute start-0 translate-middle-x bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" 
+                             style="width: 48px; height: 48px; margin-left: -2rem;">
+                            <span class="fw-bold">4</span>
+                        </div>
+                        <div class="card border-0 shadow-sm hover-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
+                                    <div>
+                                        <h5 class="card-title fw-bold mb-1">Desenvolvedor II</h5>
+                                        <p class="text-primary fw-semibold mb-1">Cogna Educação</p>
+                                        <p class="text-muted small mb-0">Valinhos, SP • Cliente: Projetos Internos (Holding)</p>
+                                    </div>
+                                    <span class="badge bg-light text-muted">mar/2022 - out/2023</span>
+                                </div>
+                                <p class="card-text text-muted small mt-2">
+                                    Desenvolvimento de soluções de automação e engajamento de clientes com Power Platform integrada ao 
+                                    Dynamics 365. Criação de soluções omnichannel para otimização da comunicação. Evolução de 
+                                    Desenvolvedor I para Desenvolvedor II durante o período.
+                                </p>
+                                <div class="mt-2">
+                                    <p class="small fw-semibold mb-1">Principais Responsabilidades:</p>
+                                    <ul class="small text-muted mb-2">
+                                        <li>Desenvolvimento de soluções low-code com Power Apps</li>
+                                        <li>Criação de fluxos de automação com Power Automate</li>
+                                        <li>Desenvolvimento e integração de Chatbot com Power Virtual Agents</li>
+                                        <li>Criação de dashboards analíticos em Power BI</li>
+                                        <li>Integração de sistemas com Dataverse</li>
+                                    </ul>
+                                </div>
+                                <div class="d-flex flex-wrap gap-2">
+                                    @foreach (var tech in new[] { "Power Apps", "Power Automate", "Power Virtual Agents", "Dynamics 365", "Power BI" })
+                                    {
+                                        <span class="badge" style="background-color: #EFF6FF; color: #1E40AF; border: 1px solid #BFDBFE;">@tech</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Experience 5: RBA Digital -->
+                    <div class="mb-4 position-relative">
+                        <div class="position-absolute start-0 translate-middle-x bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" 
+                             style="width: 48px; height: 48px; margin-left: -2rem;">
+                            <span class="fw-bold">5</span>
+                        </div>
+                        <div class="card border-0 shadow-sm hover-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
+                                    <div>
+                                        <h5 class="card-title fw-bold mb-1">Desenvolvedor Junior</h5>
+                                        <p class="text-primary fw-semibold mb-1">RBA Digital</p>
+                                        <p class="text-muted small mb-0">Joinville, SC • Cliente: Consultoria para Diversos Clientes</p>
+                                    </div>
+                                    <span class="badge bg-light text-muted">out/2020 - fev/2022</span>
+                                </div>
+                                <p class="card-text text-muted small mt-2">
+                                    Primeira imersão profissional no ecossistema Dynamics 365. Participação em todo o ciclo de vida do 
+                                    desenvolvimento de software, desde levantamento de requisitos até implementação e testes. Evolução 
+                                    de Estagiário para Desenvolvedor Júnior durante o período.
+                                </p>
+                                <div class="mt-2">
+                                    <p class="small fw-semibold mb-1">Principais Responsabilidades:</p>
+                                    <ul class="small text-muted mb-2">
+                                        <li>Modelagem de processos de negócio com diagramas UML</li>
+                                        <li>Desenvolvimento de aplicações Power Apps (Canvas e Model-Driven)</li>
+                                        <li>Criação de fluxos automatizados com Power Automate</li>
+                                        <li>Atuação em ambiente ágil (Scrum e Kanban)</li>
+                                        <li>Aprendizado de fundamentos da Power Platform e Dynamics 365</li>
+                                    </ul>
+                                </div>
+                                <div class="d-flex flex-wrap gap-2">
+                                    @foreach (var tech in new[] { "Power Apps", "Power Automate", "Dataverse", "UML", "Scrum", "Dynamics 365" })
+                                    {
+                                        <span class="badge" style="background-color: #EFF6FF; color: #1E40AF; border: 1px solid #BFDBFE;">@tech</span>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Download CV -->
+                <div class="text-center mt-5">
+                    <div class="d-flex gap-3 justify-content-center flex-wrap">
+                        <a href="/resume.html" target="_blank" class="btn btn-primary btn-lg px-5">
+                            <i class="bi bi-download"></i> Download Currículo Completo
+                        </a>
+                        <a href="https://www.linkedin.com/in/emanuel-arrudas-macedo/" target="_blank" class="btn btn-outline-primary btn-lg px-5">
+                            <i class="bi bi-linkedin"></i> Ver no LinkedIn
+                        </a>
+                    </div>
+                    <p class="text-muted small mt-3">
+                        Currículo formatado com experiências detalhadas, certificações e competências
+                    </p>
                 </div>
             </div>
         </div>
@@ -276,8 +583,13 @@
 <section id="contact" class="py-5 text-white" style="background: linear-gradient(135deg, #3B82F6 0%, #6366F1 100%);">
     <div class="container py-5">
         <h2 class="text-center display-5 fw-bold mb-4">Entre em Contato</h2>
-        <p class="text-center lead mb-5">
+        <p class="text-center lead mb-4">
             Vamos conversar sobre projetos, ideias ou parcerias? Escolha o melhor canal!
+        </p>
+        <p class="text-center mb-5">
+            <span class="badge bg-success bg-opacity-25 text-white px-4 py-2 fs-6">
+                <i class="bi bi-star-fill"></i> Preferência: WhatsApp para respostas mais rápidas
+            </span>
         </p>
 
         <div class="row g-4 justify-content-center">
@@ -293,6 +605,9 @@
                         <a href="https://wa.me/5538988601152" target="_blank" class="btn btn-success w-100">
                             <i class="bi bi-whatsapp"></i> Iniciar Conversa
                         </a>
+                        <p class="text-success small mt-2 mb-0">
+                            <i class="bi bi-check-circle-fill"></i> Canal preferencial
+                        </p>
                     </div>
                 </div>
             </div>
