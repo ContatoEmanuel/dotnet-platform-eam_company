@@ -1,5 +1,8 @@
+@using EAM.Core.Application.DTOs.Project
 @{
     ViewData["Title"] = "Início";
+    var featuredProjects = ViewBag.FeaturedProjects as IEnumerable<ProjectDto> ?? Enumerable.Empty<ProjectDto>();
+    var otherProjects = ViewBag.OtherProjects as IEnumerable<ProjectDto> ?? Enumerable.Empty<ProjectDto>();
 }
 
 <!-- Hero Section -->
@@ -176,165 +179,76 @@
         </p>
 
         <div class="row g-4">
-            <!-- Featured Project -->
-            <div class="col-md-6">
-                <div class="card h-100 border-0 shadow-lg hover-card">
-                    <div class="position-relative" style="background: linear-gradient(135deg, #DBEAFE 0%, #E0E7FF 100%); height: 200px; display: flex; align-items: center; justify-content: center;">
-                        <div class="position-absolute top-0 end-0 m-3">
-                            <span class="badge bg-warning text-dark">⭐ Destaque</span>
+            @foreach (var project in featuredProjects)
+            {
+                <div class="col-md-6">
+                    <div class="card h-100 border-0 shadow-lg hover-card">
+                        <div class="position-relative" style="background: linear-gradient(135deg, #DBEAFE 0%, #E0E7FF 100%); height: 200px; display: flex; align-items: center; justify-content: center;">
+                            <div class="position-absolute top-0 end-0 m-3">
+                                <span class="badge bg-warning text-dark">⭐ Destaque</span>
+                            </div>
+                            <div class="fs-1">@project.IconEmoji</div>
                         </div>
-                        <div class="fs-1">💬</div>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold">Dynamics 365 WhatsApp Connector</h5>
-                        <p class="card-text text-muted small">
-                            Extensão Chrome para integração automática entre WhatsApp Web e Microsoft Dynamics 365. 
-                            Permite criar contatos e leads diretamente do WhatsApp com autenticação Azure AD.
-                        </p>
-                        <div class="d-flex flex-wrap gap-2 mb-3">
-                            @foreach (var tech in new[] { "TypeScript", "Chrome Extension", "Azure AD", "Dynamics 365", "React" })
-                            {
-                                <span class="badge bg-primary-subtle text-primary">@tech</span>
-                            }
-                        </div>
-                        <a href="https://github.com/ContatoEmanuel/react-extension-dynamics_whatsapp" target="_blank" class="btn btn-dark btn-sm">
-                            <i class="bi bi-github"></i> Ver no GitHub
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- .NET Platform Project -->
-            <div class="col-md-6">
-                <div class="card h-100 border-0 shadow-lg hover-card">
-                    <div class="position-relative" style="background: linear-gradient(135deg, #DBEAFE 0%, #E0E7FF 100%); height: 200px; display: flex; align-items: center; justify-content: center;">
-                        <div class="position-absolute top-0 end-0 m-3">
-                            <span class="badge bg-warning text-dark">⭐ Destaque</span>
-                        </div>
-                        <div class="fs-1">🏗️</div>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold">.NET Platform EAM Company</h5>
-                        <p class="card-text text-muted small">
-                            Plataforma corporativa multi-projeto com Clean Architecture, Docker, API REST, site institucional MVC e portal Blazor. Configuração completa para ambientes Linux.
-                        </p>
-                        <div class="d-flex flex-wrap gap-2 mb-3">
-                            @foreach (var tech in new[] { "ASP.NET Core", "Docker", "TypeScript", "Blazor", "Clean Architecture" })
-                            {
-                                <span class="badge bg-primary-subtle text-primary">@tech</span>
-                            }
-                        </div>
-                        <a href="https://github.com/ContatoEmanuel/dotnet-platform-eam_company" target="_blank" class="btn btn-dark btn-sm">
-                            <i class="bi bi-github"></i> Ver no GitHub
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Other Project -->
-            <div class="col-md-6">
-                <div class="card h-100 border-0 shadow-lg hover-card">
-                    <div class="position-relative" style="background: linear-gradient(135deg, #DBEAFE 0%, #E0E7FF 100%); height: 200px; display: flex; align-items: center; justify-content: center;">
-                        <div class="position-absolute top-0 end-0 m-3">
-                            <span class="badge bg-warning text-dark">⭐ Destaque</span>
-                        </div>
-                        <div class="fs-1">🌐</div>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title fw-bold">React Portfolio Website</h5>
-                        <p class="card-text text-muted small">
-                            Website profissional desenvolvido com React, TypeScript e Tailwind CSS. 
-                            Deploy automatizado na Vercel com domínio customizado e HTTPS.
-                        </p>
-                        <div class="d-flex flex-wrap gap-2 mb-3">
-                            @foreach (var tech in new[] { "React", "TypeScript", "Tailwind CSS", "Vite", "Vercel" })
-                            {
-                                <span class="badge bg-primary-subtle text-primary">@tech</span>
-                            }
-                        </div>
-                        <div class="d-flex gap-2">
-                            <a href="https://eam-company.com.br" target="_blank" class="btn btn-primary btn-sm">
-                                🔗 Ver Projeto
-                            </a>
-                            <a href="https://github.com/ContatoEmanuel/react-front-portfolio" target="_blank" class="btn btn-dark btn-sm">
-                                <i class="bi bi-github"></i> GitHub
-                            </a>
+                        <div class="card-body">
+                            <h5 class="card-title fw-bold">@project.Title</h5>
+                            <p class="card-text text-muted small">
+                                @project.Description
+                            </p>
+                            <div class="d-flex flex-wrap gap-2 mb-3">
+                                @foreach (var tech in project.Technologies)
+                                {
+                                    <span class="badge bg-primary-subtle text-primary">@tech</span>
+                                }
+                            </div>
+                            <div class="d-flex gap-2">
+                                @if (!string.IsNullOrEmpty(project.LiveUrl))
+                                {
+                                    <a href="@project.LiveUrl" target="_blank" class="btn btn-primary btn-sm">
+                                        🔗 Ver Projeto
+                                    </a>
+                                }
+                                @if (!string.IsNullOrEmpty(project.GithubUrl))
+                                {
+                                    <a href="@project.GithubUrl" target="_blank" class="btn btn-dark btn-sm">
+                                        <i class="bi bi-github"></i> @(string.IsNullOrEmpty(project.LiveUrl) ? "Ver no GitHub" : "GitHub")
+                                    </a>
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            }
         </div>
 
         <!-- Outros Projetos -->
         <h3 class="text-center h4 mt-5 mb-4">Outros Projetos</h3>
         <div class="row g-4">
-            <!-- Dynamics 365 Custom Plugins -->
-            <div class="col-md-6 col-lg-3">
-                <div class="card h-100 border-0 shadow hover-card">
-                    <div class="card-body text-center">
-                        <div class="fs-1 mb-3">🔌</div>
-                        <h6 class="card-title fw-bold">Dynamics 365 Custom Plugins</h6>
-                        <p class="card-text small text-muted">
-                            Coleção de plugins customizados para Dynamics 365, incluindo validações complexas, integrações com APIs externas e automações de processos de negócio.
-                        </p>
-                        <div class="d-flex flex-wrap gap-1 justify-content-center mb-2">
-                            <span class="badge bg-secondary-subtle text-secondary small">C# .NET</span>
-                            <span class="badge bg-secondary-subtle text-secondary small">Dynamics 365</span>
+            @foreach (var project in otherProjects)
+            {
+                <div class="col-md-6 col-lg-3">
+                    <div class="card h-100 border-0 shadow hover-card">
+                        <div class="card-body text-center">
+                            <div class="fs-1 mb-3">@project.IconEmoji</div>
+                            <h6 class="card-title fw-bold">@project.Title</h6>
+                            <p class="card-text small text-muted">
+                                @project.Description
+                            </p>
+                            <div class="d-flex flex-wrap gap-1 justify-content-center mb-2">
+                                @foreach (var tech in project.Technologies.Take(2))
+                                {
+                                    <span class="badge bg-secondary-subtle text-secondary small">@tech</span>
+                                }
+                            </div>
+                            @if (!string.IsNullOrEmpty(project.GithubUrl))
+                            {
+                                <a href="@project.GithubUrl" target="_blank" class="btn btn-dark btn-sm mt-2">
+                                    <i class="bi bi-github"></i> GitHub
+                                </a>
+                            }
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <!-- Power Platform Solutions -->
-            <div class="col-md-6 col-lg-3">
-                <div class="card h-100 border-0 shadow hover-card">
-                    <div class="card-body text-center">
-                        <div class="fs-1 mb-3">⚡</div>
-                        <h6 class="card-title fw-bold">Power Platform Solutions</h6>
-                        <p class="card-text small text-muted">
-                            Soluções enterprise desenvolvidas com Power Apps (Canvas e Model-Driven), Power Automate para automação de processos e Power BI para dashboards executivos.
-                        </p>
-                        <div class="d-flex flex-wrap gap-1 justify-content-center mb-2">
-                            <span class="badge bg-secondary-subtle text-secondary small">Power Apps</span>
-                            <span class="badge bg-secondary-subtle text-secondary small">Power Automate</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Azure Integration Services -->
-            <div class="col-md-6 col-lg-3">
-                <div class="card h-100 border-0 shadow hover-card">
-                    <div class="card-body text-center">
-                        <div class="fs-1 mb-3">☁️</div>
-                        <h6 class="card-title fw-bold">Azure Integration Services</h6>
-                        <p class="card-text small text-muted">
-                            Arquitetura de integração utilizando Azure Logic Apps, Azure Functions e Service Bus para orquestração de processos entre Dynamics 365 e sistemas legados.
-                        </p>
-                        <div class="d-flex flex-wrap gap-1 justify-content-center mb-2">
-                            <span class="badge bg-secondary-subtle text-secondary small">Azure Logic Apps</span>
-                            <span class="badge bg-secondary-subtle text-secondary small">Azure Functions</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- CRM Analytics Dashboard -->
-            <div class="col-md-6 col-lg-3">
-                <div class="card h-100 border-0 shadow hover-card">
-                    <div class="card-body text-center">
-                        <div class="fs-1 mb-3">📊</div>
-                        <h6 class="card-title fw-bold">CRM Analytics Dashboard</h6>
-                        <p class="card-text small text-muted">
-                            Dashboard interativo em Power BI conectado ao Dynamics 365 para análise de vendas, pipeline e performance de equipes comerciais em tempo real.
-                        </p>
-                        <div class="d-flex flex-wrap gap-1 justify-content-center mb-2">
-                            <span class="badge bg-secondary-subtle text-secondary small">Power BI</span>
-                            <span class="badge bg-secondary-subtle text-secondary small">DAX</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            }
         </div>
 
         <div class="text-center mt-4">

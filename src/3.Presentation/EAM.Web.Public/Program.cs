@@ -1,6 +1,11 @@
 using EAM.Infra.IoC;
 using Microsoft.AspNetCore.Identity;
 using EAM.Core.Domain.Entities;
+using EAM.Core.Application.Services.Interfaces;
+using EAM.Web.Public.Services;
+using EAM.Web.Public.Data;
+using EAM.Infra.Data.Context;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +14,9 @@ builder.Services.AddControllersWithViews();
 
 // Infrastructure (Database, Repositories, Identity)
 builder.Services.AddInfrastructure(builder.Configuration);
+
+// Application Services
+builder.Services.AddScoped<IProjectService, ProjectService>();
 
 // HttpContextAccessor e SignInManager para autenticação
 builder.Services.AddHttpContextAccessor();
@@ -27,6 +35,27 @@ builder.Services.AddAuthentication(IdentityConstants.ApplicationScheme)
     .AddCookie(IdentityConstants.ExternalScheme);
 
 var app = builder.Build();
+
+// Apply migrations and seed database
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<ApplicationDbContext>();
+        
+        // Apply pending migrations
+        context.Database.Migrate();
+        
+        // Seed database
+        await DbInitializer.SeedProjectsAsync(context);
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred while migrating or seeding the database.");
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

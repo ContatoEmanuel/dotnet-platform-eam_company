@@ -1,13 +1,27 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using EAM.Web.Public.Models;
+using EAM.Core.Application.Services.Interfaces;
 
 namespace EAM.Web.Public.Controllers;
 
 public class HomeController : Controller
 {
-    public IActionResult Index()
+    private readonly IProjectService _projectService;
+
+    public HomeController(IProjectService projectService)
     {
+        _projectService = projectService;
+    }
+
+    public async Task<IActionResult> Index()
+    {
+        var featuredProjects = await _projectService.GetFeaturedProjectsAsync();
+        var otherProjects = await _projectService.GetOtherProjectsAsync();
+
+        ViewBag.FeaturedProjects = featuredProjects;
+        ViewBag.OtherProjects = otherProjects;
+
         return View();
     }
 

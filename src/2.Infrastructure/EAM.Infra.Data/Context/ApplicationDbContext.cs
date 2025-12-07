@@ -13,9 +13,16 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
     }
 
-    // DbSets serão adicionados conforme as entidades forem criadas
-    // public DbSet<Project> Projects => Set<Project>();
+    // DbSets
+    public DbSet<Project> Projects => Set<Project>();
     // public DbSet<Skill> Skills => Set<Skill>();
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        // Suprimir warning de pending model changes (migrations são aplicadas manualmente)
+        optionsBuilder.ConfigureWarnings(warnings =>
+            warnings.Ignore(Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.PendingModelChangesWarning));
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
