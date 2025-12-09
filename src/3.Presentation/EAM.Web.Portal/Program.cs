@@ -1,4 +1,5 @@
 using EAM.Web.Portal.Components;
+using EAM.Web.Portal.Services;
 using EAM.Infra.IoC;
 using Microsoft.AspNetCore.Identity;
 using EAM.Core.Domain.Entities;
@@ -11,6 +12,9 @@ builder.Services.AddRazorComponents()
 
 // Infrastructure (Database, Repositories, Identity)
 builder.Services.AddInfrastructure(builder.Configuration);
+
+// Application Services
+builder.Services.AddScoped<IProductService, ProductService>();
 
 // HttpContextAccessor e SignInManager para autenticação
 builder.Services.AddHttpContextAccessor();

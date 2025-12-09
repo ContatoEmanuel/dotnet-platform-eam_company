@@ -1,5 +1,6 @@
 @page "/"
 @layout PublicLayout
+@inject IProductService ProductService
 
 <PageTitle>EAM - Soluções para Microsoft Dynamics 365</PageTitle>
 
@@ -15,7 +16,7 @@
                         <i class="bi bi-box-seam me-2"></i>
                         Ver Produtos
                     </a>
-                    <a href="/Account/Login" class="btn btn-outline-light btn-lg">
+                    <a href="/Account/Login" class="btn btn-light btn-lg">
                         <i class="bi bi-box-arrow-in-right me-2"></i>
                         Faça Login
                     </a>
@@ -38,65 +39,111 @@
             <p class="section-subtitle">Ferramentas desenvolvidas para otimizar seu Dynamics 365</p>
         </div>
 
-        <div class="row g-4">
-            <!-- WhatsApp Extension -->
-            <div class="col-lg-6">
-                <div class="product-card">
-                    <div class="product-icon">
-                        <i class="bi bi-whatsapp"></i>
-                    </div>
-                    <h3 class="product-title">WhatsApp Extension for Dynamics</h3>
-                    <p class="product-description">
-                        Extensão React que integra WhatsApp diretamente ao Dynamics 365, 
-                        permitindo comunicação instantânea com clientes sem sair do CRM.
-                    </p>
-                    <div class="product-features">
-                        <div class="feature-item">
-                            <i class="bi bi-check-circle-fill text-success"></i>
-                            <span>Integração nativa com Dynamics 365</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="bi bi-check-circle-fill text-success"></i>
-                            <span>Interface React moderna e responsiva</span>
-                        </div>
-                        <div class="feature-item">
-                            <i class="bi bi-check-circle-fill text-success"></i>
-                            <span>Histórico de conversas sincronizado</span>
-                        </div>
-                    </div>
-                    <div class="product-footer">
-                        <a href="https://github.com/ContatoEmanuel/react-extension-dynamics_whatsapp" target="_blank" class="btn btn-outline-primary">
-                            <i class="bi bi-github me-2"></i>
-                            Ver no GitHub
-                        </a>
-                        <a href="#contato" class="btn btn-primary">
-                            <i class="bi bi-gift me-2"></i>
-                            Teste Grátis
-                        </a>
-                    </div>
+        @if (products == null)
+        {
+            <div class="text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Carregando...</span>
                 </div>
             </div>
+        }
+        else
+        {
+            <div class="row g-4">
+                @foreach (var product in products)
+                {
+                    <div class="col-lg-6">
+                        <div class="product-card">
+                            <div class="product-icon">
+                                @if (product.Title.Contains("WhatsApp"))
+                                {
+                                    <i class="bi bi-whatsapp"></i>
+                                }
+                                else
+                                {
+                                    <i class="bi bi-box-seam"></i>
+                                }
+                            </div>
+                            <h3 class="product-title">@product.Title</h3>
+                            <p class="product-description">@product.Description</p>
+                            
+                            @if (!string.IsNullOrEmpty(product.Technologies))
+                            {
+                                <div class="product-features">
+                                    @foreach (var tech in GetTechnologies(product.Technologies))
+                                    {
+                                        <div class="feature-item">
+                                            <i class="bi bi-check-circle-fill text-success"></i>
+                                            <span>@tech</span>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            
+                            <div class="product-footer">
+                                @if (product.Price.HasValue && product.Price.Value > 0)
+                                {
+                                    <span class="product-price">@product.Price.Value.ToString("C")</span>
+                                }
+                                else
+                                {
+                                    <span class="product-price text-success">Grátis</span>
+                                }
+                                <a href="#contato" class="btn btn-primary">
+                                    <i class="bi bi-gift me-2"></i>
+                                    Teste Grátis
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
 
-            <!-- Placeholder for future products -->
-            <div class="col-lg-6">
-                <div class="product-card product-card-soon">
-                    <div class="product-icon">
-                        <i class="bi bi-tools"></i>
+                <!-- Placeholder if no products -->
+                @if (!products.Any())
+                {
+                    <div class="col-lg-6">
+                        <div class="product-card product-card-soon">
+                            <div class="product-icon">
+                                <i class="bi bi-tools"></i>
+                            </div>
+                            <h3 class="product-title">Novos Produtos em Breve</h3>
+                            <p class="product-description">
+                                Estamos desenvolvendo novas extensões e ferramentas para Dynamics 365. 
+                                Fique atento às próximas novidades!
+                            </p>
+                            <div class="coming-soon-badge">
+                                <i class="bi bi-hourglass-split"></i>
+                                <span>Em desenvolvimento</span>
+                            </div>
+                        </div>
                     </div>
-                    <h3 class="product-title">Mais Soluções em Breve</h3>
-                    <p class="product-description">
-                        Estamos desenvolvendo novas extensões e ferramentas para Dynamics 365. 
-                        Fique atento às próximas novidades!
-                    </p>
-                    <div class="coming-soon-badge">
-                        <i class="bi bi-hourglass-split"></i>
-                        <span>Em desenvolvimento</span>
-                    </div>
-                </div>
+                }
             </div>
-        </div>
+        }
     </div>
 </section>
+
+@code {
+    private List<Project>? products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        products = await ProductService.GetProductsForSaleAsync();
+    }
+
+    private List<string> GetTechnologies(string techJson)
+    {
+        try
+        {
+            var techs = System.Text.Json.JsonSerializer.Deserialize<List<string>>(techJson);
+            return techs ?? new List<string>();
+        }
+        catch
+        {
+            return techJson.Split(',').Select(t => t.Trim()).Take(3).ToList();
+        }
+    }
+}
 
 <style>
     /* Hero Section */
@@ -214,6 +261,14 @@
         display: flex;
         gap: 1rem;
         flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .product-price {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #1e293b;
     }
 
     .coming-soon-badge {

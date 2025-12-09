@@ -11,6 +11,8 @@ public class Project
     public string? ThumbnailUrl { get; set; }
     public string IconEmoji { get; set; } = "📦";
     public bool IsFeatured { get; set; }
+    public bool ForSale { get; set; } = false;
+    public decimal? Price { get; set; }
     public int DisplayOrder { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
     public DateTime? UpdatedAt { get; set; }
