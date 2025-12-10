@@ -17,45 +17,81 @@ obj/
 !.vscode/extensions.json
 *.code-workspace
 
-## Security & Secrets (MUITO IMPORTANTE)
+## Security & Secrets (MUITO IMPORTANTE - CONFIDENCIAL)
 appsettings.json
-appsettings.Development.json
-appsettings.Production.json
+appsettings.*.json
+!appsettings.example.json
 secrets.json
 *.pfx
+*.p12
+*.key
+*.pem
 .env
-.env.local
-.env.*.local
-*.example
+.env.*
+!.env.example
 
 ## Docker - Arquivos locais
 docker-compose.override.yml
 docker-compose.*.local.yml
 
-## Database & EF Core
+## Database & EF Core (DADOS SENSÍVEIS)
 *.db
+*.db-shm
+*.db-wal
 *.mdf
 *.ldf
+*.bak
 migration_script.sql
 backup/
+*.sql
+!**/Migrations/*.sql
+!**/Scripts/*.example.sql
 
-## Front-end (Node/NPM - caso use para buildar CSS/Tailwind)
+## Ferramentas temporárias (CONFIDENCIAL)
+temp/
+*.tmp
+*.cache
+
+## Senhas e hashes (CRÍTICO - NUNCA SUBIR)
+**/PasswordHasher/
+hash-*.txt
+password*.txt
+
+## Front-end (Node/NPM)
 node_modules/
 npm-debug.log
 yarn-error.log
+package-lock.json
+yarn.lock
 
 ## Documentation (CONFIDENCIAL - projeto privado)
 docs/
-*.md
-!README.md
+*.private.md
 
 ## Scripts de desenvolvimento (CONFIDENCIAL)
 run-*.sh
+deploy-*.sh
 *.sh
+!install.sh
 docker-dev.sh
+
+## Logs e dados sensíveis
+*.log
+logs/
+*.csv
+*.xlsx
+*.xls
 
 ## OS Files
 .DS_Store
 Thumbs.db
 Desktop.ini
 desktop.ini
+
+## Credenciais e tokens
+**/appsettings.Development.json
+**/appsettings.Production.json
+**/appsettings.Staging.json
+*.credentials
+auth-*.json
+token*.json

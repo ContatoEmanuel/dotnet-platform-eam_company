@@ -42,7 +42,10 @@
                 <label for="password" class="form-label">Senha</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-lock"></i></span>
-                    <InputText @bind-Value="loginModel.Password" type="password" class="form-control" id="password" placeholder="••••••••" />
+                    <InputText @bind-Value="loginModel.Password" type="@passwordInputType" class="form-control" id="password" placeholder="••••••••" />
+                    <button class="btn btn-outline-secondary" type="button" @onclick="TogglePasswordVisibility">
+                        <i class="bi @passwordToggleIcon"></i>
+                    </button>
                 </div>
                 <ValidationMessage For="@(() => loginModel.Password)" class="text-danger" />
             </div>
@@ -174,6 +177,22 @@
 
     private bool isLoading = false;
     private string errorMessage = string.Empty;
+    private string passwordInputType = "password";
+    private string passwordToggleIcon = "bi-eye";
+
+    private void TogglePasswordVisibility()
+    {
+        if (passwordInputType == "password")
+        {
+            passwordInputType = "text";
+            passwordToggleIcon = "bi-eye-slash";
+        }
+        else
+        {
+            passwordInputType = "password";
+            passwordToggleIcon = "bi-eye";
+        }
+    }
 
     protected override async Task OnInitializedAsync()
     {
