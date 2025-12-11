@@ -1,31 +1,459 @@
 @page "/admin/projects"
-@attribute [Microsoft.AspNetCore.Authorization.Authorize]
+@using Microsoft.AspNetCore.Authorization
+@using EAM.Web.Portal.Services
+@attribute [Authorize]
+@inject IProjectApiService ProjectApiService
+@inject NavigationManager Navigation
 
-<PageTitle>Projetos - EAM Solutions</PageTitle>
+<PageTitle>Gerenciar Projetos - EAM Solutions</PageTitle>
 
-<div class="page-header mb-4">
-    <h2 class="mb-1">
-        <i class="bi bi-folder me-2"></i>
-        Projetos
-    </h2>
-    <p class="text-muted mb-0">Gerencie os projetos do portfólio</p>
-</div>
-
-<div class="card">
-    <div class="card-body text-center py-5">
-        <i class="bi bi-hammer" style="font-size: 3rem; color: #94a3b8;"></i>
-        <h4 class="mt-3 mb-2">Em Desenvolvimento</h4>
-        <p class="text-muted">Esta funcionalidade será implementada em breve.</p>
-        <a href="/" class="btn btn-primary mt-3">
-            <i class="bi bi-arrow-left me-2"></i>
-            Voltar ao Dashboard
-        </a>
+<div class="container-fluid py-4">
+    <div class="row mb-4">
+        <div class="col">
+            <h2 class="mb-1">
+                <i class="bi bi-folder me-2"></i>
+                Gerenciar Projetos
+            </h2>
+            <p class="text-muted">Crie, edite e gerencie os projetos do portfólio</p>
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-primary" @onclick="ShowCreateModal">
+                <i class="bi bi-plus-circle me-2"></i>
+                Novo Projeto
+            </button>
+        </div>
     </div>
+
+    @if (!string.IsNullOrEmpty(successMessage))
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle me-2"></i>
+            @successMessage
+            <button type="button" class="btn-close" @onclick="() => successMessage = string.Empty"></button>
+        </div>
+    }
+
+    @if (!string.IsNullOrEmpty(errorMessage))
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="bi bi-exclamation-triangle me-2"></i>
+            @errorMessage
+            <button type="button" class="btn-close" @onclick="() => errorMessage = string.Empty"></button>
+        </div>
+    }
+
+    @if (isLoading)
+    {
+        <div class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Carregando...</span>
+            </div>
+            <p class="text-muted mt-3">Carregando projetos...</p>
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Descrição Curta</th>
+                                <th>Tecnologias</th>
+                                <th>Destaque</th>
+                                <th>À Venda</th>
+                                <th>Status</th>
+                                <th class="text-end">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (projects == null || !projects.Any())
+                            {
+                                <tr>
+                                    <td colspan="7" class="text-center text-muted py-4">
+                                        <i class="bi bi-inbox display-4 d-block mb-3"></i>
+                                        Nenhum projeto encontrado
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                @foreach (var project in projects)
+                                {
+                                    <tr>
+                                        <td>
+                                            <strong>@project.Name</strong>
+                                        </td>
+                                        <td>@project.ShortDescription</td>
+                                        <td>
+                                            @string.Join(", ", project.Technologies.Take(3))
+                                            @if (project.Technologies.Count > 3)
+                                            {
+                                                <span class="text-muted">+@(project.Technologies.Count - 3)</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (project.IsFeatured)
+                                            {
+                                                <span class="badge bg-warning">
+                                                    <i class="bi bi-star-fill me-1"></i>Destaque
+                                                </span>
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (project.ForSale)
+                                            {
+                                                <span class="badge bg-success">
+                                                    <i class="bi bi-cart-check me-1"></i>Sim
+                                                </span>
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (project.IsActive)
+                                            {
+                                                <span class="badge bg-success">Ativo</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-secondary">Inativo</span>
+                                            }
+                                        </td>
+                                        <td class="text-end">
+                                            <button class="btn btn-sm btn-outline-primary me-1" 
+                                                    @onclick="() => ShowEditModal(project)"
+                                                    disabled="@isProcessing">
+                                                <i class="bi bi-pencil"></i>
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger" 
+                                                    @onclick="() => DeleteProject(project.Id)"
+                                                    disabled="@isProcessing">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
 </div>
+
+@if (showModal)
+{
+    <div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        @if (editingProject == null)
+                        {
+                            <text>Novo Projeto</text>
+                        }
+                        else
+                        {
+                            <text>Editar Projeto</text>
+                        }
+                    </h5>
+                    <button type="button" class="btn-close" @onclick="CloseModal"></button>
+                </div>
+                <div class="modal-body">
+                    <EditForm Model="@projectForm" OnValidSubmit="SaveProject">
+                        <DataAnnotationsValidator />
+
+                        <div class="mb-3">
+                            <label class="form-label">Nome</label>
+                            <InputText @bind-Value="projectForm.Name" class="form-control" />
+                            <ValidationMessage For="@(() => projectForm.Name)" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Descrição Curta</label>
+                            <InputTextArea @bind-Value="projectForm.ShortDescription" class="form-control" rows="2" />
+                            <ValidationMessage For="@(() => projectForm.ShortDescription)" />
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Descrição Completa</label>
+                            <InputTextArea @bind-Value="projectForm.Description" class="form-control" rows="4" />
+                            <ValidationMessage For="@(() => projectForm.Description)" />
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">URL da Imagem</label>
+                                <InputText @bind-Value="projectForm.ImageUrl" class="form-control" />
+                                <ValidationMessage For="@(() => projectForm.ImageUrl)" />
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">URL da Thumbnail (opcional)</label>
+                                <InputText @bind-Value="projectForm.ThumbnailUrl" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">URL do Projeto (opcional)</label>
+                                <InputText @bind-Value="projectForm.ProjectUrl" class="form-control" />
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">URL do Repositório (opcional)</label>
+                                <InputText @bind-Value="projectForm.RepositoryUrl" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Tecnologias (separadas por vírgula)</label>
+                            <InputText @bind-Value="technologiesInput" class="form-control" />
+                            <small class="text-muted">Ex: C#, .NET, React, TypeScript</small>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3 mb-3">
+                                <label class="form-label">Ordem de Exibição</label>
+                                <InputNumber @bind-Value="projectForm.DisplayOrder" class="form-control" />
+                            </div>
+
+                            <div class="col-md-3 mb-3 form-check mt-4">
+                                <InputCheckbox @bind-Value="projectForm.IsFeatured" class="form-check-input" id="isFeatured" />
+                                <label class="form-check-label" for="isFeatured">
+                                    Projeto em Destaque
+                                </label>
+                            </div>
+
+                            <div class="col-md-3 mb-3 form-check mt-4">
+                                <InputCheckbox @bind-Value="projectForm.ForSale" class="form-check-input" id="forSale" />
+                                <label class="form-check-label" for="forSale">
+                                    À Venda
+                                </label>
+                            </div>
+
+                            <div class="col-md-3 mb-3 form-check mt-4">
+                                <InputCheckbox @bind-Value="projectForm.IsActive" class="form-check-input" id="isActive" />
+                                <label class="form-check-label" for="isActive">
+                                    Ativo
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" @onclick="CloseModal" disabled="@isProcessing">
+                                Cancelar
+                            </button>
+                            <button type="submit" class="btn btn-primary" disabled="@isProcessing">
+                                @if (isProcessing)
+                                {
+                                    <span class="spinner-border spinner-border-sm me-2" role="status"></span>
+                                }
+                                Salvar
+                            </button>
+                        </div>
+                    </EditForm>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 
 <style>
-    .page-header h2 {
-        color: #1e293b;
+    .table thead th {
+        background-color: #f8f9fa;
+        border-bottom: 2px solid #dee2e6;
         font-weight: 600;
+        color: #495057;
+    }
+
+    .table tbody tr:hover {
+        background-color: #f8f9fa;
+    }
+
+    .card {
+        border: none;
+        border-radius: 8px;
+    }
+
+    .badge {
+        padding: 0.35em 0.65em;
+        font-weight: 500;
+    }
+
+    .btn-sm {
+        font-size: 0.875rem;
+        padding: 0.25rem 0.5rem;
+    }
+
+    .modal.show {
+        display: block;
     }
 </style>
+
+@code {
+    private List<ProjectDto>? projects;
+    private bool isLoading = true;
+    private bool isProcessing = false;
+    private string errorMessage = string.Empty;
+    private string successMessage = string.Empty;
+
+    private bool showModal = false;
+    private ProjectDto? editingProject = null;
+    private ProjectCreateDto projectForm = new();
+    private string technologiesInput = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadProjects();
+    }
+
+    private async Task LoadProjects()
+    {
+        isLoading = true;
+        errorMessage = string.Empty;
+
+        try
+        {
+            projects = await ProjectApiService.GetAllProjectsAsync();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = "Erro ao carregar projetos. Tente novamente.";
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private void ShowCreateModal()
+    {
+        editingProject = null;
+        projectForm = new ProjectCreateDto { IsActive = true, DisplayOrder = 0 };
+        technologiesInput = string.Empty;
+        showModal = true;
+    }
+
+    private void ShowEditModal(ProjectDto project)
+    {
+        editingProject = project;
+        projectForm = new ProjectCreateDto
+        {
+            Name = project.Name,
+            Description = project.Description,
+            ShortDescription = project.ShortDescription,
+            ImageUrl = project.ImageUrl,
+            ThumbnailUrl = project.ThumbnailUrl,
+            ProjectUrl = project.ProjectUrl,
+            RepositoryUrl = project.RepositoryUrl,
+            Technologies = new List<string>(project.Technologies),
+            IsFeatured = project.IsFeatured,
+            ForSale = project.ForSale,
+            DisplayOrder = project.DisplayOrder,
+            IsActive = project.IsActive
+        };
+        technologiesInput = string.Join(", ", project.Technologies);
+        showModal = true;
+    }
+
+    private void CloseModal()
+    {
+        showModal = false;
+        editingProject = null;
+        projectForm = new();
+        technologiesInput = string.Empty;
+    }
+
+    private async Task SaveProject()
+    {
+        isProcessing = true;
+        errorMessage = string.Empty;
+        successMessage = string.Empty;
+
+        try
+        {
+            // Parse technologies
+            projectForm.Technologies = technologiesInput
+                .Split(',')
+                .Select(t => t.Trim())
+                .Where(t => !string.IsNullOrEmpty(t))
+                .ToList();
+
+            if (editingProject == null)
+            {
+                // Create
+                var created = await ProjectApiService.CreateProjectAsync(projectForm);
+                if (created != null)
+                {
+                    successMessage = "Projeto criado com sucesso!";
+                    await LoadProjects();
+                    CloseModal();
+                }
+                else
+                {
+                    errorMessage = "Erro ao criar projeto.";
+                }
+            }
+            else
+            {
+                // Update
+                var updated = await ProjectApiService.UpdateProjectAsync(editingProject.Id, projectForm);
+                if (updated != null)
+                {
+                    successMessage = "Projeto atualizado com sucesso!";
+                    await LoadProjects();
+                    CloseModal();
+                }
+                else
+                {
+                    errorMessage = "Erro ao atualizar projeto.";
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = "Erro ao salvar projeto. Tente novamente.";
+        }
+        finally
+        {
+            isProcessing = false;
+        }
+    }
+
+    private async Task DeleteProject(int id)
+    {
+        if (!await JSRuntime.InvokeAsync<bool>("confirm", "Tem certeza que deseja excluir este projeto?"))
+            return;
+
+        isProcessing = true;
+        errorMessage = string.Empty;
+        successMessage = string.Empty;
+
+        try
+        {
+            var success = await ProjectApiService.DeleteProjectAsync(id);
+            if (success)
+            {
+                successMessage = "Projeto excluído com sucesso!";
+                await LoadProjects();
+            }
+            else
+            {
+                errorMessage = "Erro ao excluir projeto.";
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = "Erro ao excluir projeto. Tente novamente.";
+        }
+        finally
+        {
+            isProcessing = false;
+        }
+    }
+}
+
+@inject IJSRuntime JSRuntime

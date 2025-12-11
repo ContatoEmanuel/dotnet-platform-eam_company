@@ -1,35 +1,36 @@
 namespace EAM.Web.Portal.Services;
 
-using EAM.Core.Domain.Entities;
-using EAM.Infra.Data.Context;
-using Microsoft.EntityFrameworkCore;
-
 public interface IProductService
 {
-    Task<List<Project>> GetProductsForSaleAsync();
-    Task<Project?> GetProductByIdAsync(int id);
+    Task<List<ProjectDto>> GetProductsForSaleAsync();
+    Task<ProjectDto?> GetProductByIdAsync(int id);
 }
 
 public class ProductService : IProductService
 {
-    private readonly ApplicationDbContext _context;
+    private readonly IProjectApiService _projectApiService;
 
-    public ProductService(ApplicationDbContext context)
+    public ProductService(IProjectApiService projectApiService)
     {
-        _context = context;
+        _projectApiService = projectApiService;
     }
 
-    public async Task<List<Project>> GetProductsForSaleAsync()
+    public async Task<List<ProjectDto>> GetProductsForSaleAsync()
     {
-        return await _context.Projects
+        var allProjects = await _projectApiService.GetAllProjectsAsync();
+        return allProjects
             .Where(p => p.IsActive && p.ForSale)
             .OrderBy(p => p.DisplayOrder)
-            .ToListAsync();
+            .ToList();
     }
 
-    public async Task<Project?> GetProductByIdAsync(int id)
+    public async Task<ProjectDto?> GetProductByIdAsync(int id)
     {
-        return await _context.Projects
-            .FirstOrDefaultAsync(p => p.Id == id && p.IsActive && p.ForSale);
+        var project = await _projectApiService.GetProjectByIdAsync(id);
+        if (project != null && project.IsActive && project.ForSale)
+        {
+            return project;
+        }
+        return null;
     }
 }

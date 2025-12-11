@@ -28,11 +28,14 @@ builder.Services.AddHttpClient<IUserApiService, UserApiService>(client =>
     client.DefaultRequestHeaders.Add("Accept", "application/json");
 });
 
-builder.Services.AddHttpClient<IProductService, ProductService>(client =>
+builder.Services.AddHttpClient<IProjectApiService, ProjectApiService>(client =>
 {
     client.BaseAddress = new Uri(apiBaseUrl);
     client.DefaultRequestHeaders.Add("Accept", "application/json");
 });
+
+// ProductService agora depende de ProjectApiService
+builder.Services.AddScoped<IProductService, ProductService>();
 
 // HttpContextAccessor para autenticação
 builder.Services.AddHttpContextAccessor();
