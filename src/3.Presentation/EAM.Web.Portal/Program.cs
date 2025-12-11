@@ -15,6 +15,13 @@ builder.Services.AddInfrastructure(builder.Configuration);
 
 // HttpClient para consumir API
 var apiBaseUrl = builder.Configuration["ApiSettings:BaseUrl"] ?? "http://eam-api:8080";
+
+builder.Services.AddHttpClient<IAuthApiService, AuthApiService>(client =>
+{
+    client.BaseAddress = new Uri(apiBaseUrl);
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
+});
+
 builder.Services.AddHttpClient<IUserApiService, UserApiService>(client =>
 {
     client.BaseAddress = new Uri(apiBaseUrl);

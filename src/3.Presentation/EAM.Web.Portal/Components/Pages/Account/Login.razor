@@ -1,6 +1,8 @@
 @page "/Account/Login"
+@using EAM.Web.Portal.Services
 @using Microsoft.AspNetCore.Identity
 @using EAM.Core.Domain.Entities
+@inject IAuthApiService AuthApiService
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 @inject NavigationManager Navigation
@@ -194,29 +196,38 @@
 
         try
         {
-            var user = await UserManager.FindByEmailAsync(loginModel.Email);
-            if (user == null)
+            // Autenticar via API
+            var apiResult = await AuthApiService.LoginAsync(
+                loginModel.Email, 
+                loginModel.Password, 
+                loginModel.RememberMe
+            );
+
+            if (apiResult == null || !apiResult.Success)
             {
-                errorMessage = "E-mail ou senha inválidos.";
+                errorMessage = apiResult?.Message ?? "E-mail ou senha inválidos.";
                 isLoading = false;
                 return;
             }
 
-            var result = await SignInManager.PasswordSignInAsync(
-                user.UserName!, 
-                loginModel.Password, 
-                loginModel.RememberMe, 
-                lockoutOnFailure: false
-            );
+            // Criar usuário local se não existir (para manter sessão do Blazor)
+            var user = await UserManager.FindByEmailAsync(loginModel.Email);
+            if (user == null)
+            {
+                user = new ApplicationUser
+                {
+                    UserName = loginModel.Email,
+                    Email = loginModel.Email,
+                    EmailConfirmed = true
+                };
+                await UserManager.CreateAsync(user);
+            }
 
-            if (result.Succeeded)
-            {
-                Navigation.NavigateTo("/admin", forceLoad: true);
-            }
-            else
-            {
-                errorMessage = "E-mail ou senha inválidos.";
-            }
+            // Fazer login local no Blazor (mantém sessão)
+            await SignInManager.SignInAsync(user, isPersistent: loginModel.RememberMe);
+
+            // Redirecionar para admin
+            Navigation.NavigateTo("/admin", forceLoad: true);
         }
         catch (Exception ex)
         {

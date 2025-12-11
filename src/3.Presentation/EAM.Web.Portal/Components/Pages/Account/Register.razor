@@ -1,7 +1,9 @@
 @page "/Account/Register"
 @using Microsoft.AspNetCore.Identity
 @using EAM.Core.Domain.Entities
+@using EAM.Web.Portal.Services
 @using System.ComponentModel.DataAnnotations
+@inject IAuthApiService AuthApiService
 @inject UserManager<ApplicationUser> UserManager
 @inject SignInManager<ApplicationUser> SignInManager
 @inject NavigationManager Navigation
@@ -285,16 +287,17 @@
                 return;
             }
 
-            // Verificar se o e-mail já existe
-            var existingUser = await UserManager.FindByEmailAsync(registerModel.Email);
-            if (existingUser != null)
+            // Registrar via API
+            var apiResult = await AuthApiService.RegisterAsync(registerModel.Email, registerModel.Password);
+
+            if (apiResult == null || !apiResult.Success)
             {
-                errorMessage = "Este e-mail já está cadastrado.";
+                errorMessage = apiResult?.Message ?? "Erro ao criar conta.";
                 isLoading = false;
                 return;
             }
 
-            // Criar novo usuário
+            // Criar usuário local para manter sessão do Blazor
             var user = new ApplicationUser
             {
                 UserName = registerModel.Email,
@@ -302,18 +305,19 @@
                 EmailConfirmed = true
             };
 
-            var result = await UserManager.CreateAsync(user, registerModel.Password);
-
-            if (result.Succeeded)
+            var existingUser = await UserManager.FindByEmailAsync(registerModel.Email);
+            if (existingUser == null)
             {
-                // Fazer login automático
-                await SignInManager.SignInAsync(user, isPersistent: false);
-                Navigation.NavigateTo("/admin", forceLoad: true);
+                await UserManager.CreateAsync(user);
             }
             else
             {
-                errorMessage = string.Join(", ", result.Errors.Select(e => e.Description));
+                user = existingUser;
             }
+
+            // Fazer login automático
+            await SignInManager.SignInAsync(user, isPersistent: false);
+            Navigation.NavigateTo("/admin", forceLoad: true);
         }
         catch (Exception ex)
         {
