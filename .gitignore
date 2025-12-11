@@ -64,9 +64,10 @@ yarn-error.log
 package-lock.json
 yarn.lock
 
-## Documentation (CONFIDENCIAL - projeto privado)
-docs/internal/
+## Documentation (CONFIDENCIAL - projeto privado - NUNCA SUBIR)
+docs/
 *.private.md
+*.confidential.md
 
 ## Scripts de desenvolvimento (CONFIDENCIAL)
 run-*.sh
