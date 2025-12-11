@@ -1,0 +1,347 @@
+@page "/Account/Register"
+@using Microsoft.AspNetCore.Identity
+@using EAM.Core.Domain.Entities
+@using System.ComponentModel.DataAnnotations
+@inject UserManager<ApplicationUser> UserManager
+@inject SignInManager<ApplicationUser> SignInManager
+@inject NavigationManager Navigation
+@layout EmptyLayout
+
+<PageTitle>Criar Conta - EAM Solutions</PageTitle>
+
+<div class="login-container">
+    <div class="login-card">
+        <div class="login-header">
+            <div class="logo-circle">
+                <span class="logo-text">E</span>
+            </div>
+            <h2 class="login-title">Criar Nova Conta</h2>
+            <p class="login-subtitle">Preencha os dados para criar sua conta</p>
+        </div>
+
+        <EditForm Model="@registerModel" OnValidSubmit="HandleRegister" FormName="registerForm">
+            <DataAnnotationsValidator />
+            
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <div class="alert alert-danger" role="alert">
+                    <i class="bi bi-exclamation-triangle me-2"></i>
+                    @errorMessage
+                </div>
+            }
+
+            @if (!string.IsNullOrEmpty(successMessage))
+            {
+                <div class="alert alert-success" role="alert">
+                    <i class="bi bi-check-circle me-2"></i>
+                    @successMessage
+                </div>
+            }
+
+            <div class="mb-3">
+                <label for="fullName" class="form-label">Nome Completo</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                    <InputText @bind-Value="registerModel.FullName" class="form-control" id="fullName" placeholder="Seu nome completo" />
+                </div>
+                <ValidationMessage For="@(() => registerModel.FullName)" class="text-danger" />
+            </div>
+
+            <div class="mb-3">
+                <label for="email" class="form-label">E-mail</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                    <InputText @bind-Value="registerModel.Email" class="form-control" id="email" placeholder="seu@email.com" />
+                </div>
+                <ValidationMessage For="@(() => registerModel.Email)" class="text-danger" />
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Senha</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                    <InputText @bind-Value="registerModel.Password" type="@passwordInputType" class="form-control" id="password" placeholder="••••••••" />
+                    <button class="btn btn-outline-secondary" type="button" @onclick="TogglePasswordVisibility">
+                        <i class="bi @passwordToggleIcon"></i>
+                    </button>
+                </div>
+                <ValidationMessage For="@(() => registerModel.Password)" class="text-danger" />
+                <small class="text-muted">Mínimo 6 caracteres, incluindo maiúscula, minúscula e número</small>
+            </div>
+
+            <div class="mb-3">
+                <label for="confirmPassword" class="form-label">Confirmar Senha</label>
+                <div class="input-group">
+                    <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+                    <InputText @bind-Value="registerModel.ConfirmPassword" type="@confirmPasswordInputType" class="form-control" id="confirmPassword" placeholder="••••••••" />
+                    <button class="btn btn-outline-secondary" type="button" @onclick="ToggleConfirmPasswordVisibility">
+                        <i class="bi @confirmPasswordToggleIcon"></i>
+                    </button>
+                </div>
+                <ValidationMessage For="@(() => registerModel.ConfirmPassword)" class="text-danger" />
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100" disabled="@isLoading">
+                @if (isLoading)
+                {
+                    <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                    <text>Criando conta...</text>
+                }
+                else
+                {
+                    <i class="bi bi-person-plus me-2"></i>
+                    <text>Criar Conta</text>
+                }
+            </button>
+        </EditForm>
+
+        <div class="login-footer">
+            <p class="text-muted mb-3">
+                <small>Já tem uma conta? <a href="/Account/Login">Fazer login</a></small>
+            </p>
+            <a href="/" class="btn btn-outline-secondary w-100">
+                <i class="bi bi-arrow-left me-2"></i>
+                Voltar para Página Inicial
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .login-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+        padding: 1rem;
+    }
+
+    .login-card {
+        background: white;
+        border-radius: 16px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        padding: 2.5rem;
+        width: 100%;
+        max-width: 480px;
+    }
+
+    .login-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .logo-circle {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+        box-shadow: 0 8px 16px rgba(30, 64, 175, 0.3);
+    }
+
+    .logo-text {
+        color: white;
+        font-size: 2rem;
+        font-weight: bold;
+    }
+
+    .login-title {
+        color: #1e3a8a;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        font-size: 1.75rem;
+    }
+
+    .login-subtitle {
+        color: #64748b;
+        margin-bottom: 0;
+        font-size: 0.95rem;
+    }
+
+    .form-label {
+        font-weight: 500;
+        color: #334155;
+        margin-bottom: 0.5rem;
+    }
+
+    .input-group-text {
+        background-color: #f8fafc;
+        border-right: none;
+        color: #64748b;
+    }
+
+    .form-control {
+        border-left: none;
+    }
+
+    .form-control:focus {
+        box-shadow: none;
+        border-color: #1e40af;
+    }
+
+    .input-group:focus-within .input-group-text {
+        border-color: #1e40af;
+        color: #1e40af;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+        border: none;
+        padding: 0.75rem;
+        font-weight: 500;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 16px rgba(30, 64, 175, 0.3);
+    }
+
+    .btn-outline-secondary {
+        border-color: #e2e8f0;
+        color: #64748b;
+    }
+
+    .btn-outline-secondary:hover {
+        background-color: #f8fafc;
+        border-color: #cbd5e1;
+        color: #475569;
+    }
+
+    .login-footer {
+        margin-top: 2rem;
+        text-align: center;
+    }
+
+    .login-footer a {
+        color: #1e40af;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .login-footer a:hover {
+        text-decoration: underline;
+    }
+
+    .alert {
+        border-radius: 8px;
+        border: none;
+    }
+
+    .alert-danger {
+        background-color: #fef2f2;
+        color: #dc2626;
+    }
+
+    .alert-success {
+        background-color: #f0fdf4;
+        color: #16a34a;
+    }
+</style>
+
+@code {
+    [SupplyParameterFromForm]
+    private RegisterModel registerModel { get; set; } = new();
+
+    private bool isLoading = false;
+    private string errorMessage = string.Empty;
+    private string successMessage = string.Empty;
+    private string passwordInputType = "password";
+    private string passwordToggleIcon = "bi-eye";
+    private string confirmPasswordInputType = "password";
+    private string confirmPasswordToggleIcon = "bi-eye";
+
+    private void TogglePasswordVisibility()
+    {
+        passwordInputType = passwordInputType == "password" ? "text" : "password";
+        passwordToggleIcon = passwordInputType == "password" ? "bi-eye" : "bi-eye-slash";
+        StateHasChanged();
+    }
+
+    private void ToggleConfirmPasswordVisibility()
+    {
+        confirmPasswordInputType = confirmPasswordInputType == "password" ? "text" : "password";
+        confirmPasswordToggleIcon = confirmPasswordInputType == "password" ? "bi-eye" : "bi-eye-slash";
+        StateHasChanged();
+    }
+
+    private async Task HandleRegister()
+    {
+        isLoading = true;
+        errorMessage = string.Empty;
+        successMessage = string.Empty;
+
+        try
+        {
+            // Verificar se as senhas coincidem
+            if (registerModel.Password != registerModel.ConfirmPassword)
+            {
+                errorMessage = "As senhas não coincidem.";
+                isLoading = false;
+                return;
+            }
+
+            // Verificar se o e-mail já existe
+            var existingUser = await UserManager.FindByEmailAsync(registerModel.Email);
+            if (existingUser != null)
+            {
+                errorMessage = "Este e-mail já está cadastrado.";
+                isLoading = false;
+                return;
+            }
+
+            // Criar novo usuário
+            var user = new ApplicationUser
+            {
+                UserName = registerModel.Email,
+                Email = registerModel.Email,
+                EmailConfirmed = true
+            };
+
+            var result = await UserManager.CreateAsync(user, registerModel.Password);
+
+            if (result.Succeeded)
+            {
+                // Fazer login automático
+                await SignInManager.SignInAsync(user, isPersistent: false);
+                Navigation.NavigateTo("/admin", forceLoad: true);
+            }
+            else
+            {
+                errorMessage = string.Join(", ", result.Errors.Select(e => e.Description));
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = "Erro ao criar conta. Tente novamente.";
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private class RegisterModel
+    {
+        [Required(ErrorMessage = "Nome completo é obrigatório")]
+        [MinLength(3, ErrorMessage = "Nome deve ter no mínimo 3 caracteres")]
+        public string FullName { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "E-mail é obrigatório")]
+        [EmailAddress(ErrorMessage = "E-mail inválido")]
+        public string Email { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Senha é obrigatória")]
+        [MinLength(6, ErrorMessage = "Senha deve ter no mínimo 6 caracteres")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$", 
+            ErrorMessage = "Senha deve conter letras maiúsculas, minúsculas e números")]
+        public string Password { get; set; } = string.Empty;
+
+        [Required(ErrorMessage = "Confirme sua senha")]
+        public string ConfirmPassword { get; set; } = string.Empty;
+    }
+}

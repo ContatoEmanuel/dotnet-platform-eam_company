@@ -18,7 +18,7 @@
             <p class="login-subtitle">Entre com suas credenciais</p>
         </div>
 
-        <EditForm Model="@loginModel" OnValidSubmit="HandleLogin" @formname="loginForm">
+        <EditForm Model="@loginModel" OnValidSubmit="HandleLogin" FormName="loginForm">
             <DataAnnotationsValidator />
             
             @if (!string.IsNullOrEmpty(errorMessage))
@@ -77,7 +77,7 @@
                 Voltar para Página Inicial
             </a>
             <p class="text-muted mb-0">
-                <small>Não tem acesso? Contate o administrador do sistema.</small>
+                <small>Não tem uma conta? <a href="/Account/Register">Criar conta</a></small>
             </p>
         </div>
     </div>
@@ -172,6 +172,7 @@
 </style>
 
 @code {
+    [SupplyParameterFromForm]
     private LoginModel loginModel { get; set; } = new();
 
     private bool isLoading = false;
@@ -184,22 +185,6 @@
         passwordInputType = passwordInputType == "password" ? "text" : "password";
         passwordToggleIcon = passwordInputType == "password" ? "bi-eye" : "bi-eye-slash";
         StateHasChanged();
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        // Criar usuário padrão se não existir
-        var adminUser = await UserManager.FindByEmailAsync("admin@eam.com");
-        if (adminUser == null)
-        {
-            adminUser = new ApplicationUser
-            {
-                UserName = "admin@eam.com",
-                Email = "admin@eam.com",
-                EmailConfirmed = true
-            };
-            await UserManager.CreateAsync(adminUser, "Admin@123");
-        }
     }
 
     private async Task HandleLogin()
@@ -226,7 +211,7 @@
 
             if (result.Succeeded)
             {
-                Navigation.NavigateTo("/", forceLoad: true);
+                Navigation.NavigateTo("/admin", forceLoad: true);
             }
             else
             {
