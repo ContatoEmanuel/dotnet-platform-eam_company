@@ -7,18 +7,21 @@ services:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=${DB_PASSWORD}
       - MSSQL_PID=Developer
+      - MSSQL_AGENT_ENABLED=false
+      - MSSQL_MEMORY_LIMIT_MB=2048
     ports:
       - "1433:1433"
     volumes:
       - sqlserver-data:/var/opt/mssql
     networks:
       - eam-network
+    restart: always
     healthcheck:
       test: /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "$${SA_PASSWORD}" -C -Q "SELECT 1" || exit 1
-      interval: 10s
-      timeout: 3s
-      retries: 10
-      start_period: 10s
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
 
   # API - ASP.NET Core Web API
   api:
@@ -29,7 +32,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
       - ASPNETCORE_URLS=http://+:8080
-      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=${DB_NAME};User Id=sa;Password=${DB_PASSWORD};TrustServerCertificate=True;MultipleActiveResultSets=true
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=${DB_NAME};User Id=sa;Password=${DB_PASSWORD};TrustServerCertificate=True;MultipleActiveResultSets=true;ConnectRetryCount=5;ConnectRetryInterval=3
       - Jwt__Key=${JWT_SECRET_KEY}
       - Jwt__Issuer=${JWT_ISSUER}
       - Jwt__Audience=${JWT_AUDIENCE}
@@ -41,7 +44,13 @@ services:
         condition: service_healthy
     networks:
       - eam-network
-    restart: unless-stopped
+    restart: always
+    healthcheck:
+      test: curl --fail http://localhost:8080/health || exit 1
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 40s
 
   # Site Institucional - ASP.NET Core MVC
   web-public:
@@ -52,15 +61,18 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
       - ASPNETCORE_URLS=http://+:8080
-      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=${DB_NAME};User Id=sa;Password=${DB_PASSWORD};TrustServerCertificate=True;MultipleActiveResultSets=true
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=${DB_NAME};User Id=sa;Password=${DB_PASSWORD};TrustServerCertificate=True;MultipleActiveResultSets=true;ConnectRetryCount=5;ConnectRetryInterval=3
       - ApiSettings__BaseUrl=http://api:8080
     ports:
       - "5001:8080"
     depends_on:
-      - api
+      sqlserver:
+        condition: service_healthy
+      api:
+        condition: service_started
     networks:
       - eam-network
-    restart: unless-stopped
+    restart: always
 
   # Portal do Cliente - Blazor Server
   web-portal:
@@ -71,15 +83,18 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=${ASPNETCORE_ENVIRONMENT}
       - ASPNETCORE_URLS=http://+:8080
-      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=${DB_NAME};User Id=sa;Password=${DB_PASSWORD};TrustServerCertificate=True;MultipleActiveResultSets=true
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=${DB_NAME};User Id=sa;Password=${DB_PASSWORD};TrustServerCertificate=True;MultipleActiveResultSets=true;ConnectRetryCount=5;ConnectRetryInterval=3
       - ApiSettings__BaseUrl=http://api:8080
     ports:
       - "5002:8080"
     depends_on:
-      - api
+      sqlserver:
+        condition: service_healthy
+      api:
+        condition: service_started
     networks:
       - eam-network
-    restart: unless-stopped
+    restart: always
 
 networks:
   eam-network:

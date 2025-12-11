@@ -65,7 +65,7 @@ package-lock.json
 yarn.lock
 
 ## Documentation (CONFIDENCIAL - projeto privado)
-docs/
+docs/internal/
 *.private.md
 
 ## Scripts de desenvolvimento (CONFIDENCIAL)
