@@ -1,10 +1,8 @@
 @page "/admin/users"
-@using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Authorization
-@using EAM.Core.Domain.Entities
+@using EAM.Web.Portal.Services
 @attribute [Authorize]
-@inject UserManager<ApplicationUser> UserManager
-@inject RoleManager<IdentityRole> RoleManager
+@inject IUserApiService UserApiService
 @inject NavigationManager Navigation
 
 <PageTitle>Gerenciar Usuários - EAM Solutions</PageTitle>
@@ -118,7 +116,7 @@
                                             {
                                                 <button class="btn btn-sm btn-outline-warning" 
                                                         @onclick="() => RemoveAdminRole(user)"
-                                                        disabled="@isProcessing">
+                                                        disabled="@(isProcessing || adminCount <= 1)">
                                                     <i class="bi bi-arrow-down-circle me-1"></i>
                                                     Remover Admin
                                                 </button>
@@ -203,7 +201,7 @@
 </style>
 
 @code {
-    private List<ApplicationUser>? users;
+    private List<UserDto>? users;
     private Dictionary<string, List<string>> userRoles = new();
     private bool isLoading = true;
     private bool isProcessing = false;
@@ -214,20 +212,6 @@
     protected override async Task OnInitializedAsync()
     {
         await LoadUsers();
-        await EnsureRolesExist();
-    }
-
-    private async Task EnsureRolesExist()
-    {
-        if (!await RoleManager.RoleExistsAsync("Admin"))
-        {
-            await RoleManager.CreateAsync(new IdentityRole("Admin"));
-        }
-
-        if (!await RoleManager.RoleExistsAsync("User"))
-        {
-            await RoleManager.CreateAsync(new IdentityRole("User"));
-        }
     }
 
     private async Task LoadUsers()
@@ -237,16 +221,15 @@
 
         try
         {
-            users = UserManager.Users.ToList();
+            users = await UserApiService.GetAllUsersAsync();
             userRoles.Clear();
             adminCount = 0;
 
             foreach (var user in users)
             {
-                var roles = await UserManager.GetRolesAsync(user);
-                userRoles[user.Id] = roles.ToList();
+                userRoles[user.Id] = user.Roles;
 
-                if (roles.Contains("Admin"))
+                if (user.Roles.Contains("Admin"))
                 {
                     adminCount++;
                 }
@@ -262,7 +245,7 @@
         }
     }
 
-    private async Task AddAdminRole(ApplicationUser user)
+    private async Task AddAdminRole(UserDto user)
     {
         isProcessing = true;
         errorMessage = string.Empty;
@@ -270,12 +253,13 @@
 
         try
         {
-            var result = await UserManager.AddToRoleAsync(user, "Admin");
+            var success = await UserApiService.AddAdminRoleAsync(user.Id);
 
-            if (result.Succeeded)
+            if (success)
             {
                 successMessage = $"Usuário {user.Email} promovido a Administrador com sucesso!";
                 await LoadUsers();
+                StateHasChanged();
             }
             else
             {
@@ -284,7 +268,7 @@
         }
         catch (Exception ex)
         {
-            errorMessage = "Erro ao promover usuário. Tente novamente.";
+            errorMessage = $"Erro ao promover usuário: {ex.Message}";
         }
         finally
         {
@@ -292,7 +276,7 @@
         }
     }
 
-    private async Task RemoveAdminRole(ApplicationUser user)
+    private async Task RemoveAdminRole(UserDto user)
     {
         isProcessing = true;
         errorMessage = string.Empty;
@@ -308,12 +292,13 @@
                 return;
             }
 
-            var result = await UserManager.RemoveFromRoleAsync(user, "Admin");
+            var success = await UserApiService.RemoveAdminRoleAsync(user.Id);
 
-            if (result.Succeeded)
+            if (success)
             {
                 successMessage = $"Privilégios de administrador removidos de {user.Email}.";
                 await LoadUsers();
+                StateHasChanged();
             }
             else
             {

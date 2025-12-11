@@ -10,14 +10,29 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-// Infrastructure (Database, Repositories, Identity)
+// Infrastructure (Database, Repositories, Identity) - Apenas para autenticação local
 builder.Services.AddInfrastructure(builder.Configuration);
 
-// Application Services
-builder.Services.AddScoped<IProductService, ProductService>();
+// HttpClient para consumir API
+var apiBaseUrl = builder.Configuration["ApiSettings:BaseUrl"] ?? "http://eam-api:8080";
+builder.Services.AddHttpClient<IUserApiService, UserApiService>(client =>
+{
+    client.BaseAddress = new Uri(apiBaseUrl);
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
+});
 
-// HttpContextAccessor e SignInManager para autenticação
+builder.Services.AddHttpClient<IProductService, ProductService>(client =>
+{
+    client.BaseAddress = new Uri(apiBaseUrl);
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
+});
+
+// HttpContextAccessor para autenticação
 builder.Services.AddHttpContextAccessor();
+
+// Identity Managers (apenas para autenticação local do portal)
+builder.Services.AddScoped<UserManager<ApplicationUser>>();
+builder.Services.AddScoped<RoleManager<IdentityRole>>();
 builder.Services.AddScoped<SignInManager<ApplicationUser>>();
 
 // Adiciona autenticação via cookies

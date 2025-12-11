@@ -19,7 +19,9 @@ builder.Services.AddInfrastructure(builder.Configuration);
 // HttpContextAccessor necessário para SignInManager
 builder.Services.AddHttpContextAccessor();
 
-// Adicionar SignInManager para AuthService
+// Identity Managers
+builder.Services.AddScoped<Microsoft.AspNetCore.Identity.UserManager<EAM.Core.Domain.Entities.ApplicationUser>>();
+builder.Services.AddScoped<Microsoft.AspNetCore.Identity.RoleManager<Microsoft.AspNetCore.Identity.IdentityRole>>();
 builder.Services.AddScoped<Microsoft.AspNetCore.Identity.SignInManager<EAM.Core.Domain.Entities.ApplicationUser>>();
 
 // Application Services
