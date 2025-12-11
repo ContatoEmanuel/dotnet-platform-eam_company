@@ -19,6 +19,7 @@
         </div>
 
         <EditForm Model="@loginModel" OnValidSubmit="HandleLogin" FormName="loginForm">
+            <AntiforgeryToken />
             <DataAnnotationsValidator />
             
             @if (!string.IsNullOrEmpty(errorMessage))
