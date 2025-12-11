@@ -182,16 +182,9 @@
 
     private void TogglePasswordVisibility()
     {
-        if (passwordInputType == "password")
-        {
-            passwordInputType = "text";
-            passwordToggleIcon = "bi-eye-slash";
-        }
-        else
-        {
-            passwordInputType = "password";
-            passwordToggleIcon = "bi-eye";
-        }
+        passwordInputType = passwordInputType == "password" ? "text" : "password";
+        passwordToggleIcon = passwordInputType == "password" ? "bi-eye" : "bi-eye-slash";
+        StateHasChanged();
     }
 
     protected override async Task OnInitializedAsync()
@@ -226,7 +219,7 @@
             }
 
             var result = await SignInManager.PasswordSignInAsync(
-                user, 
+                user.UserName!, 
                 loginModel.Password, 
                 loginModel.RememberMe, 
                 lockoutOnFailure: false
