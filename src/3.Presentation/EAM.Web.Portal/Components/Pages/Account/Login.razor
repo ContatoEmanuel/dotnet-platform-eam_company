@@ -173,7 +173,7 @@
 </style>
 
 @code {
-    [SupplyParameterFromForm]
+    [SupplyParameterFromForm(FormName = "loginForm")]
     private LoginModel loginModel { get; set; } = new();
 
     private bool isLoading = false;
