@@ -18,8 +18,7 @@
             <p class="login-subtitle">Entre com suas credenciais</p>
         </div>
 
-        <EditForm Model="@loginModel" OnValidSubmit="HandleLogin" FormName="loginForm">
-            <AntiforgeryToken />
+        <EditForm Model="@loginModel" OnValidSubmit="HandleLogin">
             <DataAnnotationsValidator />
             
             @if (!string.IsNullOrEmpty(errorMessage))
@@ -173,7 +172,6 @@
 </style>
 
 @code {
-    [SupplyParameterFromForm(FormName = "loginForm")]
     private LoginModel loginModel { get; set; } = new();
 
     private bool isLoading = false;
