@@ -19,40 +19,97 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/EAM.Web.Public.styles.css" asp-append-version="true" />
 </head>
-<body>
+<body class="bg-gray-50">
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden transition-opacity duration-300"></div>
+    
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-white fixed-top shadow-sm navbar-blur">
-        <div class="container">
-            <a class="navbar-brand fw-bold fs-4" asp-controller="Home" asp-action="Index">
-                <span class="text-primary">EAM Company</span>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link smooth-scroll" href="#hero">Início</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link smooth-scroll" href="#about">Sobre</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link smooth-scroll" href="#projects">Projetos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link smooth-scroll" href="#experience">Experiência</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link smooth-scroll" href="#contact">Contato</a>
-                    </li>
-                    <li class="nav-item ms-lg-3">
-                        <a class="btn btn-primary text-white btn-sm px-3" href="http://localhost:5002" target="_blank">
-                            Portal do Cliente
-                        </a>
-                    </li>
-                </ul>
+    <nav class="fixed top-0 left-0 right-0 bg-white shadow-md z-50 backdrop-blur-sm bg-opacity-95">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <a asp-controller="Home" asp-action="Index" class="text-2xl font-bold text-blue-600 hover:text-blue-700 transition-colors">
+                    EAM Company
+                </a>
+
+                <!-- Desktop Navigation - Hidden on mobile -->
+                <div class="hidden lg:flex items-center space-x-1">
+                    <a class="nav-link-desktop" href="#hero">Início</a>
+                    <a class="nav-link-desktop" href="#about">Sobre</a>
+                    <a class="nav-link-desktop" href="#projects">Projetos</a>
+                    <a class="nav-link-desktop" href="#experience">Experiência</a>
+                    <a asp-controller="Blog" asp-action="Index" class="nav-link-desktop">Blog</a>
+                    <a class="nav-link-desktop" href="#contact">Contato</a>
+                    <a href="http://localhost:5002" target="_blank" 
+                       class="ml-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium">
+                        Portal do Cliente
+                    </a>
+                </div>
+
+                <!-- Hamburger Button - Visible on mobile -->
+                <button id="hamburger-btn" type="button" class="lg:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-600 transition-colors duration-200">
+                    <span class="sr-only">Abrir menu</span>
+                    <!-- Icon when menu is closed -->
+                    <svg id="menu-icon-closed" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                    <!-- Icon when menu is open -->
+                    <svg id="menu-icon-open" class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu - Slide from right -->
+        <div id="mobile-menu" class="fixed top-0 right-0 bottom-0 w-80 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out z-50 lg:hidden">
+            <div class="flex flex-col h-full">
+                <!-- Mobile Menu Header -->
+                <div class="flex items-center justify-between p-4 border-b">
+                    <span class="text-xl font-bold text-blue-600">Menu</span>
+                    <button id="close-menu-btn" type="button" class="p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-gray-100">
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+                
+                <!-- Mobile Menu Items -->
+                <div class="flex-1 overflow-y-auto py-4">
+                    <a class="mobile-menu-item" href="#hero">
+                        <i class="bi bi-house-door"></i>
+                        <span>Início</span>
+                    </a>
+                    <a class="mobile-menu-item" href="#about">
+                        <i class="bi bi-person"></i>
+                        <span>Sobre</span>
+                    </a>
+                    <a class="mobile-menu-item" href="#projects">
+                        <i class="bi bi-briefcase"></i>
+                        <span>Projetos</span>
+                    </a>
+                    <a class="mobile-menu-item" href="#experience">
+                        <i class="bi bi-award"></i>
+                        <span>Experiência</span>
+                    </a>
+                    <a asp-controller="Blog" asp-action="Index" class="mobile-menu-item">
+                        <i class="bi bi-journal-text"></i>
+                        <span>Blog</span>
+                    </a>
+                    <a class="mobile-menu-item" href="#contact">
+                        <i class="bi bi-envelope"></i>
+                        <span>Contato</span>
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Footer -->
+                <div class="p-4 border-t">
+                    <a href="http://localhost:5002" target="_blank" 
+                       class="block w-full text-center px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium">
+                        <i class="bi bi-box-arrow-up-right me-2"></i>
+                        Portal do Cliente
+                    </a>
+                </div>
             </div>
         </div>
     </nav>

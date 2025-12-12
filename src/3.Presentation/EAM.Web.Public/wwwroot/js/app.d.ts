@@ -11,6 +11,7 @@ declare class EAMPublicSite {
     private smoothScrollLinks;
     private activeNavigation;
     private animationObserver;
+    private mobileMenu;
     /**
      * Inicializa a aplicação
      */

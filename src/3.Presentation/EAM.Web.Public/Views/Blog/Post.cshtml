@@ -1,0 +1,186 @@
+@{
+    ViewData["Title"] = "Post";
+    var post = ViewBag.Post;
+}
+
+<!-- Post Header -->
+<section class="pt-24 pb-8 bg-gradient-to-br from-blue-600 to-indigo-700">
+    <div class="container mx-auto px-4 max-w-4xl">
+        <!-- Category Badge -->
+        <div class="mb-4">
+            <span class="px-3 py-1 bg-white bg-opacity-20 text-white text-sm font-semibold rounded-full">
+                @post.Category
+            </span>
+        </div>
+        
+        <!-- Title -->
+        <h1 class="text-5xl font-bold text-white mb-6 animate-fade-in">
+            @post.Title
+        </h1>
+        
+        <!-- Meta Info -->
+        <div class="flex flex-wrap items-center text-blue-100 gap-4 mb-6">
+            <div class="flex items-center">
+                <div class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center text-white font-bold mr-3">
+                    EM
+                </div>
+                <span class="font-medium">@post.Author</span>
+            </div>
+            <span>•</span>
+            <div class="flex items-center">
+                <i class="bi bi-calendar3 mr-2"></i>
+                <span>@post.Date.ToString("dd/MM/yyyy")</span>
+            </div>
+            <span>•</span>
+            <div class="flex items-center">
+                <i class="bi bi-clock mr-2"></i>
+                <span>@post.ReadTime de leitura</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Image -->
+<section class="bg-white border-b">
+    <div class="container mx-auto px-4 max-w-4xl -mt-8">
+        <div class="aspect-video rounded-lg overflow-hidden shadow-2xl">
+            <img src="@post.ImageUrl" alt="@post.Title" class="w-full h-full object-cover">
+        </div>
+    </div>
+</section>
+
+<!-- Post Content -->
+<article class="py-16 bg-white">
+    <div class="container mx-auto px-4 max-w-3xl">
+        <div class="prose prose-lg max-w-none">
+            @Html.Raw(post.Content)
+        </div>
+        
+        <!-- Tags -->
+        <div class="mt-12 pt-8 border-t border-gray-200">
+            <div class="flex flex-wrap gap-2">
+                <span class="text-sm font-semibold text-gray-700 mr-2">Tags:</span>
+                <span class="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full hover:bg-blue-100 hover:text-blue-700 cursor-pointer transition-colors">
+                    @post.Category
+                </span>
+                <span class="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full hover:bg-blue-100 hover:text-blue-700 cursor-pointer transition-colors">
+                    Microsoft
+                </span>
+                <span class="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full hover:bg-blue-100 hover:text-blue-700 cursor-pointer transition-colors">
+                    Tutorial
+                </span>
+            </div>
+        </div>
+        
+        <!-- Share Buttons -->
+        <div class="mt-8 flex items-center justify-between flex-wrap gap-4">
+            <span class="text-sm font-semibold text-gray-700">Compartilhar:</span>
+            <div class="flex gap-3">
+                <button class="w-10 h-10 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors flex items-center justify-center" title="Compartilhar no LinkedIn">
+                    <i class="bi bi-linkedin"></i>
+                </button>
+                <button class="w-10 h-10 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors flex items-center justify-center" title="Compartilhar no Twitter">
+                    <i class="bi bi-twitter"></i>
+                </button>
+                <button class="w-10 h-10 bg-green-600 text-white rounded-full hover:bg-green-700 transition-colors flex items-center justify-center" title="Compartilhar no WhatsApp">
+                    <i class="bi bi-whatsapp"></i>
+                </button>
+                <button class="w-10 h-10 bg-gray-600 text-white rounded-full hover:bg-gray-700 transition-colors flex items-center justify-center" title="Copiar link">
+                    <i class="bi bi-link-45deg"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</article>
+
+<!-- Author Card -->
+<section class="py-12 bg-gray-50 border-t">
+    <div class="container mx-auto px-4 max-w-3xl">
+        <div class="bg-white rounded-lg shadow-md p-8">
+            <div class="flex items-start gap-6">
+                <div class="flex-shrink-0">
+                    <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                        EM
+                    </div>
+                </div>
+                <div class="flex-1">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-2">Emanuel A Macêdo</h3>
+                    <p class="text-gray-600 mb-4">
+                        Senior Software Engineer especializado em Dynamics 365, Power Platform, .NET C# e Azure.
+                        Apaixonado por compartilhar conhecimento e ajudar desenvolvedores a crescerem em suas carreiras.
+                    </p>
+                    <div class="flex gap-3">
+                        <a href="https://www.linkedin.com/in/emanuel-a-macedo/" target="_blank" 
+                           class="text-blue-600 hover:text-blue-700 transition-colors">
+                            <i class="bi bi-linkedin text-xl"></i>
+                        </a>
+                        <a href="https://github.com/ContatoEmanuel" target="_blank" 
+                           class="text-gray-900 hover:text-gray-700 transition-colors">
+                            <i class="bi bi-github text-xl"></i>
+                        </a>
+                        <a href="https://www.youtube.com/channel/UCQbZlecPawGlx0F6Oo56LDw" target="_blank" 
+                           class="text-red-600 hover:text-red-700 transition-colors">
+                            <i class="bi bi-youtube text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Navigation -->
+<section class="py-8 bg-white border-t">
+    <div class="container mx-auto px-4 max-w-3xl">
+        <div class="flex justify-between items-center">
+            <a asp-controller="Blog" asp-action="Index" 
+               class="text-blue-600 hover:text-blue-700 font-medium inline-flex items-center group">
+                <i class="bi bi-arrow-left mr-2 group-hover:-translate-x-1 transition-transform"></i>
+                Voltar para o blog
+            </a>
+            <a href="#" class="text-blue-600 hover:text-blue-700 font-medium inline-flex items-center group">
+                Próximo artigo
+                <i class="bi bi-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Add some custom styles for the prose content -->
+<style>
+    .prose h2 {
+        font-size: 1.875rem;
+        font-weight: 700;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: #1f2937;
+    }
+    
+    .prose p {
+        margin-bottom: 1.5rem;
+        line-height: 1.75;
+        color: #4b5563;
+    }
+    
+    .prose ul, .prose ol {
+        margin-bottom: 1.5rem;
+        padding-left: 1.5rem;
+    }
+    
+    .prose li {
+        margin-bottom: 0.5rem;
+        color: #4b5563;
+    }
+    
+    .prose strong {
+        font-weight: 600;
+        color: #1f2937;
+    }
+    
+    .prose .lead {
+        font-size: 1.25rem;
+        font-weight: 400;
+        color: #6b7280;
+        margin-bottom: 2rem;
+    }
+</style>

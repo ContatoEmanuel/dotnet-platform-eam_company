@@ -8,6 +8,7 @@ import { BackToTopButton } from './components/BackToTopButton';
 import { SmoothScrollLinks } from './components/SmoothScrollLinks';
 import { ActiveNavigation } from './components/ActiveNavigation';
 import { AnimationObserver } from './components/AnimationObserver';
+import { MobileMenu } from './components/MobileMenu';
 
 /**
  * Classe principal da aplicação
@@ -17,6 +18,7 @@ class EAMPublicSite {
     private smoothScrollLinks: SmoothScrollLinks | null = null;
     private activeNavigation: ActiveNavigation | null = null;
     private animationObserver: AnimationObserver | null = null;
+    private mobileMenu: MobileMenu | null = null;
 
     /**
      * Inicializa a aplicação
@@ -55,6 +57,9 @@ class EAMPublicSite {
             this.animationObserver.observe();
             console.log(`✅ Animation Observer inicializado (${this.animationObserver.getElementsCount()} elementos)`);
 
+            // Inicializa Mobile Menu
+            this.mobileMenu = new MobileMenu();
+
             console.log('✨ EAM Public Site inicializado com sucesso!');
         } catch (error) {
             console.error('❌ Erro ao inicializar aplicação:', error);
@@ -68,6 +73,7 @@ class EAMPublicSite {
         this.backToTopButton?.destroy();
         this.activeNavigation?.disconnect();
         this.animationObserver?.disconnect();
+        this.mobileMenu?.destroy();
         
         console.log('🔄 Componentes destruídos');
     }
