@@ -1,0 +1,1 @@
+{"version":3,"file":"ReconnectModal.d.ts","sourceRoot":"","sources":["../../TypeScript/ReconnectModal.ts"],"names":[],"mappings":"AAAA;;;GAGG;AAGH,OAAO,CAAC,MAAM,CAAC;IACX,UAAU,MAAM;QACZ,MAAM,EAAE;YACJ,SAAS,IAAI,OAAO,CAAC,OAAO,CAAC,CAAC;YAC9B,aAAa,IAAI,OAAO,CAAC,OAAO,CAAC,CAAC;SACrC,CAAC;KACL;CACJ;AA2FD,OAAO,EAAE,CAAC"}

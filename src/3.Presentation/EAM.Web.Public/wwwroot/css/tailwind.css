@@ -1,0 +1,85 @@
+/* Tailwind CSS directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles */
+@layer base {
+  html {
+    @apply scroll-smooth;
+  }
+  
+  body {
+    @apply m-0 p-0 bg-gray-50 text-gray-900 font-sans;
+  }
+}
+
+@layer components {
+  /* Top Bar */
+  .top-bar {
+    @apply text-sm bg-gradient-to-r from-primary-500 to-primary-600;
+  }
+  
+  /* Navigation */
+  .navbar-brand {
+    @apply text-2xl font-semibold;
+  }
+  
+  .navbar-nav .nav-link {
+    @apply font-medium px-4 py-2 transition-colors duration-300;
+  }
+  
+  .navbar-nav .nav-link:hover {
+    @apply text-primary-500;
+  }
+  
+  /* Hero Section */
+  .hero-section {
+    @apply bg-gradient-to-br from-primary-500 to-primary-600 relative overflow-hidden;
+  }
+  
+  /* Cards */
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-xl hover:scale-105;
+  }
+  
+  /* Buttons */
+  .btn-primary {
+    @apply bg-primary-500 hover:bg-primary-600 text-white font-medium px-6 py-3 rounded-lg transition-all duration-300;
+  }
+  
+  .btn-outline-primary {
+    @apply border-2 border-primary-500 text-primary-500 hover:bg-primary-500 hover:text-white font-medium px-6 py-3 rounded-lg transition-all duration-300;
+  }
+}
+
+@layer utilities {
+  /* Animations */
+  .animate-fade-in {
+    animation: fadeIn 1s ease-in;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+}
