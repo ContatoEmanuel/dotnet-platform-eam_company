@@ -1,31 +1,375 @@
 @page "/admin/leads"
-@attribute [Microsoft.AspNetCore.Authorization.Authorize]
+@using Microsoft.AspNetCore.Authorization
+@using EAM.Web.Portal.Services
+@using EAM.Core.Application.DTOs.Lead
+@attribute [Authorize]
+@inject ILeadApiService LeadApiService
+@inject IJSRuntime JSRuntime
+@inject NavigationManager Navigation
 
-<PageTitle>Leads - EAM Solutions</PageTitle>
+<PageTitle>Gerenciar Leads - EAM Solutions</PageTitle>
 
-<div class="page-header mb-4">
-    <h2 class="mb-1">
-        <i class="bi bi-person-lines-fill me-2"></i>
-        Leads
-    </h2>
-    <p class="text-muted mb-0">Gerencie os contatos recebidos</p>
-</div>
-
-<div class="card">
-    <div class="card-body text-center py-5">
-        <i class="bi bi-hammer" style="font-size: 3rem; color: #94a3b8;"></i>
-        <h4 class="mt-3 mb-2">Em Desenvolvimento</h4>
-        <p class="text-muted">Esta funcionalidade será implementada em breve.</p>
-        <a href="/" class="btn btn-primary mt-3">
-            <i class="bi bi-arrow-left me-2"></i>
-            Voltar ao Dashboard
-        </a>
+<div class="container-fluid py-4">
+    <div class="row mb-4">
+        <div class="col">
+            <h2 class="mb-1">
+                <i class="bi bi-person-lines-fill me-2"></i>
+                Gerenciar Leads
+            </h2>
+            <p class="text-muted">Gerencie os contatos recebidos através do formulário</p>
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-outline-secondary" @onclick="LoadLeads">
+                <i class="bi bi-arrow-clockwise me-2"></i>
+                Atualizar
+            </button>
+        </div>
     </div>
+
+    @if (isLoading)
+    {
+        <div class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Carregando...</span>
+            </div>
+            <p class="mt-3 text-muted">Carregando leads...</p>
+        </div>
+    }
+    else
+    {
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <!-- Filtros -->
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" placeholder="🔍 Buscar por nome ou email..." 
+                               @bind="searchTerm" @bind:event="oninput" />
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select" @bind="filterContacted">
+                            <option value="all">Todos os Leads</option>
+                            <option value="notContacted">Não Contatados</option>
+                            <option value="contacted">Contatados</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3 text-end">
+                        <span class="badge bg-info fs-6">Total: @FilteredLeads.Count()</span>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Email</th>
+                                <th>Telefone</th>
+                                <th>Empresa</th>
+                                <th>Assunto</th>
+                                <th>Data</th>
+                                <th>Status</th>
+                                <th class="text-end">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (!FilteredLeads.Any())
+                            {
+                                <tr>
+                                    <td colspan="8" class="text-center text-muted py-4">
+                                        <i class="bi bi-inbox display-4 d-block mb-3"></i>
+                                        Nenhum lead encontrado
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                @foreach (var lead in FilteredLeads)
+                                {
+                                    <tr class="@(lead.IsContacted ? "table-light" : "")">
+                                        <td>
+                                            <strong>@lead.FullName</strong>
+                                        </td>
+                                        <td>
+                                            <a href="mailto:@lead.Email" class="text-decoration-none">
+                                                <i class="bi bi-envelope me-1"></i>@lead.Email
+                                            </a>
+                                        </td>
+                                        <td>
+                                            @if (!string.IsNullOrEmpty(lead.Phone))
+                                            {
+                                                <a href="tel:@lead.Phone" class="text-decoration-none">
+                                                    <i class="bi bi-telephone me-1"></i>@lead.Phone
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <span class="text-muted">-</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            @(string.IsNullOrEmpty(lead.Company) ? "-" : lead.Company)
+                                        </td>
+                                        <td>
+                                            @(string.IsNullOrEmpty(lead.Subject) ? "-" : lead.Subject)
+                                        </td>
+                                        <td>
+                                            <small>@lead.CreatedAt.ToString("dd/MM/yyyy HH:mm")</small>
+                                        </td>
+                                        <td>
+                                            @if (lead.IsContacted)
+                                            {
+                                                <span class="badge bg-success">
+                                                    <i class="bi bi-check-circle me-1"></i>Contatado
+                                                </span>
+                                                @if (lead.ContactedAt.HasValue)
+                                                {
+                                                    <br />
+                                                    <small class="text-muted">@lead.ContactedAt.Value.ToString("dd/MM/yyyy")</small>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-warning">
+                                                    <i class="bi bi-clock me-1"></i>Pendente
+                                                </span>
+                                            }
+                                        </td>
+                                        <td class="text-end">
+                                            <button class="btn btn-sm btn-info me-1" 
+                                                    @onclick="() => ShowLeadDetails(lead)"
+                                                    title="Ver detalhes">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                            @if (!lead.IsContacted)
+                                            {
+                                                <button class="btn btn-sm btn-success me-1" 
+                                                        @onclick="() => MarkAsContacted(lead.Id)"
+                                                        title="Marcar como contatado">
+                                                    <i class="bi bi-check"></i>
+                                                </button>
+                                            }
+                                            <button class="btn btn-sm btn-danger" 
+                                                    @onclick="() => DeleteLead(lead.Id)"
+                                                    title="Excluir">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
 </div>
 
-<style>
-    .page-header h2 {
-        color: #1e293b;
-        font-weight: 600;
+<!-- Modal de Detalhes -->
+@if (showDetailsModal && selectedLead != null)
+{
+    <div class="modal fade show d-block" tabindex="-1" style="background-color: rgba(0,0,0,0.5);">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="bi bi-person-lines-fill me-2"></i>
+                        Detalhes do Lead
+                    </h5>
+                    <button type="button" class="btn-close" @onclick="CloseDetailsModal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Nome Completo</label>
+                            <p>@selectedLead.FullName</p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Email</label>
+                            <p>
+                                <a href="mailto:@selectedLead.Email">@selectedLead.Email</a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Telefone</label>
+                            <p>@(string.IsNullOrEmpty(selectedLead.Phone) ? "-" : selectedLead.Phone)</p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Empresa</label>
+                            <p>@(string.IsNullOrEmpty(selectedLead.Company) ? "-" : selectedLead.Company)</p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label class="form-label fw-bold">Assunto</label>
+                            <p>@(string.IsNullOrEmpty(selectedLead.Subject) ? "-" : selectedLead.Subject)</p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label class="form-label fw-bold">Mensagem</label>
+                            <p class="border p-3 rounded" style="white-space: pre-wrap;">@selectedLead.Message</p>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Data de Contato</label>
+                            <p>@selectedLead.CreatedAt.ToString("dd/MM/yyyy HH:mm")</p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Status</label>
+                            <p>
+                                @if (selectedLead.IsContacted)
+                                {
+                                    <span class="badge bg-success">
+                                        <i class="bi bi-check-circle me-1"></i>Contatado
+                                    </span>
+                                    @if (selectedLead.ContactedAt.HasValue)
+                                    {
+                                        <br />
+                                        <small class="text-muted">em @selectedLead.ContactedAt.Value.ToString("dd/MM/yyyy HH:mm")</small>
+                                    }
+                                }
+                                else
+                                {
+                                    <span class="badge bg-warning">
+                                        <i class="bi bi-clock me-1"></i>Pendente
+                                    </span>
+                                }
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    @if (!selectedLead.IsContacted)
+                    {
+                        <button type="button" class="btn btn-success" @onclick="() => MarkAsContacted(selectedLead.Id)">
+                            <i class="bi bi-check-circle me-2"></i>
+                            Marcar como Contatado
+                        </button>
+                    }
+                    <button type="button" class="btn btn-secondary" @onclick="CloseDetailsModal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    private List<LeadDto> leads = new();
+    private LeadDto? selectedLead;
+    private bool isLoading = true;
+    private bool showDetailsModal = false;
+    private string searchTerm = string.Empty;
+    private string filterContacted = "all";
+
+    private IEnumerable<LeadDto> FilteredLeads
+    {
+        get
+        {
+            var filtered = leads.AsEnumerable();
+
+            // Filtro de busca
+            if (!string.IsNullOrWhiteSpace(searchTerm))
+            {
+                filtered = filtered.Where(l =>
+                    l.FullName.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                    l.Email.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
+                    (l.Company != null && l.Company.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+                );
+            }
+
+            // Filtro de status
+            filtered = filterContacted switch
+            {
+                "contacted" => filtered.Where(l => l.IsContacted),
+                "notContacted" => filtered.Where(l => !l.IsContacted),
+                _ => filtered
+            };
+
+            return filtered;
+        }
     }
-</style>
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadLeads();
+    }
+
+    private async Task LoadLeads()
+    {
+        isLoading = true;
+        try
+        {
+            leads = await LeadApiService.GetAllLeadsAsync();
+        }
+        catch (Exception)
+        {
+            leads = new List<LeadDto>();
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private void ShowLeadDetails(LeadDto lead)
+    {
+        selectedLead = lead;
+        showDetailsModal = true;
+    }
+
+    private void CloseDetailsModal()
+    {
+        showDetailsModal = false;
+        selectedLead = null;
+    }
+
+    private async Task MarkAsContacted(int leadId)
+    {
+        try
+        {
+            var updated = await LeadApiService.MarkAsContactedAsync(leadId);
+            if (updated != null)
+            {
+                await LoadLeads();
+                if (showDetailsModal && selectedLead?.Id == leadId)
+                {
+                    selectedLead = updated;
+                }
+            }
+        }
+        catch
+        {
+            // Log error
+        }
+    }
+
+    private async Task DeleteLead(int leadId)
+    {
+        var confirmed = await JSRuntime.InvokeAsync<bool>("confirm", 
+            "Tem certeza que deseja excluir este lead? Esta ação não pode ser desfeita.");
+        
+        if (confirmed)
+        {
+            try
+            {
+                var success = await LeadApiService.DeleteLeadAsync(leadId);
+                if (success)
+                {
+                    await LoadLeads();
+                    if (showDetailsModal && selectedLead?.Id == leadId)
+                    {
+                        CloseDetailsModal();
+                    }
+                }
+            }
+            catch
+            {
+                // Log error
+            }
+        }
+    }
+}

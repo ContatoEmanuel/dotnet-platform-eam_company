@@ -34,6 +34,12 @@ builder.Services.AddHttpClient<IProjectApiService, ProjectApiService>(client =>
     client.DefaultRequestHeaders.Add("Accept", "application/json");
 });
 
+builder.Services.AddHttpClient<ILeadApiService, LeadApiService>(client =>
+{
+    client.BaseAddress = new Uri(apiBaseUrl);
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
+});
+
 // ProductService agora depende de ProjectApiService
 builder.Services.AddScoped<IProductService, ProductService>();
 
