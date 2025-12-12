@@ -15,11 +15,20 @@ export class MobileMenu {
     }
     init() {
         if (!this.hamburgerBtn || !this.mobileMenu || !this.overlay) {
-            console.warn('Mobile menu elements not found');
+            console.error('❌ Mobile menu elements not found:', {
+                hamburgerBtn: !!this.hamburgerBtn,
+                mobileMenu: !!this.mobileMenu,
+                overlay: !!this.overlay,
+                closeBtn: !!this.closeBtn
+            });
             return;
         }
+        console.log('✅ Mobile Menu elements found, initializing...');
         // Event listeners
-        this.hamburgerBtn.addEventListener('click', () => this.toggle());
+        this.hamburgerBtn.addEventListener('click', () => {
+            console.log('🔘 Hamburger button clicked!');
+            this.toggle();
+        });
         this.closeBtn?.addEventListener('click', () => this.close());
         this.overlay.addEventListener('click', () => this.close());
         // Close menu when clicking on menu items
@@ -39,6 +48,7 @@ export class MobileMenu {
         console.log('✅ Mobile Menu initialized');
     }
     toggle() {
+        console.log('🔄 Toggle called, isOpen:', this.isOpen);
         if (this.isOpen) {
             this.close();
         }
@@ -49,6 +59,7 @@ export class MobileMenu {
     open() {
         if (!this.mobileMenu || !this.overlay)
             return;
+        console.log('📂 Opening menu...');
         this.isOpen = true;
         // Show overlay
         this.overlay.classList.remove('hidden');
