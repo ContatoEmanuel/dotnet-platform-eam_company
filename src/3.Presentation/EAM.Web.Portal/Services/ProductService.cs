@@ -1,3 +1,5 @@
+using EAM.Core.Application.DTOs.Project;
+
 namespace EAM.Web.Portal.Services;
 
 public interface IProductService
@@ -26,11 +28,6 @@ public class ProductService : IProductService
 
     public async Task<ProjectDto?> GetProductByIdAsync(int id)
     {
-        var project = await _projectApiService.GetProjectByIdAsync(id);
-        if (project != null && project.IsActive && project.ForSale)
-        {
-            return project;
-        }
-        return null;
+        return await _projectApiService.GetProjectByIdAsync(id);
     }
 }

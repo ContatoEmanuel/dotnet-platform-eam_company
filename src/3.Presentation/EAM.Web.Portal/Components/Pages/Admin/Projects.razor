@@ -1,6 +1,7 @@
 @page "/admin/projects"
 @using Microsoft.AspNetCore.Authorization
 @using EAM.Web.Portal.Services
+@using EAM.Core.Application.DTOs.Project
 @attribute [Authorize]
 @inject IProjectApiService ProjectApiService
 @inject NavigationManager Navigation
@@ -59,8 +60,8 @@
                     <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>Nome</th>
-                                <th>Descrição Curta</th>
+                                <th>Título</th>
+                                <th>Descrição</th>
                                 <th>Tecnologias</th>
                                 <th>Destaque</th>
                                 <th>À Venda</th>
@@ -84,9 +85,9 @@
                                 {
                                     <tr>
                                         <td>
-                                            <strong>@project.Name</strong>
+                                            <strong>@project.Title</strong>
                                         </td>
-                                        <td>@project.ShortDescription</td>
+                                        <td>@(project.Description.Length > 50 ? project.Description.Substring(0, 50) + "..." : project.Description)</td>
                                         <td>
                                             @string.Join(", ", project.Technologies.Take(3))
                                             @if (project.Technologies.Count > 3)
@@ -166,15 +167,9 @@
                         <DataAnnotationsValidator />
 
                         <div class="mb-3">
-                            <label class="form-label">Nome</label>
-                            <InputText @bind-Value="projectForm.Name" class="form-control" />
-                            <ValidationMessage For="@(() => projectForm.Name)" />
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label">Descrição Curta</label>
-                            <InputTextArea @bind-Value="projectForm.ShortDescription" class="form-control" rows="2" />
-                            <ValidationMessage For="@(() => projectForm.ShortDescription)" />
+                            <label class="form-label">Título</label>
+                            <InputText @bind-Value="projectForm.Title" class="form-control" />
+                            <ValidationMessage For="@(() => projectForm.Title)" />
                         </div>
 
                         <div class="mb-3">
@@ -185,26 +180,25 @@
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">URL da Imagem</label>
-                                <InputText @bind-Value="projectForm.ImageUrl" class="form-control" />
-                                <ValidationMessage For="@(() => projectForm.ImageUrl)" />
+                                <label class="form-label">URL da Thumbnail (opcional)</label>
+                                <InputText @bind-Value="projectForm.ThumbnailUrl" class="form-control" />
                             </div>
 
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">URL da Thumbnail (opcional)</label>
-                                <InputText @bind-Value="projectForm.ThumbnailUrl" class="form-control" />
+                                <label class="form-label">Emoji/Ícone</label>
+                                <InputText @bind-Value="projectForm.IconEmoji" class="form-control" />
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">URL do Projeto (opcional)</label>
-                                <InputText @bind-Value="projectForm.ProjectUrl" class="form-control" />
+                                <label class="form-label">URL do Projeto (LiveUrl - opcional)</label>
+                                <InputText @bind-Value="projectForm.LiveUrl" class="form-control" />
                             </div>
 
                             <div class="col-md-6 mb-3">
-                                <label class="form-label">URL do Repositório (opcional)</label>
-                                <InputText @bind-Value="projectForm.RepositoryUrl" class="form-control" />
+                                <label class="form-label">URL do GitHub (opcional)</label>
+                                <InputText @bind-Value="projectForm.GithubUrl" class="form-control" />
                             </div>
                         </div>
 
@@ -215,9 +209,15 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-3 mb-3">
+                            <div class="col-md-4 mb-3">
                                 <label class="form-label">Ordem de Exibição</label>
                                 <InputNumber @bind-Value="projectForm.DisplayOrder" class="form-control" />
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label class="form-label">Preço (opcional)</label>
+                                <InputNumber @bind-Value="projectForm.Price" class="form-control" />
+                                <small class="text-muted">Deixe vazio para "Consulte"</small>
                             </div>
 
                             <div class="col-md-3 mb-3 form-check mt-4">
@@ -342,16 +342,16 @@
         editingProject = project;
         projectForm = new ProjectCreateDto
         {
-            Name = project.Name,
+            Title = project.Title,
             Description = project.Description,
-            ShortDescription = project.ShortDescription,
-            ImageUrl = project.ImageUrl,
             ThumbnailUrl = project.ThumbnailUrl,
-            ProjectUrl = project.ProjectUrl,
-            RepositoryUrl = project.RepositoryUrl,
+            GithubUrl = project.GithubUrl,
+            LiveUrl = project.LiveUrl,
+            IconEmoji = project.IconEmoji,
             Technologies = new List<string>(project.Technologies),
             IsFeatured = project.IsFeatured,
             ForSale = project.ForSale,
+            Price = project.Price,
             DisplayOrder = project.DisplayOrder,
             IsActive = project.IsActive
         };

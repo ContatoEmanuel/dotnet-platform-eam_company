@@ -63,6 +63,9 @@ public class ProjectService : IProjectService
             ThumbnailUrl = projectDto.ThumbnailUrl,
             IconEmoji = projectDto.IconEmoji,
             IsFeatured = projectDto.IsFeatured,
+            ForSale = projectDto.ForSale,
+            Price = projectDto.Price,
+            IsActive = projectDto.IsActive,
             DisplayOrder = projectDto.DisplayOrder,
             CreatedAt = DateTime.UtcNow
         };
@@ -88,6 +91,9 @@ public class ProjectService : IProjectService
         project.ThumbnailUrl = projectDto.ThumbnailUrl;
         project.IconEmoji = projectDto.IconEmoji;
         project.IsFeatured = projectDto.IsFeatured;
+        project.ForSale = projectDto.ForSale;
+        project.Price = projectDto.Price;
+        project.IsActive = projectDto.IsActive;
         project.DisplayOrder = projectDto.DisplayOrder;
         project.UpdatedAt = DateTime.UtcNow;
 
@@ -124,8 +130,12 @@ public class ProjectService : IProjectService
             ThumbnailUrl = project.ThumbnailUrl,
             IconEmoji = project.IconEmoji,
             IsFeatured = project.IsFeatured,
+            ForSale = project.ForSale,
+            Price = project.Price,
+            IsActive = project.IsActive,
             DisplayOrder = project.DisplayOrder,
-            CreatedAt = project.CreatedAt
+            CreatedAt = project.CreatedAt,
+            UpdatedAt = project.UpdatedAt
         };
     }
 }

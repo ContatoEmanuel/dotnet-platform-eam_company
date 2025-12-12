@@ -11,6 +11,10 @@ public class ProjectDto
     public string? ThumbnailUrl { get; set; }
     public string IconEmoji { get; set; } = "📦";
     public bool IsFeatured { get; set; }
+    public bool ForSale { get; set; }
+    public decimal? Price { get; set; }
+    public bool IsActive { get; set; }
     public int DisplayOrder { get; set; }
     public DateTime CreatedAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
 }
