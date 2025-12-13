@@ -1,0 +1,581 @@
+@model EAM.Core.Application.DTOs.Resume.ResumeDto
+@{
+    Layout = null;
+    var personalInfo = Model.PersonalInfo;
+}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Currículo - @personalInfo.FullName | @personalInfo.Title">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Currículo - @personalInfo.FullName</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        header {
+            text-align: center;
+            border-bottom: 3px solid #3B82F6;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #1E40AF;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            color: #6B7280;
+            margin-bottom: 15px;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-size: 0.95em;
+            color: #4B5563;
+        }
+
+        .contact-info a {
+            color: #3B82F6;
+            text-decoration: none;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        .section {
+            margin-bottom: 35px;
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            color: #1E40AF;
+            border-bottom: 2px solid #BFDBFE;
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+        }
+
+        .summary {
+            text-align: justify;
+            color: #4B5563;
+            font-size: 1.05em;
+            line-height: 1.8;
+        }
+
+        .experience-item, .education-item, .certification-item {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #E5E7EB;
+        }
+
+        .experience-item:last-child, .education-item:last-child, .certification-item:last-child {
+            border-bottom: none;
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .job-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #1F2937;
+        }
+
+        .company {
+            font-size: 1.1em;
+            color: #3B82F6;
+            font-weight: 600;
+        }
+
+        .period {
+            font-size: 0.95em;
+            color: #6B7280;
+            white-space: nowrap;
+        }
+
+        .location {
+            color: #6B7280;
+            font-size: 0.95em;
+            margin-bottom: 5px;
+        }
+
+        .description {
+            margin: 10px 0;
+            color: #4B5563;
+            text-align: justify;
+            line-height: 1.7;
+        }
+
+        .technologies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .tech-badge {
+            background: #EFF6FF;
+            color: #1E40AF;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 500;
+            border: 1px solid #BFDBFE;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .skill-category {
+            background: #F9FAFB;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #E5E7EB;
+        }
+
+        .skill-category h4 {
+            color: #1E40AF;
+            margin-bottom: 12px;
+            font-size: 1.1em;
+        }
+
+        .skill-list {
+            list-style: none;
+        }
+
+        .skill-list li {
+            padding: 5px 0;
+            color: #4B5563;
+            position: relative;
+            padding-left: 18px;
+        }
+
+        .skill-list li:before {
+            content: "•";
+            color: #3B82F6;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .certification-code {
+            background: #FEF3C7;
+            color: #92400E;
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-size: 0.85em;
+            font-family: 'Courier New', monospace;
+            display: inline-block;
+            margin: 5px 0;
+        }
+
+        .certification-block {
+            margin-bottom: 35px;
+        }
+
+        .subsection-title {
+            font-size: 1.2em;
+            color: #1F2937;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #E5E7EB;
+            font-weight: 600;
+        }
+
+        .subsection-title.principal {
+            border-bottom-color: #3B82F6;
+        }
+
+        .subsection-title.secundario {
+            border-bottom-color: #10B981;
+        }
+
+        .subsection-title.outros {
+            border-bottom-color: #6B7280;
+        }
+
+        .languages {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .language-item {
+            background: #F3F4F6;
+            padding: 15px 25px;
+            border-radius: 8px;
+            border-left: 4px solid #3B82F6;
+        }
+
+        .language-name {
+            font-weight: 600;
+            color: #1F2937;
+        }
+
+        .language-level {
+            color: #6B7280;
+            font-size: 0.95em;
+        }
+
+        @@media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .container {
+                box-shadow: none;
+                padding: 20px;
+            }
+
+            .experience-item, .education-item, .certification-item {
+                page-break-inside: avoid;
+            }
+        }
+
+        @@media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .subtitle {
+                font-size: 1em;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .experience-header {
+                flex-direction: column;
+            }
+
+            .period {
+                margin-top: 5px;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>@personalInfo.FullName</h1>
+            <p class="subtitle">@personalInfo.Title</p>
+            <div class="contact-info">
+                @if (!string.IsNullOrEmpty(personalInfo.Email))
+                {
+                    <span>📧 <a href="mailto:@personalInfo.Email">@personalInfo.Email</a></span>
+                }
+                @if (!string.IsNullOrEmpty(personalInfo.Location))
+                {
+                    <span>📍 @personalInfo.Location</span>
+                }
+                @if (!string.IsNullOrEmpty(personalInfo.LinkedIn))
+                {
+                    <span>💼 <a href="@personalInfo.LinkedIn" target="_blank">LinkedIn</a></span>
+                }
+                @if (!string.IsNullOrEmpty(personalInfo.GitHub))
+                {
+                    <span>💻 <a href="@personalInfo.GitHub" target="_blank">GitHub</a></span>
+                }
+            </div>
+        </header>
+
+        @if (!string.IsNullOrEmpty(personalInfo.Summary))
+        {
+            <div class="section">
+                <h3 class="section-title">Resumo Profissional</h3>
+                <p class="summary">@personalInfo.Summary</p>
+            </div>
+        }
+
+        @if (Model.Experiences.Any())
+        {
+            <div class="section">
+                <h3 class="section-title">Experiência Profissional</h3>
+                
+                @foreach (var exp in Model.Experiences)
+                {
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <div>
+                                <div class="job-title">@exp.JobTitle</div>
+                                <div class="company">@exp.Company</div>
+                            </div>
+                            <div class="period">@exp.Period</div>
+                        </div>
+                        @if (!string.IsNullOrEmpty(exp.Location))
+                        {
+                            <div class="location">📍 @exp.Location</div>
+                        }
+                        @if (!string.IsNullOrEmpty(exp.Description))
+                        {
+                            <p class="description">@exp.Description</p>
+                        }
+                        @if (exp.Technologies.Any())
+                        {
+                            <div class="technologies">
+                                @foreach (var tech in exp.Technologies)
+                                {
+                                    <span class="tech-badge">@tech</span>
+                                }
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        }
+
+        @if (Model.Skills.PowerPlatform.Any() || Model.Skills.Development.Any() || Model.Skills.Others.Any())
+        {
+            <div class="section">
+                <h3 class="section-title">Competências Técnicas</h3>
+                <div class="skills-grid">
+                    @if (Model.Skills.PowerPlatform.Any())
+                    {
+                        <div class="skill-category">
+                            <h4>Power Platform</h4>
+                            <ul class="skill-list">
+                                @foreach (var skill in Model.Skills.PowerPlatform)
+                                {
+                                    <li>@skill.Name</li>
+                                }
+                            </ul>
+                        </div>
+                    }
+                    @if (Model.Skills.Development.Any())
+                    {
+                        <div class="skill-category">
+                            <h4>Desenvolvimento</h4>
+                            <ul class="skill-list">
+                                @foreach (var skill in Model.Skills.Development)
+                                {
+                                    <li>@skill.Name</li>
+                                }
+                            </ul>
+                        </div>
+                    }
+                    @if (Model.Skills.Others.Any())
+                    {
+                        <div class="skill-category">
+                            <h4>Outras Competências</h4>
+                            <ul class="skill-list">
+                                @foreach (var skill in Model.Skills.Others)
+                                {
+                                    <li>@skill.Name</li>
+                                }
+                            </ul>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+
+        @if (Model.Education.Any())
+        {
+            <div class="section">
+                <h3 class="section-title">Formação Acadêmica</h3>
+                @foreach (var edu in Model.Education)
+                {
+                    <div class="education-item">
+                        <div class="experience-header">
+                            <div>
+                                <div class="job-title">@edu.Degree</div>
+                                <div class="company">@edu.Institution</div>
+                            </div>
+                            <div class="period">@edu.Period</div>
+                        </div>
+                        @if (edu.IsInProgress)
+                        {
+                            <div class="location">📚 Em andamento</div>
+                        }
+                        @if (!string.IsNullOrEmpty(edu.Description))
+                        {
+                            <p class="description">@edu.Description</p>
+                        }
+                    </div>
+                }
+            </div>
+        }
+
+        @if (Model.Certifications.MicrosoftCertified.Any() || Model.Certifications.MicrosoftAppliedSkills.Any() || Model.Certifications.Others.Any())
+        {
+            <div class="section">
+                <h3 class="section-title">Certificações</h3>
+                
+                @if (Model.Certifications.MicrosoftCertified.Any())
+                {
+                    <div class="certification-block">
+                        <h4 class="subsection-title principal">Microsoft Certified</h4>
+                        
+                        @foreach (var cert in Model.Certifications.MicrosoftCertified)
+                        {
+                            <div class="certification-item">
+                                <div class="experience-header">
+                                    <div>
+                                        <div class="job-title">@cert.Name</div>
+                                        <div class="company">@cert.Issuer</div>
+                                    </div>
+                                    <div class="period">@cert.Period</div>
+                                </div>
+                                @if (!string.IsNullOrEmpty(cert.CredentialCode))
+                                {
+                                    <div class="certification-code">🔐 Código: @cert.CredentialCode</div>
+                                }
+                                @if (!string.IsNullOrEmpty(cert.Description))
+                                {
+                                    <p class="description">@cert.Description</p>
+                                }
+                                @if (cert.Technologies.Any())
+                                {
+                                    <div class="technologies">
+                                        @foreach (var tech in cert.Technologies)
+                                        {
+                                            <span class="tech-badge">@tech</span>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </div>
+                }
+
+                @if (Model.Certifications.MicrosoftAppliedSkills.Any())
+                {
+                    <div class="certification-block">
+                        <h4 class="subsection-title secundario">Microsoft Applied Skills</h4>
+                        
+                        @foreach (var cert in Model.Certifications.MicrosoftAppliedSkills)
+                        {
+                            <div class="certification-item">
+                                <div class="experience-header">
+                                    <div>
+                                        <div class="job-title">@cert.Name</div>
+                                        <div class="company">@cert.Issuer</div>
+                                    </div>
+                                    <div class="period">@cert.Period</div>
+                                </div>
+                                @if (!string.IsNullOrEmpty(cert.CredentialCode))
+                                {
+                                    <div class="certification-code">🔐 Código: @cert.CredentialCode</div>
+                                }
+                                @if (!string.IsNullOrEmpty(cert.Description))
+                                {
+                                    <p class="description">@cert.Description</p>
+                                }
+                                @if (cert.Technologies.Any())
+                                {
+                                    <div class="technologies">
+                                        @foreach (var tech in cert.Technologies)
+                                        {
+                                            <span class="tech-badge">@tech</span>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </div>
+                }
+
+                @if (Model.Certifications.Others.Any())
+                {
+                    <div class="certification-block">
+                        <h4 class="subsection-title outros">Outras</h4>
+                        
+                        @foreach (var cert in Model.Certifications.Others)
+                        {
+                            <div class="certification-item">
+                                <div class="experience-header">
+                                    <div>
+                                        <div class="job-title">@cert.Name</div>
+                                        <div class="company">@cert.Issuer</div>
+                                    </div>
+                                    <div class="period">@cert.Period</div>
+                                </div>
+                                @if (!string.IsNullOrEmpty(cert.CredentialCode))
+                                {
+                                    <div class="certification-code">🔐 Código: @cert.CredentialCode</div>
+                                }
+                                @if (!string.IsNullOrEmpty(cert.Description))
+                                {
+                                    <p class="description">@cert.Description</p>
+                                }
+                                @if (cert.Technologies.Any())
+                                {
+                                    <div class="technologies">
+                                        @foreach (var tech in cert.Technologies)
+                                        {
+                                            <span class="tech-badge">@tech</span>
+                                        }
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        }
+
+        @if (Model.Languages.Any())
+        {
+            <div class="section">
+                <h3 class="section-title">Idiomas</h3>
+                <div class="languages">
+                    @foreach (var lang in Model.Languages)
+                    {
+                        <div class="language-item">
+                            <div class="language-name">@lang.Name</div>
+                            <div class="language-level">@lang.ProficiencyLevel</div>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    </div>
+</body>
+</html>

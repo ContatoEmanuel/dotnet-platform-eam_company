@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using EAM.Core.Domain.Entities;
+using EAM.Core.Domain.Entities.Resume;
 using System.Linq.Expressions;
 
 namespace EAM.Infra.Data.Context;
@@ -18,7 +19,14 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Lead> Leads => Set<Lead>();
     public DbSet<BlogPost> BlogPosts => Set<BlogPost>();
     public DbSet<BlogCategory> BlogCategories => Set<BlogCategory>();
-    // public DbSet<Skill> Skills => Set<Skill>();
+    
+    // Resume DbSets
+    public DbSet<PersonalInfo> PersonalInfos => Set<PersonalInfo>();
+    public DbSet<Experience> Experiences => Set<Experience>();
+    public DbSet<Education> Educations => Set<Education>();
+    public DbSet<Certification> Certifications => Set<Certification>();
+    public DbSet<Skill> Skills => Set<Skill>();
+    public DbSet<Language> Languages => Set<Language>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
