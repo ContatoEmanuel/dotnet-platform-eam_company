@@ -49,6 +49,7 @@ public class BlogPostUpdateDto
     public string? ImageUrl { get; set; }
     public int? ReadTimeMinutes { get; set; }
     public bool? IsPublished { get; set; }
+    public DateTime? PublishedAt { get; set; }
     public int? CategoryId { get; set; }
     public List<string>? Tags { get; set; }
 }

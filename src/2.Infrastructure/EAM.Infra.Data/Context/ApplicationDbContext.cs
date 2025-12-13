@@ -100,6 +100,98 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
         );
     }
 
+    private void SeedBlogData(ModelBuilder modelBuilder)
+    {
+        // Seed Categories
+        modelBuilder.Entity<BlogCategory>().HasData(
+            new BlogCategory
+            {
+                Id = 1,
+                Name = "Dynamics 365",
+                Slug = "dynamics-365",
+                Description = "Artigos sobre Dynamics 365 Customer Engagement, Sales, Marketing e muito mais",
+                Color = "#3B82F6",
+                DisplayOrder = 1,
+                CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+            },
+            new BlogCategory
+            {
+                Id = 2,
+                Name = "Power Platform",
+                Slug = "power-platform",
+                Description = "Tutoriais e dicas sobre Power Apps, Power Automate, Power BI e Power Pages",
+                Color = "#6366F1",
+                DisplayOrder = 2,
+                CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+            },
+            new BlogCategory
+            {
+                Id = 3,
+                Name = ".NET",
+                Slug = "dotnet",
+                Description = "Desenvolvimento com .NET, C#, ASP.NET Core e arquitetura de software",
+                Color = "#8B5CF6",
+                DisplayOrder = 3,
+                CreatedAt = new DateTime(2024, 1, 1, 0, 0, 0, DateTimeKind.Utc)
+            }
+        );
+
+        // Seed Posts
+        modelBuilder.Entity<BlogPost>().HasData(
+            new BlogPost
+            {
+                Id = 1,
+                Title = "Começando com Dynamics 365 Customer Engagement",
+                Slug = "comecando-com-dynamics-365-ce",
+                Excerpt = "Aprenda os conceitos fundamentais do Dynamics 365 CE e como começar seu primeiro projeto.",
+                Content = "<p class='lead'>O Dynamics 365 Customer Engagement é uma plataforma poderosa para gerenciar relacionamentos com clientes.</p><h2>O que é Dynamics 365 CE?</h2><p>Dynamics 365 Customer Engagement (CE) é uma solução CRM (Customer Relationship Management) que ajuda organizações a gerenciar vendas, marketing, atendimento ao cliente e operações de campo.</p><h2>Principais Componentes</h2><ul><li><strong>Sales:</strong> Gerenciamento de oportunidades e pipeline de vendas</li><li><strong>Marketing:</strong> Automação de marketing e gestão de campanhas</li><li><strong>Customer Service:</strong> Atendimento ao cliente e gestão de casos</li><li><strong>Field Service:</strong> Operações de campo e agendamento</li></ul><h2>Por onde começar?</h2><p>Para iniciar com Dynamics 365, recomendo seguir estes passos:</p><ol><li>Criar uma conta de trial no Microsoft 365</li><li>Acessar o Power Platform Admin Center</li><li>Provisionar um ambiente Dynamics 365</li><li>Explorar os aplicativos model-driven disponíveis</li></ol><p>Nos próximos artigos, vamos aprofundar em cada um desses componentes e criar soluções práticas.</p>",
+                ImageUrl = "https://via.placeholder.com/1200x400/3B82F6/FFFFFF?text=Dynamics+365",
+                Author = "Emanuel Macêdo",
+                ReadTimeMinutes = 5,
+                IsPublished = true,
+                PublishedAt = new DateTime(2024, 12, 10, 10, 0, 0, DateTimeKind.Utc),
+                CategoryId = 1,
+                Tags = "[\"Dynamics 365\",\"CRM\",\"Microsoft\",\"Tutorial\"]",
+                DisplayOrder = 1,
+                CreatedAt = new DateTime(2024, 12, 10, 10, 0, 0, DateTimeKind.Utc)
+            },
+            new BlogPost
+            {
+                Id = 2,
+                Title = "Power Platform: Automatizando processos com Power Automate",
+                Slug = "power-platform-automatizando-com-power-automate",
+                Excerpt = "Descubra como criar automações poderosas usando Power Automate e integrar com diversas aplicações.",
+                Content = "<p class='lead'>Power Automate é a ferramenta de automação da Microsoft que permite conectar aplicativos e automatizar fluxos de trabalho.</p><h2>O que é Power Automate?</h2><p>Power Automate (anteriormente conhecido como Microsoft Flow) é uma plataforma de automação low-code que permite criar workflows automatizados entre aplicativos e serviços.</p><h2>Tipos de Fluxos</h2><ul><li><strong>Cloud Flows:</strong> Automações na nuvem disparadas por eventos</li><li><strong>Desktop Flows:</strong> RPA (Robotic Process Automation) para automação de desktop</li><li><strong>Business Process Flows:</strong> Guias visuais para processos padronizados</li></ul><h2>Casos de Uso Comuns</h2><ol><li>Aprovação de documentos e workflows</li><li>Sincronização de dados entre sistemas</li><li>Notificações e alertas automatizados</li><li>Coleta e processamento de dados</li></ol><p>Em breve publicarei tutoriais práticos mostrando como criar seus primeiros fluxos.</p>",
+                ImageUrl = "https://via.placeholder.com/1200x400/6366F1/FFFFFF?text=Power+Automate",
+                Author = "Emanuel Macêdo",
+                ReadTimeMinutes = 7,
+                IsPublished = true,
+                PublishedAt = new DateTime(2024, 12, 8, 14, 30, 0, DateTimeKind.Utc),
+                CategoryId = 2,
+                Tags = "[\"Power Platform\",\"Power Automate\",\"Automação\",\"Low-Code\"]",
+                DisplayOrder = 2,
+                CreatedAt = new DateTime(2024, 12, 8, 14, 30, 0, DateTimeKind.Utc)
+            },
+            new BlogPost
+            {
+                Id = 3,
+                Title = "Arquitetura Clean em .NET: Princípios e Práticas",
+                Slug = "arquitetura-clean-dotnet-principios-praticas",
+                Excerpt = "Entenda os conceitos de Clean Architecture e como aplicar em projetos .NET Core.",
+                Content = "<p class='lead'>Clean Architecture é um padrão arquitetural que promove a separação de responsabilidades e independência de frameworks.</p><h2>O que é Clean Architecture?</h2><p>Proposta por Robert C. Martin (Uncle Bob), Clean Architecture organiza o código em camadas concêntricas, onde as dependências apontam sempre para dentro, em direção às regras de negócio.</p><h2>Camadas Principais</h2><ul><li><strong>Domain:</strong> Entidades e regras de negócio core</li><li><strong>Application:</strong> Casos de uso e interfaces de serviço</li><li><strong>Infrastructure:</strong> Implementações de persistência e serviços externos</li><li><strong>Presentation:</strong> UI, APIs e interfaces de usuário</li></ul><h2>Benefícios</h2><ol><li>Testabilidade: código facilmente testável</li><li>Manutenibilidade: mudanças isoladas em camadas específicas</li><li>Flexibilidade: troca de frameworks sem impacto no core</li><li>Independência: não acoplamento com tecnologias específicas</li></ol><p>Este projeto é um exemplo prático de Clean Architecture em .NET!</p>",
+                ImageUrl = "https://via.placeholder.com/1200x400/8B5CF6/FFFFFF?text=Clean+Architecture",
+                Author = "Emanuel Macêdo",
+                ReadTimeMinutes = 10,
+                IsPublished = true,
+                PublishedAt = new DateTime(2024, 12, 5, 9, 0, 0, DateTimeKind.Utc),
+                CategoryId = 3,
+                Tags = "[\".NET\",\"Clean Architecture\",\"Design Patterns\",\"Boas Práticas\"]",
+                DisplayOrder = 3,
+                CreatedAt = new DateTime(2024, 12, 5, 9, 0, 0, DateTimeKind.Utc)
+            }
+        );
+    }
+
     private void ConfigureGlobalFilters(ModelBuilder modelBuilder)
     {
         // Soft delete global filter (apenas para entidades customizadas)
