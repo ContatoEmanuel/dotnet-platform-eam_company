@@ -237,6 +237,31 @@
             margin: 5px 0;
         }
 
+        .certification-block {
+            margin-bottom: 35px;
+        }
+
+        .subsection-title {
+            font-size: 1.2em;
+            color: #1F2937;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #E5E7EB;
+            font-weight: 600;
+        }
+
+        .subsection-title.principal {
+            border-bottom-color: #3B82F6;
+        }
+
+        .subsection-title.secundario {
+            border-bottom-color: #10B981;
+        }
+
+        .subsection-title.outros {
+            border-bottom-color: #6B7280;
+        }
+
         .languages {
             display: flex;
             gap: 30px;
@@ -563,130 +588,145 @@
         <div class="section">
             <h3 class="section-title">Certificações</h3>
             
-            <div class="certification-item">
-                <div class="experience-header">
-                    <div>
-                        <div class="job-title">Microsoft Applied Skills: Criar e gerenciar aplicativos baseados em modelo</div>
-                        <div class="company">Microsoft</div>
+            <!-- Bloco 1: Microsoft Certified (Principal) -->
+            <div class="certification-block">
+                <h4 class="subsection-title principal">Microsoft Certified</h4>
+                
+                <div class="certification-item">
+                    <div class="experience-header">
+                        <div>
+                            <div class="job-title">Microsoft Certified: Dynamics 365 Fundamentals (CRM)</div>
+                            <div class="company">Microsoft</div>
+                        </div>
+                        <div class="period">dez/2022</div>
                     </div>
-                    <div class="period">jan/2025</div>
+                    <div class="certification-code">🔐 Código: 6DDFF53C4C7BE301</div>
+                    <p class="description">
+                        Fundamentos da plataforma Microsoft Dynamics 365 Customer Engagement.
+                    </p>
+                    <div class="technologies">
+                        <span class="tech-badge">Microsoft Dynamics 365</span>
+                        <span class="tech-badge">Microsoft CRM</span>
+                        <span class="tech-badge">Microsoft Power Platform</span>
+                    </div>
                 </div>
-                <div class="certification-code">🔐 Código: C8FF6F7BA37C5B36</div>
-                <p class="description">
-                    Criar e gerenciar aplicativos baseados em modelo com o Power Apps e o Dataverse.
-                </p>
-                <div class="technologies">
-                    <span class="tech-badge">Dataverse</span>
-                    <span class="tech-badge">Microsoft Dynamics 365</span>
-                    <span class="tech-badge">Power Apps</span>
+
+                <div class="certification-item">
+                    <div class="experience-header">
+                        <div>
+                            <div class="job-title">Microsoft Certified: Power Platform Fundamentals</div>
+                            <div class="company">Microsoft</div>
+                        </div>
+                        <div class="period">ago/2022</div>
+                    </div>
+                    <div class="certification-code">🔐 Código: AFA32BEF041EA6E5</div>
+                    <p class="description">
+                        Fundamentos da Microsoft Power Platform incluindo Power Apps, Power Automate, Power BI e Power Virtual Agents.
+                    </p>
+                    <div class="technologies">
+                        <span class="tech-badge">Microsoft Power Automate</span>
+                        <span class="tech-badge">Microsoft Power Virtual Agents</span>
+                        <span class="tech-badge">Microsoft Power Platform</span>
+                        <span class="tech-badge">Microsoft Power BI</span>
+                    </div>
+                </div>
+
+                <div class="certification-item">
+                    <div class="experience-header">
+                        <div>
+                            <div class="job-title">Microsoft Certified: Azure Fundamentals</div>
+                            <div class="company">Microsoft</div>
+                        </div>
+                        <div class="period">abr/2022</div>
+                    </div>
+                    <div class="certification-code">🔐 Código: 74EDD934A9DDB798</div>
+                    <p class="description">
+                        Fundamentos da plataforma Microsoft Azure incluindo serviços de nuvem, DevOps e Functions.
+                    </p>
+                    <div class="technologies">
+                        <span class="tech-badge">Azure DevOps</span>
+                        <span class="tech-badge">Azure Functions</span>
+                        <span class="tech-badge">Windows Azure</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="certification-item">
-                <div class="experience-header">
-                    <div>
-                        <div class="job-title">Microsoft Applied Skills: Criar e gerenciar processos automatizados</div>
-                        <div class="company">Microsoft</div>
+            <!-- Bloco 2: Microsoft Applied Skills (Secundário) -->
+            <div class="certification-block">
+                <h4 class="subsection-title secundario">Microsoft Applied Skills</h4>
+                
+                <div class="certification-item">
+                    <div class="experience-header">
+                        <div>
+                            <div class="job-title">Microsoft Applied Skills: Criar e gerenciar aplicativos baseados em modelo</div>
+                            <div class="company">Microsoft</div>
+                        </div>
+                        <div class="period">jan/2025</div>
                     </div>
-                    <div class="period">dez/2024</div>
+                    <div class="certification-code">🔐 Código: C8FF6F7BA37C5B36</div>
+                    <p class="description">
+                        Criar e gerenciar aplicativos baseados em modelo com o Power Apps e o Dataverse.
+                    </p>
+                    <div class="technologies">
+                        <span class="tech-badge">Dataverse</span>
+                        <span class="tech-badge">Microsoft Dynamics 365</span>
+                        <span class="tech-badge">Power Apps</span>
+                    </div>
                 </div>
-                <div class="certification-code">🔐 Código: 2DD0B21C91F261F8</div>
-                <p class="description">
-                    Criar e gerenciar processos automatizados usando o Power Automate.
-                </p>
-                <div class="technologies">
-                    <span class="tech-badge">Microsoft Power Automate</span>
+
+                <div class="certification-item">
+                    <div class="experience-header">
+                        <div>
+                            <div class="job-title">Microsoft Applied Skills: Criar e gerenciar processos automatizados</div>
+                            <div class="company">Microsoft</div>
+                        </div>
+                        <div class="period">dez/2024</div>
+                    </div>
+                    <div class="certification-code">🔐 Código: 2DD0B21C91F261F8</div>
+                    <p class="description">
+                        Criar e gerenciar processos automatizados usando o Power Automate.
+                    </p>
+                    <div class="technologies">
+                        <span class="tech-badge">Microsoft Power Automate</span>
+                    </div>
+                </div>
+
+                <div class="certification-item">
+                    <div class="experience-header">
+                        <div>
+                            <div class="job-title">Microsoft Applied Skills: Criar e gerenciar aplicativos de tela</div>
+                            <div class="company">Microsoft</div>
+                        </div>
+                        <div class="period">out/2024</div>
+                    </div>
+                    <div class="certification-code">🔐 Código: C1693C7A38490D4A</div>
+                    <p class="description">
+                        Criar e gerenciar aplicativos de tela com o Power Apps.
+                    </p>
+                    <div class="technologies">
+                        <span class="tech-badge">Microsoft Power Apps</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="certification-item">
-                <div class="experience-header">
-                    <div>
-                        <div class="job-title">Microsoft Applied Skills: Criar e gerenciar aplicativos de tela</div>
-                        <div class="company">Microsoft</div>
+            <!-- Bloco 3: Outras (Outros) -->
+            <div class="certification-block">
+                <h4 class="subsection-title outros">Outras</h4>
+                
+                <div class="certification-item">
+                    <div class="experience-header">
+                        <div>
+                            <div class="job-title">CEFR Level A1</div>
+                            <div class="company">EF English Live</div>
+                        </div>
+                        <div class="period">abr/2023</div>
                     </div>
-                    <div class="period">out/2024</div>
-                </div>
-                <div class="certification-code">🔐 Código: C1693C7A38490D4A</div>
-                <p class="description">
-                    Criar e gerenciar aplicativos de tela com o Power Apps.
-                </p>
-                <div class="technologies">
-                    <span class="tech-badge">Microsoft Power Apps</span>
-                </div>
-            </div>
-
-            <div class="certification-item">
-                <div class="experience-header">
-                    <div>
-                        <div class="job-title">Microsoft Certified: Dynamics 365 Fundamentals (CRM)</div>
-                        <div class="company">Microsoft</div>
+                    <p class="description">
+                        Certificação de proficiência em inglês como segunda língua - Nível A1 (Iniciante).
+                    </p>
+                    <div class="technologies">
+                        <span class="tech-badge">ESL (Inglês como segunda língua)</span>
                     </div>
-                    <div class="period">dez/2022</div>
-                </div>
-                <div class="certification-code">🔐 Código: 6DDFF53C4C7BE301</div>
-                <p class="description">
-                    Fundamentos da plataforma Microsoft Dynamics 365 Customer Engagement.
-                </p>
-                <div class="technologies">
-                    <span class="tech-badge">Microsoft Dynamics 365</span>
-                    <span class="tech-badge">Microsoft CRM</span>
-                    <span class="tech-badge">Microsoft Power Platform</span>
-                </div>
-            </div>
-
-            <div class="certification-item">
-                <div class="experience-header">
-                    <div>
-                        <div class="job-title">Microsoft Certified: Power Platform Fundamentals</div>
-                        <div class="company">Microsoft</div>
-                    </div>
-                    <div class="period">ago/2022</div>
-                </div>
-                <div class="certification-code">🔐 Código: AFA32BEF041EA6E5</div>
-                <p class="description">
-                    Fundamentos da Microsoft Power Platform incluindo Power Apps, Power Automate, Power BI e Power Virtual Agents.
-                </p>
-                <div class="technologies">
-                    <span class="tech-badge">Microsoft Power Automate</span>
-                    <span class="tech-badge">Microsoft Power Virtual Agents</span>
-                    <span class="tech-badge">Microsoft Power Platform</span>
-                    <span class="tech-badge">Microsoft Power BI</span>
-                </div>
-            </div>
-
-            <div class="certification-item">
-                <div class="experience-header">
-                    <div>
-                        <div class="job-title">Microsoft Certified: Azure Fundamentals</div>
-                        <div class="company">Microsoft</div>
-                    </div>
-                    <div class="period">abr/2022</div>
-                </div>
-                <div class="certification-code">🔐 Código: 74EDD934A9DDB798</div>
-                <p class="description">
-                    Fundamentos da plataforma Microsoft Azure incluindo serviços de nuvem, DevOps e Functions.
-                </p>
-                <div class="technologies">
-                    <span class="tech-badge">Azure DevOps</span>
-                    <span class="tech-badge">Azure Functions</span>
-                    <span class="tech-badge">Windows Azure</span>
-                </div>
-            </div>
-
-            <div class="certification-item">
-                <div class="experience-header">
-                    <div>
-                        <div class="job-title">CEFR Level A1</div>
-                        <div class="company">EF English Live</div>
-                    </div>
-                    <div class="period">abr/2023</div>
-                </div>
-                <p class="description">
-                    Certificação de proficiência em inglês como segunda língua - Nível A1 (Iniciante).
-                </p>
-                <div class="technologies">
-                    <span class="tech-badge">ESL (Inglês como segunda língua)</span>
                 </div>
             </div>
         </div>
