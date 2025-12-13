@@ -28,7 +28,8 @@ secrets.json
 *.pem
 .env
 .env.*
-!.env.example
+.env.example
+*.env.example
 
 ## Docker - Arquivos locais
 docker-compose.override.yml
@@ -66,8 +67,16 @@ yarn.lock
 
 ## Documentation (CONFIDENCIAL - projeto privado - NUNCA SUBIR)
 docs/
+*.md
+*.MD
+*.markdown
 *.private.md
 *.confidential.md
+REFACTORING-SUMMARY.md
+ARCHITECTURE.md
+README*.md
+CHANGELOG.md
+CONTRIBUTING.md
 
 ## Scripts de desenvolvimento (CONFIDENCIAL)
 run-*.sh
@@ -96,3 +105,18 @@ desktop.ini
 *.credentials
 auth-*.json
 token*.json
+secrets/
+.secrets/
+config.local.*
+*.config.local
+launchSettings.json
+**/Properties/launchSettings.json
+
+## Arquivos de configuração pessoal
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
