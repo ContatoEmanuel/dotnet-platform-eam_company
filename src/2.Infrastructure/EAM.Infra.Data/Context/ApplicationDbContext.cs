@@ -16,6 +16,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     // DbSets
     public DbSet<Project> Projects => Set<Project>();
     public DbSet<Lead> Leads => Set<Lead>();
+    public DbSet<BlogPost> BlogPosts => Set<BlogPost>();
+    public DbSet<BlogCategory> BlogCategories => Set<BlogCategory>();
     // public DbSet<Skill> Skills => Set<Skill>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -34,6 +36,9 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
         
         // Seed de Roles e usuário Admin
         SeedIdentityData(modelBuilder);
+        
+        // Seed de dados do Blog
+        SeedBlogData(modelBuilder);
         
         // Configurações globais
         ConfigureGlobalFilters(modelBuilder);

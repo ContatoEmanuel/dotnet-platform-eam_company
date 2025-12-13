@@ -15,6 +15,9 @@ builder.Services.AddControllersWithViews();
 // Infrastructure (Database, Repositories, Identity)
 builder.Services.AddInfrastructure(builder.Configuration);
 
+// HttpClient para consumir a API
+builder.Services.AddHttpClient();
+
 // Application Services
 builder.Services.AddScoped<IProjectService, ProjectService>();
 
