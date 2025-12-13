@@ -9,7 +9,7 @@
         <!-- Category Badge -->
         <div class="mb-4">
             <span class="px-3 py-1 bg-white bg-opacity-20 text-white text-sm font-semibold rounded-full">
-                @post.Category
+                @(post.Category?.Name ?? "Geral")
             </span>
         </div>
         
@@ -29,12 +29,12 @@
             <span>•</span>
             <div class="flex items-center">
                 <i class="bi bi-calendar3 mr-2"></i>
-                <span>@post.Date.ToString("dd/MM/yyyy")</span>
+                <span>@(post.PublishedAt?.ToString("dd/MM/yyyy") ?? DateTime.Now.ToString("dd/MM/yyyy"))</span>
             </div>
             <span>•</span>
             <div class="flex items-center">
                 <i class="bi bi-clock mr-2"></i>
-                <span>@post.ReadTime de leitura</span>
+                <span>@post.ReadTimeMinutes min de leitura</span>
             </div>
         </div>
     </div>
@@ -60,15 +60,15 @@
         <div class="mt-12 pt-8 border-t border-gray-200">
             <div class="flex flex-wrap gap-2">
                 <span class="text-sm font-semibold text-gray-700 mr-2">Tags:</span>
-                <span class="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full hover:bg-blue-100 hover:text-blue-700 cursor-pointer transition-colors">
-                    @post.Category
-                </span>
-                <span class="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full hover:bg-blue-100 hover:text-blue-700 cursor-pointer transition-colors">
-                    Microsoft
-                </span>
-                <span class="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full hover:bg-blue-100 hover:text-blue-700 cursor-pointer transition-colors">
-                    Tutorial
-                </span>
+                @if (post.Tags != null && post.Tags.Count > 0)
+                {
+                    @foreach (var tag in post.Tags)
+                    {
+                        <span class="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full hover:bg-blue-100 hover:text-blue-700 cursor-pointer transition-colors">
+                            @tag
+                        </span>
+                    }
+                }
             </div>
         </div>
         
