@@ -78,6 +78,10 @@ README*.md
 CHANGELOG.md
 CONTRIBUTING.md
 
+# Exceções: Arquivos que DEVEM estar no repositório
+!README.md
+!CONFIDENTIAL-NOTICE.md
+
 ## Scripts de desenvolvimento (CONFIDENCIAL)
 run-*.sh
 deploy-*.sh
