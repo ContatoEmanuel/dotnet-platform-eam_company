@@ -1,20 +1,21 @@
 using Microsoft.AspNetCore.Mvc;
 using EAM.Core.Application.DTOs.Blog;
 using System.Text.Json;
+using Microsoft.Extensions.Options;
+using EAM.Web.Public.Configuration;
 
 namespace EAM.Web.Public.Controllers;
 
-public class BlogController : Controller
+public class BlogController : BaseController
 {
     private readonly HttpClient _httpClient;
-    private readonly IConfiguration _configuration;
+    private readonly ApiSettings _apiSettings;
 
-    public BlogController(IHttpClientFactory httpClientFactory, IConfiguration configuration)
+    public BlogController(IHttpClientFactory httpClientFactory, IOptions<ApiSettings> apiSettings, IOptions<AppSettings> appSettings) : base(appSettings)
     {
         _httpClient = httpClientFactory.CreateClient();
-        _configuration = configuration;
-        var apiBaseUrl = _configuration["ApiSettings:BaseUrl"] ?? "http://localhost:5000";
-        _httpClient.BaseAddress = new Uri(apiBaseUrl);
+        _apiSettings = apiSettings.Value;
+        _httpClient.BaseAddress = new Uri(_apiSettings.BaseUrl);
     }
 
     public async Task<IActionResult> Index()

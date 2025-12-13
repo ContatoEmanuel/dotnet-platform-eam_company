@@ -3,8 +3,13 @@ using EAM.Web.Portal.Services;
 using EAM.Infra.IoC;
 using Microsoft.AspNetCore.Identity;
 using EAM.Core.Domain.Entities;
+using EAM.Web.Portal.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Configure strongly-typed settings
+builder.Services.Configure<ApiSettings>(builder.Configuration.GetSection("ApiSettings"));
+builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -14,7 +19,7 @@ builder.Services.AddRazorComponents()
 builder.Services.AddInfrastructure(builder.Configuration);
 
 // HttpClient para consumir API
-var apiBaseUrl = builder.Configuration["ApiSettings:BaseUrl"] ?? "http://eam-api:8080";
+var apiBaseUrl = builder.Configuration["ApiSettings:BaseUrl"] ?? "http://localhost:5000";
 
 builder.Services.AddHttpClient<IAuthApiService, AuthApiService>(client =>
 {

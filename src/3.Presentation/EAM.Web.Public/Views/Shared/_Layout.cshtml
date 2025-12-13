@@ -54,7 +54,7 @@
                     </a>
                     
                     <!-- Portal Button -->
-                    <a href="http://localhost:5002" target="_blank" 
+                    <a href="@(ViewBag.AppSettings?.PortalUrl ?? "http://localhost:5002")" target="_blank" 
                        class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium inline-flex items-center">
                         <i class="bi bi-box-arrow-up-right me-2"></i>
                         Portal do Cliente
@@ -113,22 +113,22 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <h5 class="fw-bold">EAM Company</h5>
+                    <h5 class="fw-bold">@(ViewBag.AppSettings?.CompanyName ?? "EAM Company")</h5>
                     <p class="text-muted small">Soluções Microsoft para grandes empresas</p>
                 </div>
                 <div class="col-md-6 text-md-end">
                     <div class="mb-3">
-                        <a href="https://www.linkedin.com/in/emanuel-a-macedo/" target="_blank" class="text-light me-3 social-link">
+                        <a href="@(ViewBag.AppSettings?.SocialMedia?.LinkedIn ?? "https://www.linkedin.com/in/emanuel-a-macedo/")" target="_blank" class="text-light me-3 social-link">
                             <i class="bi bi-linkedin fs-4"></i>
                         </a>
-                        <a href="https://github.com/ContatoEmanuel" target="_blank" class="text-light me-3 social-link">
+                        <a href="@(ViewBag.AppSettings?.SocialMedia?.GitHub ?? "https://github.com/ContatoEmanuel")" target="_blank" class="text-light me-3 social-link">
                             <i class="bi bi-github fs-4"></i>
                         </a>
-                        <a href="https://www.youtube.com/channel/UCQbZlecPawGlx0F6Oo56LDw" target="_blank" class="text-light social-link">
+                        <a href="@(ViewBag.AppSettings?.SocialMedia?.YouTube ?? "https://www.youtube.com/channel/UCQbZlecPawGlx0F6Oo56LDw")" target="_blank" class="text-light social-link">
                             <i class="bi bi-youtube fs-4"></i>
                         </a>
                     </div>
-                    <p class="text-muted small mb-0">&copy; @DateTime.Now.Year EAM Company - Todos os direitos reservados</p>
+                    <p class="text-muted small mb-0">&copy; @DateTime.Now.Year @(ViewBag.AppSettings?.CompanyName ?? "EAM Company") - Todos os direitos reservados</p>
                     <p class="text-muted small">Desenvolvido com ASP.NET Core & Bootstrap</p>
                 </div>
             </div>

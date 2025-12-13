@@ -6,8 +6,13 @@ using EAM.Web.Public.Services;
 using EAM.Web.Public.Data;
 using EAM.Infra.Data.Context;
 using Microsoft.EntityFrameworkCore;
+using EAM.Web.Public.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Configure strongly-typed settings
+builder.Services.Configure<ApiSettings>(builder.Configuration.GetSection("ApiSettings"));
+builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

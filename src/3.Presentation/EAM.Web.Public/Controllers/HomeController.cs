@@ -2,14 +2,16 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using EAM.Web.Public.Models;
 using EAM.Core.Application.Services.Interfaces;
+using Microsoft.Extensions.Options;
+using EAM.Web.Public.Configuration;
 
 namespace EAM.Web.Public.Controllers;
 
-public class HomeController : Controller
+public class HomeController : BaseController
 {
     private readonly IProjectService _projectService;
 
-    public HomeController(IProjectService projectService)
+    public HomeController(IProjectService projectService, IOptions<AppSettings> appSettings) : base(appSettings)
     {
         _projectService = projectService;
     }

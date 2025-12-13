@@ -32,7 +32,7 @@ public class BlogPostCreateDto
     public string Excerpt { get; set; } = string.Empty;
     public string Content { get; set; } = string.Empty;
     public string? ImageUrl { get; set; }
-    public string Author { get; set; } = "Emanuel Macêdo";
+    public string Author { get; set; } = string.Empty;
     public int ReadTimeMinutes { get; set; } = 5;
     public bool IsPublished { get; set; } = false;
     public DateTime? PublishedAt { get; set; }
