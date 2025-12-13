@@ -24,10 +24,13 @@
                 <article class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
                     <!-- Post Image -->
                     <div class="aspect-video bg-gradient-to-br from-blue-500 to-indigo-600 relative overflow-hidden">
-                        <img src="@post.ImageUrl" alt="@post.Title" class="w-full h-full object-cover">
+                        @if (!string.IsNullOrEmpty(post.ImageUrl))
+                        {
+                            <img src="@post.ImageUrl" alt="@post.Title" class="w-full h-full object-cover">
+                        }
                         <div class="absolute top-4 left-4">
-                            <span class="px-3 py-1 bg-white text-blue-600 text-xs font-semibold rounded-full">
-                                @post.Category
+                            <span class="px-3 py-1 bg-white text-blue-600 text-xs font-semibold rounded-full" style="background-color: @(post.Category?.Color ?? "#3B82F6");">
+                                @(post.Category?.Name ?? "Geral")
                             </span>
                         </div>
                     </div>
@@ -37,10 +40,10 @@
                         <!-- Meta Info -->
                         <div class="flex items-center text-sm text-gray-500 mb-3">
                             <i class="bi bi-calendar3 mr-2"></i>
-                            <span>@post.Date.ToString("dd/MM/yyyy")</span>
+                            <span>@(post.PublishedAt?.ToString("dd/MM/yyyy") ?? DateTime.Now.ToString("dd/MM/yyyy"))</span>
                             <span class="mx-2">•</span>
                             <i class="bi bi-clock mr-2"></i>
-                            <span>@post.ReadTime</span>
+                            <span>@post.ReadTimeMinutes min</span>
                         </div>
                         
                         <!-- Title -->

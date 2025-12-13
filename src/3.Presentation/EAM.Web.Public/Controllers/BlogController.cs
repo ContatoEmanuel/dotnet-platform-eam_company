@@ -13,7 +13,8 @@ public class BlogController : Controller
     {
         _httpClient = httpClientFactory.CreateClient();
         _configuration = configuration;
-        _httpClient.BaseAddress = new Uri(_configuration["ApiBaseUrl"] ?? "http://localhost:5000");
+        var apiBaseUrl = _configuration["ApiSettings:BaseUrl"] ?? "http://localhost:5000";
+        _httpClient.BaseAddress = new Uri(apiBaseUrl);
     }
 
     public async Task<IActionResult> Index()
