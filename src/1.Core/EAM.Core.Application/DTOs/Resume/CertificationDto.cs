@@ -2,7 +2,7 @@ namespace EAM.Core.Application.DTOs.Resume;
 
 public class CertificationDto
 {
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
     public string Issuer { get; set; } = string.Empty;
     public DateTime IssueDate { get; set; }

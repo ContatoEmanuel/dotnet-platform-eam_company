@@ -1,4 +1,5 @@
 using EAM.Core.Application.DTOs.Resume;
+using EAM.Web.Public.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Text.Json;

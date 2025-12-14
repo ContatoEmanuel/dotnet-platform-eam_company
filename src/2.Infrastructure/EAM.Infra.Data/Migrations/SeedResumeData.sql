@@ -3,7 +3,7 @@
 
 -- PersonalInfos
 CREATE TABLE PersonalInfos (
-    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
     FullName NVARCHAR(200) NOT NULL,
     Title NVARCHAR(200) NOT NULL,
     Location NVARCHAR(200),
@@ -14,12 +14,14 @@ CREATE TABLE PersonalInfos (
     Summary NVARCHAR(2000),
     IsActive BIT NOT NULL DEFAULT 1,
     CreatedAt DATETIME2 NOT NULL DEFAULT GETDATE(),
-    UpdatedAt DATETIME2 NULL
+    UpdatedAt DATETIME2 NULL,
+    CreatedBy NVARCHAR(200) NULL,
+    UpdatedBy NVARCHAR(200) NULL
 );
 
 -- Experiences
 CREATE TABLE Experiences (
-    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
     JobTitle NVARCHAR(200) NOT NULL,
     Company NVARCHAR(200) NOT NULL,
     Location NVARCHAR(200),
@@ -30,12 +32,15 @@ CREATE TABLE Experiences (
     Technologies NVARCHAR(MAX), -- Stored as CSV
     DisplayOrder INT NOT NULL,
     CreatedAt DATETIME2 NOT NULL DEFAULT GETDATE(),
-    UpdatedAt DATETIME2 NULL
+    UpdatedAt DATETIME2 NULL,
+    CreatedBy NVARCHAR(200) NULL,
+    UpdatedBy NVARCHAR(200) NULL,
+    IsActive BIT NOT NULL DEFAULT 1
 );
 
 -- Educations
 CREATE TABLE Educations (
-    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
     Degree NVARCHAR(300) NOT NULL,
     Institution NVARCHAR(200) NOT NULL,
     StartDate DATETIME2 NOT NULL,
@@ -44,12 +49,15 @@ CREATE TABLE Educations (
     Description NVARCHAR(1000),
     DisplayOrder INT NOT NULL,
     CreatedAt DATETIME2 NOT NULL DEFAULT GETDATE(),
-    UpdatedAt DATETIME2 NULL
+    UpdatedAt DATETIME2 NULL,
+    CreatedBy NVARCHAR(200) NULL,
+    UpdatedBy NVARCHAR(200) NULL,
+    IsActive BIT NOT NULL DEFAULT 1
 );
 
 -- Certifications
 CREATE TABLE Certifications (
-    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
     Name NVARCHAR(300) NOT NULL,
     Issuer NVARCHAR(200) NOT NULL,
     IssueDate DATETIME2 NOT NULL,
@@ -60,27 +68,36 @@ CREATE TABLE Certifications (
     Type INT NOT NULL, -- 1=MicrosoftCertified, 2=MicrosoftAppliedSkills, 3=Other
     DisplayOrder INT NOT NULL,
     CreatedAt DATETIME2 NOT NULL DEFAULT GETDATE(),
-    UpdatedAt DATETIME2 NULL
+    UpdatedAt DATETIME2 NULL,
+    CreatedBy NVARCHAR(200) NULL,
+    UpdatedBy NVARCHAR(200) NULL,
+    IsActive BIT NOT NULL DEFAULT 1
 );
 
 -- Skills
 CREATE TABLE Skills (
-    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
     Name NVARCHAR(200) NOT NULL,
     Category INT NOT NULL, -- 1=PowerPlatform, 2=Development, 3=Other
     DisplayOrder INT NOT NULL,
     CreatedAt DATETIME2 NOT NULL DEFAULT GETDATE(),
-    UpdatedAt DATETIME2 NULL
+    UpdatedAt DATETIME2 NULL,
+    CreatedBy NVARCHAR(200) NULL,
+    UpdatedBy NVARCHAR(200) NULL,
+    IsActive BIT NOT NULL DEFAULT 1
 );
 
 -- Languages
 CREATE TABLE Languages (
-    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Id UNIQUEIDENTIFIER PRIMARY KEY DEFAULT NEWID(),
     Name NVARCHAR(100) NOT NULL,
     ProficiencyLevel NVARCHAR(100) NOT NULL,
     DisplayOrder INT NOT NULL,
     CreatedAt DATETIME2 NOT NULL DEFAULT GETDATE(),
-    UpdatedAt DATETIME2 NULL
+    UpdatedAt DATETIME2 NULL,
+    CreatedBy NVARCHAR(200) NULL,
+    UpdatedBy NVARCHAR(200) NULL,
+    IsActive BIT NOT NULL DEFAULT 1
 );
 
 -- Seed Personal Info
