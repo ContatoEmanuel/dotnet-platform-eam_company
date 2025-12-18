@@ -49,7 +49,8 @@ public class BlogController : BaseController
         return View();
     }
 
-    public async Task<IActionResult> Post(int id)
+    [Route("Blog/Post/{id}/{slug?}")]
+    public async Task<IActionResult> Post(int id, string? slug = null)
     {
         try
         {
@@ -65,6 +66,12 @@ public class BlogController : BaseController
 
                 if (post != null)
                 {
+                    // Redirect to URL with slug if slug is missing
+                    if (string.IsNullOrEmpty(slug) && !string.IsNullOrEmpty(post.Slug))
+                    {
+                        return RedirectToActionPermanent("Post", new { id = id, slug = post.Slug });
+                    }
+
                     ViewBag.Post = post;
 
                     // Get next post
