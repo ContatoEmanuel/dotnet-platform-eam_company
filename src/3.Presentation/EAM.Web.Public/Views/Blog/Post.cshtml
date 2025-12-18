@@ -135,10 +135,14 @@
                 <i class="bi bi-arrow-left mr-2 group-hover:-translate-x-1 transition-transform"></i>
                 Voltar para o blog
             </a>
-            <a href="#" class="text-blue-600 hover:text-blue-700 font-medium inline-flex items-center group">
-                Próximo artigo
-                <i class="bi bi-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
-            </a>
+            @if (ViewBag.NextPost != null)
+            {
+                <a asp-controller="Blog" asp-action="Post" asp-route-id="@ViewBag.NextPost.Id" 
+                   class="text-blue-600 hover:text-blue-700 font-medium inline-flex items-center group">
+                    Próximo artigo
+                    <i class="bi bi-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+            }
         </div>
     </div>
 </section>

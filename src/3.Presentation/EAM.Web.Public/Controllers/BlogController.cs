@@ -66,6 +66,34 @@ public class BlogController : BaseController
                 if (post != null)
                 {
                     ViewBag.Post = post;
+
+                    // Get next post
+                    try
+                    {
+                        var allPostsResponse = await _httpClient.GetAsync("/api/blog/posts?publishedOnly=true");
+                        if (allPostsResponse.IsSuccessStatusCode)
+                        {
+                            var allPostsJson = await allPostsResponse.Content.ReadAsStringAsync();
+                            var allPosts = JsonSerializer.Deserialize<List<BlogPostDto>>(allPostsJson, new JsonSerializerOptions 
+                            { 
+                                PropertyNameCaseInsensitive = true 
+                            });
+
+                            if (allPosts != null && allPosts.Count > 0)
+                            {
+                                var currentIndex = allPosts.FindIndex(p => p.Id == id);
+                                if (currentIndex >= 0 && currentIndex < allPosts.Count - 1)
+                                {
+                                    ViewBag.NextPost = allPosts[currentIndex + 1];
+                                }
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        // Ignore error getting next post
+                    }
+
                     return View();
                 }
             }
