@@ -48,7 +48,7 @@
                     </button>
 
                     <!-- Blog Link -->
-                    <a asp-controller="Blog" asp-action="Index" class="nav-link-desktop" target="_blank">
+                    <a asp-controller="Blog" asp-action="Index" class="nav-link-desktop" id="blog-link" target="_blank">
                         <i class="bi bi-journal-text me-1"></i>
                         Blog
                     </a>
@@ -144,6 +144,28 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <!-- TypeScript compilado -->
     <script type="module" src="~/js/app.js" asp-append-version="true"></script>
+    
+    <!-- Blog link behavior -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const blogLink = document.getElementById('blog-link');
+            
+            if (blogLink) {
+                // Se já estiver na página de blog, remove o target
+                if (window.location.pathname.toLowerCase().includes('/blog')) {
+                    blogLink.removeAttribute('target');
+                }
+                
+                // Adiciona evento de click para verificar em tempo real
+                blogLink.addEventListener('click', function(e) {
+                    if (window.location.pathname.toLowerCase().includes('/blog')) {
+                        this.removeAttribute('target');
+                    }
+                });
+            }
+        });
+    </script>
+    
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
