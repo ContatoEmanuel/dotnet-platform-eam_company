@@ -76,16 +76,13 @@
         <div class="mt-8 flex items-center justify-end flex-wrap gap-3">
             <span class="text-sm font-semibold text-gray-700">Compartilhar:</span>
             <div class="flex gap-3">
-                <button class="w-10 h-10 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors flex items-center justify-center" title="Compartilhar no LinkedIn">
+                <button id="share-linkedin" class="w-10 h-10 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors flex items-center justify-center" title="Compartilhar no LinkedIn">
                     <i class="bi bi-linkedin"></i>
                 </button>
-                <button class="w-10 h-10 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors flex items-center justify-center" title="Compartilhar no Twitter">
-                    <i class="bi bi-twitter"></i>
-                </button>
-                <button class="w-10 h-10 bg-green-600 text-white rounded-full hover:bg-green-700 transition-colors flex items-center justify-center" title="Compartilhar no WhatsApp">
+                <button id="share-whatsapp" class="w-10 h-10 bg-green-600 text-white rounded-full hover:bg-green-700 transition-colors flex items-center justify-center" title="Compartilhar no WhatsApp">
                     <i class="bi bi-whatsapp"></i>
                 </button>
-                <button class="w-10 h-10 bg-gray-600 text-white rounded-full hover:bg-gray-700 transition-colors flex items-center justify-center" title="Copiar link">
+                <button id="copy-link" class="w-10 h-10 bg-gray-600 text-white rounded-full hover:bg-gray-700 transition-colors flex items-center justify-center" title="Copiar link">
                     <i class="bi bi-link-45deg"></i>
                 </button>
             </div>
@@ -184,3 +181,52 @@
         margin-bottom: 2rem;
     }
 </style>
+
+@section Scripts {
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const postUrl = window.location.href;
+        const postTitle = '@Html.Raw(post.Title.Replace("'", "\\'"))';
+        const postExcerpt = '@Html.Raw(post.Excerpt.Replace("'", "\\'"))';
+
+        // LinkedIn Share
+        document.getElementById('share-linkedin').addEventListener('click', function() {
+            const shareText = `${postTitle}\n\n${postExcerpt}\n\n${postUrl}`;
+            const linkedinUrl = `https://www.linkedin.com/feed/?shareActive=true&text=${encodeURIComponent(shareText)}`;
+            window.open(linkedinUrl, '_blank', 'width=600,height=600');
+        });
+
+        // WhatsApp Share
+        document.getElementById('share-whatsapp').addEventListener('click', function() {
+            const shareText = `*${postTitle}*\n\n${postExcerpt}\n\n${postUrl}`;
+            const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
+            window.open(whatsappUrl, '_blank');
+        });
+
+        // Copy Link
+        document.getElementById('copy-link').addEventListener('click', function() {
+            navigator.clipboard.writeText(postUrl).then(function() {
+                const btn = document.getElementById('copy-link');
+                const icon = btn.querySelector('i');
+                
+                // Change to check icon
+                icon.classList.remove('bi-link-45deg');
+                icon.classList.add('bi-check-lg');
+                btn.classList.remove('bg-gray-600', 'hover:bg-gray-700');
+                btn.classList.add('bg-green-600');
+                
+                // Reset after 2 seconds
+                setTimeout(function() {
+                    icon.classList.remove('bi-check-lg');
+                    icon.classList.add('bi-link-45deg');
+                    btn.classList.remove('bg-green-600');
+                    btn.classList.add('bg-gray-600', 'hover:bg-gray-700');
+                }, 2000);
+            }).catch(function(err) {
+                console.error('Erro ao copiar link:', err);
+            });
+        });
+    });
+</script>
+}
+
