@@ -150,8 +150,10 @@
 @section Scripts {
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        let activeCategory = 'all';
-        let activeTag = 'all';
+        // Read URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        let activeCategory = urlParams.get('category') || 'all';
+        let activeTag = urlParams.get('tag') || 'all';
 
         const categoryButtons = document.querySelectorAll('.category-filter');
         const tagButtons = document.querySelectorAll('.tag-filter');
@@ -210,6 +212,34 @@
                 filterPosts();
             });
         });
+
+        // Apply initial filter from URL
+        if (activeCategory !== 'all') {
+            categoryButtons.forEach(btn => {
+                if (btn.dataset.category === activeCategory) {
+                    btn.classList.remove('bg-gray-100', 'text-gray-700', 'hover:bg-gray-200');
+                    btn.classList.add('bg-blue-600', 'text-white');
+                } else if (btn.dataset.category !== 'all') {
+                    btn.classList.remove('bg-blue-600', 'text-white');
+                    btn.classList.add('bg-gray-100', 'text-gray-700', 'hover:bg-gray-200');
+                }
+            });
+        }
+
+        if (activeTag !== 'all') {
+            tagButtons.forEach(btn => {
+                if (btn.dataset.tag === activeTag) {
+                    btn.classList.remove('bg-gray-50', 'text-gray-600', 'border-gray-200', 'hover:bg-gray-100');
+                    btn.classList.add('bg-blue-600', 'text-white', 'border-blue-600');
+                } else if (btn.dataset.tag !== 'all') {
+                    btn.classList.remove('bg-blue-600', 'text-white', 'border-blue-600');
+                    btn.classList.add('bg-gray-50', 'text-gray-600', 'border-gray-200', 'hover:bg-gray-100');
+                }
+            });
+        }
+
+        // Apply initial filter
+        filterPosts();
     });
 </script>
 }
