@@ -29,7 +29,7 @@
                             <img src="@post.ImageUrl" alt="@post.Title" class="w-full h-full object-cover">
                         }
                         <div class="absolute top-4 left-4">
-                            <span class="px-3 py-1 bg-white text-blue-600 text-xs font-semibold rounded-full" style="background-color: @(post.Category?.Color ?? "#3B82F6");">
+                            <span class="px-3 py-1 bg-white text-xs font-semibold rounded-full" style="background-color: white; color: @(post.Category?.Color ?? "#3B82F6");">
                                 @(post.Category?.Name ?? "Geral")
                             </span>
                         </div>

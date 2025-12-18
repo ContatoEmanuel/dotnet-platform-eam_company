@@ -100,19 +100,21 @@
                 <h3 class="text-center h4 mb-4">Experiência com Grandes Players</h3>
                 <div class="row g-3">
                     @foreach (var client in new[] { 
-                        new { Name = "Itaú", Sector = "Financeiro" },
-                        new { Name = "Bradesco Seguros", Sector = "Seguros" },
-                        new { Name = "Alesat", Sector = "Varejo" },
-                        new { Name = "Cogna", Sector = "Educação" }
+                        new { Name = "Itaú", Sector = "Financeiro", Target = "exp-itau" },
+                        new { Name = "Bradesco Seguros", Sector = "Seguros", Target = "exp-bradesco" },
+                        new { Name = "Alesat", Sector = "Varejo", Target = "exp-alesat" },
+                        new { Name = "Cogna", Sector = "Educação", Target = "exp-cogna" }
                     })
                     {
                         <div class="col-6 col-md-3">
-                            <div class="card h-100 shadow-sm hover-card" style="border: 2px solid #E5E7EB;">
-                                <div class="card-body text-center" style="background: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 100%);">
-                                    <h5 class="card-title fw-bold mb-1">@client.Name</h5>
-                                    <p class="card-text small text-muted mb-0">@client.Sector</p>
+                            <a href="#@client.Target" class="text-decoration-none client-card-link">
+                                <div class="card h-100 shadow-sm hover-card" style="border: 2px solid #E5E7EB; cursor: pointer; transition: all 0.3s;">
+                                    <div class="card-body text-center" style="background: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 100%);">
+                                        <h5 class="card-title fw-bold mb-1 text-dark">@client.Name</h5>
+                                        <p class="card-text small text-muted mb-0">@client.Sector</p>
+                                    </div>
                                 </div>
-                            </div>
+                            </a>
                         </div>
                     }
                 </div>
@@ -272,7 +274,7 @@
                 <div class="position-relative" style="border-left: 3px solid #3B82F6; padding-left: 2rem;">
                     
                     <!-- Experience 1: Solutis (Bradesco Seguros) -->
-                    <div class="mb-5 position-relative">
+                    <div id="exp-bradesco" class="mb-5 position-relative">
                         <div class="position-absolute start-0 translate-middle-x bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" 
                              style="width: 48px; height: 48px; margin-left: -2rem;">
                             <span class="fw-bold">1</span>
@@ -311,7 +313,7 @@
                     </div>
 
                     <!-- Experience 2: GFT (Alesat) -->
-                    <div class="mb-5 position-relative">
+                    <div id="exp-alesat" class="mb-5 position-relative">
                         <div class="position-absolute start-0 translate-middle-x bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" 
                              style="width: 48px; height: 48px; margin-left: -2rem;">
                             <span class="fw-bold">2</span>
@@ -351,7 +353,7 @@
                     </div>
 
                     <!-- Experience 3: BRQ (Itaú) -->
-                    <div class="mb-5 position-relative">
+                    <div id="exp-itau" class="mb-5 position-relative">
                         <div class="position-absolute start-0 translate-middle-x bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" 
                              style="width: 48px; height: 48px; margin-left: -2rem;">
                             <span class="fw-bold">3</span>
@@ -391,7 +393,7 @@
                     </div>
 
                     <!-- Experience 4: Cogna -->
-                    <div class="mb-5 position-relative">
+                    <div id="exp-cogna" class="mb-5 position-relative">
                         <div class="position-absolute start-0 translate-middle-x bg-primary text-white rounded-circle d-flex align-items-center justify-content-center" 
                              style="width: 48px; height: 48px; margin-left: -2rem;">
                             <span class="fw-bold">4</span>
@@ -572,5 +574,48 @@
         .social-link:hover {
             transform: scale(1.1);
         }
+
+        .client-card-link:hover .card {
+            border-color: #3B82F6 !important;
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3) !important;
+        }
+
+        .client-card-link:hover .card-title {
+            color: #3B82F6 !important;
+        }
     </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Smooth scroll para os cards de grandes players
+            const clientLinks = document.querySelectorAll('.client-card-link');
+            
+            clientLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+                    
+                    if (targetElement) {
+                        const headerOffset = 100;
+                        const elementPosition = targetElement.getBoundingClientRect().top;
+                        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                        window.scrollTo({
+                            top: offsetPosition,
+                            behavior: 'smooth'
+                        });
+
+                        // Adiciona efeito de destaque temporário
+                        targetElement.style.transition = 'all 0.5s ease';
+                        targetElement.style.backgroundColor = '#EFF6FF';
+                        
+                        setTimeout(() => {
+                            targetElement.style.backgroundColor = '';
+                        }, 2000);
+                    }
+                });
+            });
+        });
+    </script>
 }
