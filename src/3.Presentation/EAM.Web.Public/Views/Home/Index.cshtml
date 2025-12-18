@@ -6,7 +6,7 @@
 }
 
 <!-- Hero Section -->
-<section id="hero" class="min-vh-100 d-flex align-items-center" style="background: linear-gradient(135deg, #EFF6FF 0%, #E0E7FF 100%); padding-top: 80px;">
+<section id="hero" class="min-vh-100 d-flex align-items-center bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-200" style="padding-top: 80px;">
     <div class="container">
         <div class="row align-items-center">
             <div class="col-lg-12 text-center">
@@ -28,13 +28,13 @@
                 </div>
 
                 <!-- Heading -->
-                <h1 class="display-3 fw-bold mb-3 animate-fade-in">
+                <h1 class="display-3 fw-bold mb-3 animate-fade-in dark:text-white">
                     Emanuel A Macêdo
                 </h1>
-                <h2 class="display-6 text-primary mb-4 animate-fade-in">
+                <h2 class="display-6 text-primary mb-4 animate-fade-in dark:text-white">
                     Senior Software Engineer
                 </h2>
-                <p class="lead text-muted mb-4 animate-fade-in">
+                <p class="lead text-muted mb-4 animate-fade-in dark:text-gray-300">
                     Dynamics 365 • Power Platform • .NET C# • Azure
                 </p>
 
@@ -75,18 +75,18 @@
 </section>
 
 <!-- About Section -->
-<section id="about" class="py-5 bg-white">
+<section id="about" class="py-5 bg-white dark:bg-gray-800 transition-colors duration-200">
     <div class="container py-5">
-        <h2 class="text-center display-5 fw-bold mb-5">Sobre Mim</h2>
+        <h2 class="text-center display-5 fw-bold mb-5 dark:text-white">Sobre Mim</h2>
         
         <div class="row">
             <div class="col-lg-8 mx-auto">
-                <p class="lead text-center text-muted mb-3">
+                <p class="lead text-center text-muted dark:text-gray-300 mb-3">
                     Engenheiro de Software Sênior especializado no ecossistema Microsoft, com sólida trajetória 
                     no desenvolvimento e sustentação de soluções críticas para grandes players dos setores 
                     <strong>financeiro, varejista e educacional</strong> (como Itaú, Bradesco Seguros, Alesat e Cogna).
                 </p>
-                <p class="text-center text-muted mb-5">
+                <p class="text-center text-muted dark:text-gray-300 mb-5">
                     Minha expertise combina o desenvolvimento técnico avançado (Pro-Code) com a agilidade da 
                     Power Platform, permitindo-me atuar desde a arquitetura de soluções em nuvem até a 
                     manutenção de ambientes legados complexos (On-Premise).
@@ -97,7 +97,7 @@
         <!-- Principais Clientes -->
         <div class="row mb-5">
             <div class="col-lg-10 mx-auto">
-                <h3 class="text-center h4 mb-4">Experiência com Grandes Players</h3>
+                <h3 class="text-center h4 mb-4 dark:text-white">Experiência com Grandes Players</h3>
                 <div class="row g-3">
                     @foreach (var client in new[] { 
                         new { Name = "Itaú", Sector = "Financeiro", Target = "exp-itau" },
@@ -108,10 +108,10 @@
                     {
                         <div class="col-6 col-md-3">
                             <a href="#@client.Target" class="text-decoration-none client-card-link">
-                                <div class="card h-100 shadow-sm hover-card" style="border: 2px solid #E5E7EB; cursor: pointer; transition: all 0.3s;">
-                                    <div class="card-body text-center" style="background: linear-gradient(135deg, #F9FAFB 0%, #F3F4F6 100%);">
-                                        <h5 class="card-title fw-bold mb-1 text-dark">@client.Name</h5>
-                                        <p class="card-text small text-muted mb-0">@client.Sector</p>
+                                <div class="card h-100 shadow-sm hover-card dark:bg-gray-700 dark:border-gray-600" style="border: 2px solid #E5E7EB; cursor: pointer; transition: all 0.3s;">
+                                    <div class="card-body text-center bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-800">
+                                        <h5 class="card-title fw-bold mb-1 text-dark dark:text-white">@client.Name</h5>
+                                        <p class="card-text small text-muted dark:text-gray-300 mb-0">@client.Sector</p>
                                     </div>
                                 </div>
                             </a>
@@ -124,7 +124,7 @@
         <!-- Expertise -->
         <div class="row mb-5">
             <div class="col-lg-10 mx-auto">
-                <h3 class="text-center h4 mb-4">Principais Competências</h3>
+                <h3 class="text-center h4 mb-4 dark:text-white">Principais Competências</h3>
                 <div class="row g-4">
                     @foreach (var expertise in new[] {
                         new { Icon = "⚙️", Title = "Desenvolvimento Dynamics 365", Description = "Domínio na customização e extensão da plataforma (Sales, Customer Service) utilizando C# .NET para Plugins e Workflows, além de JavaScript para scripts client-side e validações complexas." },
@@ -135,13 +135,13 @@
                     })
                     {
                         <div class="col-md-6">
-                            <div class="card h-100 border-0 shadow-sm hover-card">
+                            <div class="card h-100 border-0 shadow-sm hover-card dark:bg-gray-700 dark:border-gray-600">
                                 <div class="card-body">
                                     <div class="d-flex align-items-start">
                                         <div class="fs-1 me-3">@expertise.Icon</div>
                                         <div>
-                                            <h5 class="card-title fw-bold">@expertise.Title</h5>
-                                            <p class="card-text text-muted small">@expertise.Description</p>
+                                            <h5 class="card-title fw-bold dark:text-white">@expertise.Title</h5>
+                                            <p class="card-text text-muted small dark:text-gray-300">@expertise.Description</p>
                                         </div>
                                     </div>
                                 </div>
@@ -155,7 +155,7 @@
         <!-- Tech Stack -->
         <div class="row">
             <div class="col-lg-10 mx-auto">
-                <h3 class="text-center h4 mb-4">Stack Tecnológico</h3>
+                <h3 class="text-center h4 mb-4 dark:text-white">Stack Tecnológico</h3>
                 <div class="d-flex flex-wrap justify-content-center gap-2">
                     @foreach (var tech in new[] { 
                         "Microsoft Dynamics 365", "Microsoft Power Platform", "ASP.NET Core", "C# .NET", "JavaScript", 
@@ -163,7 +163,7 @@
                         "Data Factory", "Dataverse", "SQL Server", "TypeScript", "React", "Azure DevOps" 
                     })
                     {
-                        <span class="badge px-3 py-2" style="background-color: #EFF6FF; color: #1E40AF; border: 1px solid #BFDBFE;">@tech</span>
+                        <span class="badge px-3 py-2 dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600" style="background-color: #EFF6FF; color: #1E40AF; border: 1px solid #BFDBFE;">@tech</span>
                     }
                 </div>
             </div>
@@ -172,10 +172,10 @@
 </section>
 
 <!-- Projects Section -->
-<section id="projects" class="py-5 bg-light">
+<section id="projects" class="py-5 bg-light dark:bg-gray-900 transition-colors duration-200">
     <div class="container py-5">
-        <h2 class="text-center display-5 fw-bold mb-3">Portfólio de Projetos</h2>
-        <p class="text-center text-muted mb-5 col-lg-8 mx-auto">
+        <h2 class="text-center display-5 fw-bold mb-3 dark:text-white">Portfólio de Projetos</h2>
+        <p class="text-center text-muted mb-5 col-lg-8 mx-auto dark:text-gray-300">
             Soluções desenvolvidas utilizando o ecossistema Microsoft, focadas em integração, 
             automação e modernização de processos empresariais.
         </p>
@@ -184,7 +184,7 @@
             @foreach (var project in featuredProjects)
             {
                 <div class="col-md-6">
-                    <div class="card h-100 border-0 shadow-lg hover-card">
+                    <div class="card h-100 border-0 shadow-lg hover-card dark:bg-gray-700 dark:border-gray-600">
                         <div class="position-relative" style="background: linear-gradient(135deg, #DBEAFE 0%, #E0E7FF 100%); height: 200px; display: flex; align-items: center; justify-content: center;">
                             <div class="position-absolute top-0 end-0 m-3">
                                 <span class="badge bg-warning text-dark">⭐ Destaque</span>
@@ -192,14 +192,14 @@
                             <div class="fs-1">@project.IconEmoji</div>
                         </div>
                         <div class="card-body">
-                            <h5 class="card-title fw-bold">@project.Title</h5>
-                            <p class="card-text text-muted small">
+                            <h5 class="card-title fw-bold dark:text-white">@project.Title</h5>
+                            <p class="card-text text-muted small dark:text-gray-300">
                                 @project.Description
                             </p>
                             <div class="d-flex flex-wrap gap-2 mb-3">
                                 @foreach (var tech in project.Technologies)
                                 {
-                                    <span class="badge bg-primary-subtle text-primary">@tech</span>
+                                    <span class="badge bg-primary-subtle text-primary dark:bg-gray-600 dark:text-gray-200">@tech</span>
                                 }
                             </div>
                             <div class="d-flex gap-2">
@@ -223,22 +223,22 @@
         </div>
 
         <!-- Outros Projetos -->
-        <h3 class="text-center h4 mt-5 mb-4">Outros Projetos</h3>
+        <h3 class="text-center h4 mt-5 mb-4 dark:text-white">Outros Projetos</h3>
         <div class="row g-4">
             @foreach (var project in otherProjects)
             {
                 <div class="col-md-6 col-lg-3">
-                    <div class="card h-100 border-0 shadow hover-card">
+                    <div class="card h-100 border-0 shadow hover-card dark:bg-gray-700 dark:border-gray-600">
                         <div class="card-body text-center">
                             <div class="fs-1 mb-3">@project.IconEmoji</div>
-                            <h6 class="card-title fw-bold">@project.Title</h6>
-                            <p class="card-text small text-muted">
+                            <h6 class="card-title fw-bold dark:text-white">@project.Title</h6>
+                            <p class="card-text small text-muted dark:text-gray-300">
                                 @project.Description
                             </p>
                             <div class="d-flex flex-wrap gap-1 justify-content-center mb-2">
                                 @foreach (var tech in project.Technologies.Take(2))
                                 {
-                                    <span class="badge bg-secondary-subtle text-secondary small">@tech</span>
+                                    <span class="badge bg-secondary-subtle text-secondary small dark:bg-gray-600 dark:text-gray-200">@tech</span>
                                 }
                             </div>
                             @if (!string.IsNullOrEmpty(project.GithubUrl))
@@ -262,10 +262,10 @@
 </section>
 
 <!-- Experience Section -->
-<section id="experience" class="py-5 bg-white">
+<section id="experience" class="py-5 bg-white dark:bg-gray-800 transition-colors duration-200">
     <div class="container py-5">
-        <h2 class="text-center display-5 fw-bold mb-3">Experiência Profissional</h2>
-        <p class="text-center text-muted mb-5">
+        <h2 class="text-center display-5 fw-bold mb-3 dark:text-white">Experiência Profissional</h2>
+        <p class="text-center text-muted mb-5 dark:text-gray-300">
             Trajetória sólida no desenvolvimento de soluções Microsoft para grandes empresas dos setores financeiro, seguros, varejo e educação.
         </p>
         
@@ -279,24 +279,24 @@
                              style="width: 48px; height: 48px; margin-left: -2rem;">
                             <span class="fw-bold">1</span>
                         </div>
-                        <div class="card border-0 shadow-sm hover-card">
+                        <div class="card border-0 shadow-sm hover-card dark:bg-gray-700 dark:border-gray-600">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
                                     <div>
-                                        <h5 class="card-title fw-bold mb-1">Senior Software Engineer I</h5>
-                                        <p class="text-primary fw-semibold mb-1">Solutis Tecnologias</p>
-                                        <p class="text-muted small mb-0">Salvador, BA • Cliente: Bradesco Seguros</p>
+                                        <h5 class="card-title fw-bold mb-1 dark:text-white">Senior Software Engineer I</h5>
+                                        <p class="text-primary fw-semibold mb-1 dark:text-blue-400">Solutis Tecnologias</p>
+                                        <p class="text-muted small mb-0 dark:text-gray-400">Salvador, BA • Cliente: Bradesco Seguros</p>
                                     </div>
                                     <span class="badge bg-success">abril de 2025 - Atual</span>
                                 </div>
-                                <p class="card-text text-muted small mt-2">
+                                <p class="card-text text-muted small mt-2 dark:text-gray-300">
                                     Especialista técnico responsável por projetos e sustentação em ambientes Dynamics 2016 (On-Premise v. 8.2). 
                                     Foco em estabilidade da plataforma e evolução de funcionalidades através de customizações complexas, 
                                     gerenciamento de segurança e automação de processos de negócio.
                                 </p>
                                 <div class="mt-2">
-                                    <p class="small fw-semibold mb-1">Principais Responsabilidades:</p>
-                                    <ul class="small text-muted mb-2">
+                                    <p class="small fw-semibold mb-1 dark:text-white">Principais Responsabilidades:</p>
+                                    <ul class="small text-muted mb-2 dark:text-gray-300">
                                         <li>Desenvolvimento e manutenção de componentes back-end em .NET C#, incluindo Plugins e Workflows</li>
                                         <li>Criação de scripts client-side em JavaScript para validações e manipulação dinâmica de formulários</li>
                                         <li>Gestão de perfis de segurança com configuração de Security Roles e Unidades de Negócio</li>
@@ -305,7 +305,7 @@
                                 <div class="d-flex flex-wrap gap-2">
                                     @foreach (var tech in new[] { "Dynamics 2016", ".NET C#", "JavaScript", "SQL Server", "Visual Studio" })
                                     {
-                                        <span class="badge" style="background-color: #EFF6FF; color: #1E40AF; border: 1px solid #BFDBFE;">@tech</span>
+                                        <span class="badge dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600" style="background-color: #EFF6FF; color: #1E40AF; border: 1px solid #BFDBFE;">@tech</span>
                                     }
                                 </div>
                             </div>
@@ -318,24 +318,24 @@
                              style="width: 48px; height: 48px; margin-left: -2rem;">
                             <span class="fw-bold">2</span>
                         </div>
-                        <div class="card border-0 shadow-sm hover-card">
+                        <div class="card border-0 shadow-sm hover-card dark:bg-gray-700 dark:border-gray-600">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
                                     <div>
-                                        <h5 class="card-title fw-bold mb-1">Analista de Automação de Processos III</h5>
-                                        <p class="text-primary fw-semibold mb-1">GFT Technologies Brasil</p>
-                                        <p class="text-muted small mb-0">Barueri, SP • Cliente: Alesat Combustíveis S.A.</p>
+                                        <h5 class="card-title fw-bold mb-1 dark:text-white">Analista de Automação de Processos III</h5>
+                                        <p class="text-primary fw-semibold mb-1 dark:text-blue-400">GFT Technologies Brasil</p>
+                                        <p class="text-muted small mb-0 dark:text-gray-400">Barueri, SP • Cliente: Alesat Combustíveis S.A.</p>
                                     </div>
-                                    <span class="badge bg-light text-muted">nov/2024 - mar/2025</span>
+                                    <span class="badge bg-light text-muted dark:bg-gray-800 dark:text-gray-400">nov/2024 - mar/2025</span>
                                 </div>
-                                <p class="card-text text-muted small mt-2">
+                                <p class="card-text text-muted small mt-2 dark:text-gray-300">
                                     Projeto de escopo fechado para digitalização e gerenciamento de dados de campo. Responsável pela 
                                     arquitetura e implementação de solução completa com Power Platform e Azure, desde coleta de dados 
                                     até integração e visualização gerencial.
                                 </p>
                                 <div class="mt-2">
-                                    <p class="small fw-semibold mb-1">Principais Responsabilidades:</p>
-                                    <ul class="small text-muted mb-2">
+                                    <p class="small fw-semibold mb-1 dark:text-white">Principais Responsabilidades:</p>
+                                    <ul class="small text-muted mb-2 dark:text-gray-300">
                                         <li>Desenvolvimento de Canvas App com capacidade offline para coleta de dados em campo</li>
                                         <li>Construção de Model-Driven App para gerenciamento e aprovação centralizada</li>
                                         <li>Orquestração de automações com Azure Logic Apps</li>
@@ -345,7 +345,7 @@
                                 <div class="d-flex flex-wrap gap-2">
                                     @foreach (var tech in new[] { "Power Apps", "Dataverse", "Azure Logic Apps", "Azure Data Factory", "JavaScript" })
                                     {
-                                        <span class="badge" style="background-color: #EFF6FF; color: #1E40AF; border: 1px solid #BFDBFE;">@tech</span>
+                                        <span class="badge dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600" style="background-color: #EFF6FF; color: #1E40AF; border: 1px solid #BFDBFE;">@tech</span>
                                     }
                                 </div>
                             </div>
@@ -358,24 +358,24 @@
                              style="width: 48px; height: 48px; margin-left: -2rem;">
                             <span class="fw-bold">3</span>
                         </div>
-                        <div class="card border-0 shadow-sm hover-card">
+                        <div class="card border-0 shadow-sm hover-card dark:bg-gray-700 dark:border-gray-600">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
                                     <div>
-                                        <h5 class="card-title fw-bold mb-1">Analista de Sistemas PL</h5>
-                                        <p class="text-primary fw-semibold mb-1">BRQ Digital Solutions</p>
-                                        <p class="text-muted small mb-0">São Paulo, SP • Cliente: Itaú</p>
+                                        <h5 class="card-title fw-bold mb-1 dark:text-white">Analista de Sistemas PL</h5>
+                                        <p class="text-primary fw-semibold mb-1 dark:text-blue-400">BRQ Digital Solutions</p>
+                                        <p class="text-muted small mb-0 dark:text-gray-400">São Paulo, SP • Cliente: Itaú</p>
                                     </div>
-                                    <span class="badge bg-light text-muted">nov/2023 - out/2024</span>
+                                    <span class="badge bg-light text-muted dark:bg-gray-800 dark:text-gray-400">nov/2023 - out/2024</span>
                                 </div>
-                                <p class="card-text text-muted small mt-2">
+                                <p class="card-text text-muted small mt-2 dark:text-gray-300">
                                     Desenvolvimento e manutenção de soluções no Dynamics 365 com foco em customizações de back-end e 
                                     otimização de processos. Tradução de requisitos de negócio em implementações técnicas em ambiente 
                                     financeiro de alta demanda.
                                 </p>
                                 <div class="mt-2">
-                                    <p class="small fw-semibold mb-1">Principais Responsabilidades:</p>
-                                    <ul class="small text-muted mb-2">
+                                    <p class="small fw-semibold mb-1 dark:text-white">Principais Responsabilidades:</p>
+                                    <ul class="small text-muted mb-2 dark:text-gray-300">
                                         <li>Desenvolvimento de Plugins e Custom Workflow Activities em C#</li>
                                         <li>Criação de Web Resources (JavaScript, HTML, CSS) para formulários interativos</li>
                                         <li>Automação de processos com Workflows, Business Rules e Power Automate</li>
@@ -385,7 +385,7 @@
                                 <div class="d-flex flex-wrap gap-2">
                                     @foreach (var tech in new[] { "Dynamics 365", "C#", "JavaScript", "Power Automate", "Dataverse" })
                                     {
-                                        <span class="badge" style="background-color: #EFF6FF; color: #1E40AF; border: 1px solid #BFDBFE;">@tech</span>
+                                        <span class="badge dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600" style="background-color: #EFF6FF; color: #1E40AF; border: 1px solid #BFDBFE;">@tech</span>
                                     }
                                 </div>
                             </div>
@@ -398,24 +398,24 @@
                              style="width: 48px; height: 48px; margin-left: -2rem;">
                             <span class="fw-bold">4</span>
                         </div>
-                        <div class="card border-0 shadow-sm hover-card">
+                        <div class="card border-0 shadow-sm hover-card dark:bg-gray-700 dark:border-gray-600">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
                                     <div>
-                                        <h5 class="card-title fw-bold mb-1">Desenvolvedor II</h5>
-                                        <p class="text-primary fw-semibold mb-1">Cogna Educação</p>
-                                        <p class="text-muted small mb-0">Valinhos, SP • Cliente: Projetos Internos (Holding)</p>
+                                        <h5 class="card-title fw-bold mb-1 dark:text-white">Desenvolvedor II</h5>
+                                        <p class="text-primary fw-semibold mb-1 dark:text-blue-400">Cogna Educação</p>
+                                        <p class="text-muted small mb-0 dark:text-gray-400">Valinhos, SP • Cliente: Projetos Internos (Holding)</p>
                                     </div>
-                                    <span class="badge bg-light text-muted">mar/2022 - out/2023</span>
+                                    <span class="badge bg-light text-muted dark:bg-gray-800 dark:text-gray-400">mar/2022 - out/2023</span>
                                 </div>
-                                <p class="card-text text-muted small mt-2">
+                                <p class="card-text text-muted small mt-2 dark:text-gray-300">
                                     Desenvolvimento de soluções de automação e engajamento de clientes com Power Platform integrada ao 
                                     Dynamics 365. Criação de soluções omnichannel para otimização da comunicação. Evolução de 
                                     Desenvolvedor I para Desenvolvedor II durante o período.
                                 </p>
                                 <div class="mt-2">
-                                    <p class="small fw-semibold mb-1">Principais Responsabilidades:</p>
-                                    <ul class="small text-muted mb-2">
+                                    <p class="small fw-semibold mb-1 dark:text-white">Principais Responsabilidades:</p>
+                                    <ul class="small text-muted mb-2 dark:text-gray-300">
                                         <li>Desenvolvimento de soluções low-code com Power Apps</li>
                                         <li>Criação de fluxos de automação com Power Automate</li>
                                         <li>Desenvolvimento e integração de Chatbot com Power Virtual Agents</li>
@@ -426,7 +426,7 @@
                                 <div class="d-flex flex-wrap gap-2">
                                     @foreach (var tech in new[] { "Power Apps", "Power Automate", "Power Virtual Agents", "Dynamics 365", "Power BI" })
                                     {
-                                        <span class="badge" style="background-color: #EFF6FF; color: #1E40AF; border: 1px solid #BFDBFE;">@tech</span>
+                                        <span class="badge dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600" style="background-color: #EFF6FF; color: #1E40AF; border: 1px solid #BFDBFE;">@tech</span>
                                     }
                                 </div>
                             </div>
@@ -439,24 +439,24 @@
                              style="width: 48px; height: 48px; margin-left: -2rem;">
                             <span class="fw-bold">5</span>
                         </div>
-                        <div class="card border-0 shadow-sm hover-card">
+                        <div class="card border-0 shadow-sm hover-card dark:bg-gray-700 dark:border-gray-600">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
                                     <div>
-                                        <h5 class="card-title fw-bold mb-1">Desenvolvedor Junior</h5>
-                                        <p class="text-primary fw-semibold mb-1">RBA Digital</p>
-                                        <p class="text-muted small mb-0">Joinville, SC • Cliente: Consultoria para Diversos Clientes</p>
+                                        <h5 class="card-title fw-bold mb-1 dark:text-white">Desenvolvedor Junior</h5>
+                                        <p class="text-primary fw-semibold mb-1 dark:text-blue-400">RBA Digital</p>
+                                        <p class="text-muted small mb-0 dark:text-gray-400">Joinville, SC • Cliente: Consultoria para Diversos Clientes</p>
                                     </div>
-                                    <span class="badge bg-light text-muted">out/2020 - fev/2022</span>
+                                    <span class="badge bg-light text-muted dark:bg-gray-800 dark:text-gray-400">out/2020 - fev/2022</span>
                                 </div>
-                                <p class="card-text text-muted small mt-2">
+                                <p class="card-text text-muted small mt-2 dark:text-gray-300">
                                     Primeira imersão profissional no ecossistema Dynamics 365. Participação em todo o ciclo de vida do 
                                     desenvolvimento de software, desde levantamento de requisitos até implementação e testes. Evolução 
                                     de Estagiário para Desenvolvedor Júnior durante o período.
                                 </p>
                                 <div class="mt-2">
-                                    <p class="small fw-semibold mb-1">Principais Responsabilidades:</p>
-                                    <ul class="small text-muted mb-2">
+                                    <p class="small fw-semibold mb-1 dark:text-white">Principais Responsabilidades:</p>
+                                    <ul class="small text-muted mb-2 dark:text-gray-300">
                                         <li>Modelagem de processos de negócio com diagramas UML</li>
                                         <li>Desenvolvimento de aplicações Power Apps (Canvas e Model-Driven)</li>
                                         <li>Criação de fluxos automatizados com Power Automate</li>
@@ -467,7 +467,7 @@
                                 <div class="d-flex flex-wrap gap-2">
                                     @foreach (var tech in new[] { "Power Apps", "Power Automate", "Dataverse", "UML", "Scrum", "Dynamics 365" })
                                     {
-                                        <span class="badge" style="background-color: #EFF6FF; color: #1E40AF; border: 1px solid #BFDBFE;">@tech</span>
+                                        <span class="badge dark:bg-gray-700 dark:text-gray-200 dark:border-gray-600" style="background-color: #EFF6FF; color: #1E40AF; border: 1px solid #BFDBFE;">@tech</span>
                                     }
                                 </div>
                             </div>
@@ -486,7 +486,7 @@
                             <i class="bi bi-linkedin"></i> Ver no LinkedIn
                         </a>
                     </div>
-                    <p class="text-muted small mt-3">
+                    <p class="text-muted small mt-3 dark:text-gray-400">
                         Currículo formatado com experiências detalhadas, certificações e competências
                     </p>
                 </div>
@@ -510,14 +510,14 @@
 
         <div class="row g-4 justify-content-center">
             <div class="col-md-5">
-                <div class="card h-100 shadow-lg hover-card" style="border: 2px solid #10B981;">
+                <div class="card h-100 shadow-lg hover-card dark:bg-gray-700 dark:border-green-500" style="border: 2px solid #10B981;">
                     <div class="card-body text-center p-4">
                         <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" 
                              style="width: 64px; height: 64px;">
                             <i class="bi bi-whatsapp fs-2"></i>
                         </div>
-                        <h3 class="h5 fw-bold text-dark mb-2">WhatsApp</h3>
-                        <p class="text-muted mb-3">+55 38 98860-1152</p>
+                        <h3 class="h5 fw-bold text-dark mb-2 dark:text-white">WhatsApp</h3>
+                        <p class="text-muted mb-3 dark:text-gray-300">+55 38 98860-1152</p>
                         <a href="https://wa.me/5538988601152" target="_blank" class="btn btn-success w-100">
                             <i class="bi bi-whatsapp"></i> Iniciar Conversa
                         </a>
@@ -528,14 +528,14 @@
                 </div>
             </div>
             <div class="col-md-5">
-                <div class="card h-100 shadow-lg hover-card" style="border: 2px solid #8B5CF6;">
+                <div class="card h-100 shadow-lg hover-card dark:bg-gray-700 dark:border-purple-500" style="border: 2px solid #8B5CF6;">
                     <div class="card-body text-center p-4">
                         <div class="rounded-circle d-inline-flex align-items-center justify-content-center mb-3 text-white" 
                              style="width: 64px; height: 64px; background-color: #8B5CF6;">
                             <i class="bi bi-envelope fs-2"></i>
                         </div>
-                        <h3 class="h5 fw-bold text-dark mb-2">Email</h3>
-                        <p class="text-muted small mb-3 text-break">contato.emanuel97@gmail.com</p>
+                        <h3 class="h5 fw-bold text-dark mb-2 dark:text-white">Email</h3>
+                        <p class="text-muted small mb-3 text-break dark:text-gray-300">contato.emanuel97@gmail.com</p>
                         <a href="mailto:contato.emanuel97@gmail.com" class="btn w-100 text-white" style="background-color: #8B5CF6;">
                             <i class="bi bi-envelope"></i> Enviar Email
                         </a>
