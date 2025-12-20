@@ -6,6 +6,12 @@ module.exports = {
     "./wwwroot/**/*.html",
     "./wwwroot/js/**/*.js"
   ],
+  safelist: [
+    'translate-x-0',
+    'translate-x-full',
+    'opacity-100',
+    'opacity-0'
+  ],
   theme: {
     extend: {
       colors: {

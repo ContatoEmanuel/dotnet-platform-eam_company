@@ -66,8 +66,9 @@ export class MobileMenu {
         setTimeout(() => {
             this.overlay?.classList.add('opacity-100');
         }, 10);
-        // Slide menu in
+        // Slide menu in - remove translate-x-full and add translate-x-0
         this.mobileMenu.classList.remove('translate-x-full');
+        this.mobileMenu.classList.add('translate-x-0');
         // Toggle icons
         this.menuIconClosed?.classList.add('hidden');
         this.menuIconOpen?.classList.remove('hidden');
@@ -83,7 +84,8 @@ export class MobileMenu {
         setTimeout(() => {
             this.overlay?.classList.add('hidden');
         }, 300);
-        // Slide menu out
+        // Slide menu out - remove translate-x-0 and add translate-x-full
+        this.mobileMenu.classList.remove('translate-x-0');
         this.mobileMenu.classList.add('translate-x-full');
         // Toggle icons
         this.menuIconClosed?.classList.remove('hidden');
