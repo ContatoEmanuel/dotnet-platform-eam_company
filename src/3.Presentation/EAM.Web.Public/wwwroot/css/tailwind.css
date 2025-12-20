@@ -3,6 +3,70 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Dark Mode Override for Bootstrap conflicts */
+html.dark body {
+  background-color: #111827 !important;
+  color: #e5e7eb !important;
+}
+
+html.dark .bg-white {
+  background-color: #1f2937 !important;
+}
+
+html.dark .bg-light {
+  background-color: #111827 !important;
+}
+
+html.dark .text-dark {
+  color: #f9fafb !important;
+}
+
+html.dark .text-muted {
+  color: #9ca3af !important;
+}
+
+html.dark .card {
+  background-color: #374151 !important;
+  border-color: #4b5563 !important;
+}
+
+html.dark .card-body {
+  background-color: #374151 !important;
+}
+
+html.dark h1, html.dark h2, html.dark h3, html.dark h4, html.dark h5, html.dark h6 {
+  color: #f9fafb !important;
+}
+
+html.dark p:not(.text-white):not(.text-light) {
+  color: #d1d5db !important;
+}
+
+html.dark .lead {
+  color: #9ca3af !important;
+}
+
+html.dark .badge.bg-light {
+  background-color: #374151 !important;
+  color: #d1d5db !important;
+}
+
+html.dark .border {
+  border-color: #4b5563 !important;
+}
+
+html.dark a:not(.btn):not(.nav-link):not([class*="text-white"]) {
+  color: #60a5fa;
+}
+
+html.dark .navbar {
+  background-color: #1f2937 !important;
+}
+
+html.dark .bg-dark {
+  background-color: #030712 !important;
+}
+
 /* Custom styles */
 @layer base {
   html {
