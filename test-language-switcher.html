@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Language Switcher</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .section { margin: 20px 0; padding: 20px; border: 1px solid #ccc; }
+        select { padding: 5px 10px; font-size: 16px; }
+        .logs { background: #f5f5f5; padding: 10px; margin-top: 20px; min-height: 100px; max-height: 300px; overflow-y: auto; border: 1px solid #ddd; }
+        .log-entry { margin: 5px 0; font-size: 12px; font-family: monospace; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="title">Teste do Language Switcher</h1>
+        
+        <div class="section">
+            <label for="language-select">Selecione o idioma:</label>
+            <select id="language-select">
+                <option value="pt-BR">Português</option>
+                <option value="en-US">Inglês</option>
+            </select>
+        </div>
+
+        <div class="section">
+            <h2 id="subtitle">Conteúdo em Português</h2>
+            <p id="description">Este é um teste do Language Switcher</p>
+            <p id="storage-info">localStorage: <span id="storage-value">não definido</span></p>
+        </div>
+
+        <div class="section">
+            <h3>Console Logs:</h3>
+            <div class="logs" id="logs"></div>
+        </div>
+    </div>
+
+    <script>
+        // Translations
+        const translations = {
+            'pt-BR': {
+                title: 'Teste do Language Switcher',
+                subtitle: 'Conteúdo em Português',
+                description: 'Este é um teste do Language Switcher',
+                selectLabel: 'Selecione o idioma:'
+            },
+            'en-US': {
+                title: 'Language Switcher Test',
+                subtitle: 'Content in English',
+                description: 'This is a Language Switcher test',
+                selectLabel: 'Select the language:'
+            }
+        };
+
+        // Logging
+        const logsDiv = document.getElementById('logs');
+        const originalLog = console.log;
+        console.log = function(...args) {
+            const message = args.map(arg => 
+                typeof arg === 'object' ? JSON.stringify(arg) : String(arg)
+            ).join(' ');
+            
+            const logEntry = document.createElement('div');
+            logEntry.className = 'log-entry';
+            logEntry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            logsDiv.appendChild(logEntry);
+            logsDiv.scrollTop = logsDiv.scrollHeight;
+            
+            originalLog.apply(console, args);
+        };
+
+        // Language Switcher Class
+        class SimpleLangSwitcher {
+            constructor() {
+                this.LANG_KEY = 'test_lang';
+                this.lang = this.getSavedLang() || 'pt-BR';
+                this.applyLang();
+            }
+
+            getCurrentLang() {
+                return this.lang;
+            }
+
+            setLang(lang) {
+                console.log(`setLang() chamado com: ${lang}`);
+                this.lang = lang;
+                localStorage.setItem(this.LANG_KEY, lang);
+                console.log(`localStorage.setItem('${this.LANG_KEY}', '${lang}')`);
+                this.applyLang();
+            }
+
+            getSavedLang() {
+                const saved = localStorage.getItem(this.LANG_KEY);
+                console.log(`getSavedLang(): ${saved || 'null'}`);
+                return saved === 'pt-BR' || saved === 'en-US' ? saved : null;
+            }
+
+            applyLang() {
+                console.log(`applyLang() com idioma: ${this.lang}`);
+                
+                document.documentElement.lang = this.lang;
+                document.getElementById('title').textContent = translations[this.lang].title;
+                document.getElementById('subtitle').textContent = translations[this.lang].subtitle;
+                document.getElementById('description').textContent = translations[this.lang].description;
+                
+                const select = document.getElementById('language-select');
+                if (select) {
+                    select.value = this.lang;
+                    console.log(`Select atualizado para: ${select.value}`);
+                }
+                
+                document.getElementById('storage-value').textContent = localStorage.getItem(this.LANG_KEY) || 'não definido';
+            }
+        }
+
+        // Initialize
+        console.log('=== Iniciando teste ===');
+        const switcher = new SimpleLangSwitcher();
+        console.log(`Idioma inicial: ${switcher.getCurrentLang()}`);
+
+        const select = document.getElementById('language-select');
+        select.addEventListener('change', (e) => {
+            console.log(`Event 'change' disparado no select`);
+            const value = e.target.value;
+            console.log(`Novo valor selecionado: ${value}`);
+            switcher.setLang(value);
+        });
+
+        console.log('=== Teste pronto ===');
+    </script>
+</body>
+</html>

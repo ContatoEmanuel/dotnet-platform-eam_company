@@ -12,6 +12,7 @@ declare class EAMPublicSite {
     private activeNavigation;
     private animationObserver;
     private mobileMenu;
+    private languageSwitcher;
     /**
      * Inicializa a aplicação
      */

@@ -9,6 +9,7 @@ import { SmoothScrollLinks } from './components/SmoothScrollLinks';
 import { ActiveNavigation } from './components/ActiveNavigation';
 import { AnimationObserver } from './components/AnimationObserver';
 import { MobileMenu } from './components/MobileMenu';
+import { LanguageSwitcher } from './components/LanguageSwitcher';
 
 /**
  * Classe principal da aplicação
@@ -19,6 +20,7 @@ class EAMPublicSite {
     private activeNavigation: ActiveNavigation | null = null;
     private animationObserver: AnimationObserver | null = null;
     private mobileMenu: MobileMenu | null = null;
+    private languageSwitcher: LanguageSwitcher | null = null;
 
     /**
      * Inicializa a aplicação
@@ -59,6 +61,24 @@ class EAMPublicSite {
 
             // Inicializa Mobile Menu
             this.mobileMenu = new MobileMenu();
+
+            // Inicializa Language Switcher
+            const langSelect = document.getElementById('footer-language-select') as HTMLSelectElement | null;
+            this.languageSwitcher = new LanguageSwitcher(langSelect);
+            
+            if (langSelect) {
+                // Listener para mudanças do select
+                langSelect.addEventListener('change', (e) => {
+                    const value = (e.target as HTMLSelectElement).value;
+                    console.log(`Select change event disparado: ${value}`);
+                    if (value === 'pt-BR' || value === 'en-US') {
+                        this.languageSwitcher?.setLang(value);
+                    }
+                });
+                console.log(`✅ Event listener registrado para o select`);
+            }
+            
+            console.log(`✅ Language Switcher inicializado com idioma: ${this.languageSwitcher.getCurrentLang()}`);
 
             console.log('✨ EAM Public Site inicializado com sucesso!');
         } catch (error) {
