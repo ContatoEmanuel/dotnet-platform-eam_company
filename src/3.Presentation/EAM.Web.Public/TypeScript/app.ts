@@ -10,6 +10,8 @@ import { ActiveNavigation } from './components/ActiveNavigation';
 import { AnimationObserver } from './components/AnimationObserver';
 import { MobileMenu } from './components/MobileMenu';
 import { LanguageSwitcher } from './components/LanguageSwitcher';
+import { BlogRenderer } from './components/BlogRenderer';
+import { apiClient } from './utils/api-client';
 
 /**
  * Classe principal da aplicação
@@ -21,6 +23,7 @@ class EAMPublicSite {
     private animationObserver: AnimationObserver | null = null;
     private mobileMenu: MobileMenu | null = null;
     private languageSwitcher: LanguageSwitcher | null = null;
+    private blogRenderer: BlogRenderer | null = null;
 
     /**
      * Inicializa a aplicação
@@ -68,19 +71,34 @@ class EAMPublicSite {
             
             if (langSelect) {
                 // Listener para mudanças do select
-                langSelect.addEventListener('change', (e) => {
+                langSelect.addEventListener('change', async (e) => {
                     const value = (e.target as HTMLSelectElement).value;
                     console.log(`Select change event disparado: ${value}`);
                     if (value === 'pt-BR' || value === 'en-US') {
                         this.languageSwitcher?.setLang(value);
-                        // Recarrega a página para aplicar o novo idioma
-                        setTimeout(() => {
-                            window.location.reload();
-                        }, 200);
+                        
+                        // Recarrega dados da API com novo idioma
+                        if (this.blogRenderer) {
+                            await this.blogRenderer.setLanguage(value);
+                        }
+                        
+                        // Atualiza apiClient com novo idioma
+                        apiClient.setLanguage(value);
+                        
+                        // Dispara evento customizado para outros componentes
+                        window.dispatchEvent(new CustomEvent('languageChanged', { detail: { language: value } }));
+                        
+                        console.log(`✅ Idioma atualizado para ${value}`);
                     }
                 });
                 console.log(`✅ Event listener registrado para o select`);
             }
+            
+            // Inicializa Blog Renderer (carrega posts da API)
+            this.blogRenderer = new BlogRenderer('posts-grid');
+            this.blogRenderer.loadAndRender().catch(error => {
+                console.warn('Blog Renderer não disponível (página sem blog)', error);
+            });
             
             console.log(`✅ Language Switcher inicializado com idioma: ${this.languageSwitcher.getCurrentLang()}`);
 
