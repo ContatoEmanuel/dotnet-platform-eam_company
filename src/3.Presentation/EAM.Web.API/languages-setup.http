@@ -1,0 +1,93 @@
+### Setup de Traduções - Criar Categorias em Inglês
+POST http://localhost:5000/api/languages/setup-translations
+Content-Type: application/json
+
+###
+
+### Verificar Status de Traduções
+GET http://localhost:5000/api/languages/status
+Content-Type: application/json
+
+###
+
+### Listar Posts que Precisam Tradução
+GET http://localhost:5000/api/languages/posts/pending
+Content-Type: application/json
+
+###
+
+### Listar Projetos que Precisam Tradução
+GET http://localhost:5000/api/languages/projects/pending
+Content-Type: application/json
+
+###
+
+### Traduzir Post ID 1
+POST http://localhost:5000/api/languages/posts/1/translate
+Content-Type: application/json
+
+{
+  "titleEn": "Getting Started with ASP.NET Core 10",
+  "slugEn": "getting-started-aspnet-core-10",
+  "excerptEn": "Learn the fundamentals of the latest ASP.NET Core 10 framework and build modern web applications",
+  "contentEn": "<h2>Introduction</h2><p>ASP.NET Core 10 is the latest version of Microsoft's web framework...</p><h2>Installation</h2><p>To get started with ASP.NET Core 10...</p>"
+}
+
+###
+
+### Traduzir Post ID 2
+POST http://localhost:5000/api/languages/posts/2/translate
+Content-Type: application/json
+
+{
+  "titleEn": "Power Automate for Beginners",
+  "slugEn": "power-automate-beginners",
+  "excerptEn": "Learn how to automate your business processes with Microsoft Power Automate",
+  "contentEn": "<h2>What is Power Automate?</h2><p>Power Automate is a cloud-based service that allows you to create workflows...</p>"
+}
+
+###
+
+### Traduzir Post ID 3
+POST http://localhost:5000/api/languages/posts/3/translate
+Content-Type: application/json
+
+{
+  "titleEn": "Dynamics 365 Implementation Best Practices",
+  "slugEn": "dynamics-365-best-practices",
+  "excerptEn": "Discover best practices for implementing Dynamics 365 in your organization",
+  "contentEn": "<h2>Planning Phase</h2><p>Before implementing Dynamics 365, your organization must define clear objectives...</p>"
+}
+
+###
+
+### Traduzir Projeto ID 1
+POST http://localhost:5000/api/languages/projects/1/translate
+Content-Type: application/json
+
+{
+  "titleEn": "EAM Company Platform",
+  "descriptionEn": "A comprehensive enterprise platform built with ASP.NET Core 10, TypeScript, and React for managing business applications"
+}
+
+###
+
+### Traduzir Projeto ID 2
+POST http://localhost:5000/api/languages/projects/2/translate
+Content-Type: application/json
+
+{
+  "titleEn": "Cloud Migration Solution",
+  "descriptionEn": "Seamless migration of legacy systems to Microsoft Azure cloud infrastructure with zero downtime"
+}
+
+###
+
+### Traduzir Projeto ID 3
+POST http://localhost:5000/api/languages/projects/3/translate
+Content-Type: application/json
+
+{
+  "titleEn": "Power Apps Real-time Dashboard",
+  "descriptionEn": "Interactive dashboard built with Power Apps for business intelligence and real-time analytics"
+}
