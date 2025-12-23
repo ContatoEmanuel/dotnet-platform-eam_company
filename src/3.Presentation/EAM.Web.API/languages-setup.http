@@ -91,3 +91,33 @@ Content-Type: application/json
   "titleEn": "Power Apps Real-time Dashboard",
   "descriptionEn": "Interactive dashboard built with Power Apps for business intelligence and real-time analytics"
 }
+
+###
+### ============================================
+### NOVOS: AUTO-TRANSLATE (Tradução Automática)
+### ============================================
+
+### 🤖 Verificar se o Serviço de Auto-Tradução está Disponível
+GET http://localhost:5000/api/languages/auto-translate/status
+Content-Type: application/json
+
+###
+
+### 🤖 Traduzir Automaticamente um Blog Post (ID específico)
+POST http://localhost:5000/api/languages/posts/1/auto-translate
+Content-Type: application/json
+
+###
+
+### 🤖 Traduzir Automaticamente um Projeto (ID específico)
+POST http://localhost:5000/api/languages/projects/1/auto-translate
+Content-Type: application/json
+
+###
+
+### 🚀 🚀 Traduzir Automaticamente TODOS os Posts e Projetos
+### (Recomendado: Execute isso primeiro!)
+POST http://localhost:5000/api/languages/auto-translate-all
+Content-Type: application/json
+
+###

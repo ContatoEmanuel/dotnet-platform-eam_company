@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using EAM.Core.Application.Services.Interfaces;
+using EAM.Core.Application.Services;
 using EAM.Web.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +30,50 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<IBlogService, BlogService>();
 builder.Services.AddScoped<IResumeService, ResumeService>();
+
+// Translation Service - Suporta múltiplos provedores via configuração
+var translationProvider = builder.Configuration["Translation:Provider"] ?? "azure";
+var translationApiKey = builder.Configuration["Translation:ApiKey"];
+var translationRegion = builder.Configuration["Translation:Region"] ?? "eastus";
+
+if (translationProvider.Equals("azure", StringComparison.OrdinalIgnoreCase))
+{
+    if (string.IsNullOrWhiteSpace(translationApiKey))
+    {
+        throw new InvalidOperationException(
+            "Azure Translator API Key is required when using 'azure' provider. " +
+            "Configure in appsettings.json or environment variable Translation__ApiKey");
+    }
+
+    builder.Services.AddHttpClient<ITranslationService>((sp, client) =>
+    {
+        var logger = sp.GetRequiredService<ILogger<AzureTranslatorService>>();
+        return new AzureTranslatorService(client, logger, translationApiKey, translationRegion);
+    });
+}
+else if (translationProvider.Equals("google", StringComparison.OrdinalIgnoreCase))
+{
+    builder.Services.AddHttpClient<ITranslationService, GoogleTranslationService>()
+        .ConfigureHttpClient(client => 
+        {
+            client.DefaultRequestHeaders.Add("User-Agent", "EAM-Platform/1.0");
+        });
+    
+    // Registra a factory se tiver API key
+    if (!string.IsNullOrWhiteSpace(translationApiKey))
+    {
+        builder.Services.AddScoped<ITranslationService>(sp =>
+        {
+            var httpClient = sp.GetRequiredService<HttpClient>();
+            var logger = sp.GetRequiredService<ILogger<GoogleTranslationService>>();
+            return new GoogleTranslationService(httpClient, logger, translationApiKey);
+        });
+    }
+}
+else
+{
+    throw new InvalidOperationException($"Translation provider '{translationProvider}' is not supported. Use 'azure' or 'google'.");
+}
 
 // JWT Authentication
 var jwtKey = builder.Configuration["Jwt:Key"] ?? throw new InvalidOperationException("JWT Key not configured");

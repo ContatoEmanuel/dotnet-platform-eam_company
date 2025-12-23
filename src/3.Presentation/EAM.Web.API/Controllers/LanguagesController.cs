@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EAM.Infra.Data.Context;
 using EAM.Core.Domain.Entities;
+using EAM.Core.Application.Services.Interfaces;
 
 namespace EAM.Web.API.Controllers;
 
@@ -16,11 +17,13 @@ public class LanguagesController : ControllerBase
 {
     private readonly ApplicationDbContext _context;
     private readonly ILogger<LanguagesController> _logger;
+    private readonly ITranslationService _translationService;
 
-    public LanguagesController(ApplicationDbContext context, ILogger<LanguagesController> logger)
+    public LanguagesController(ApplicationDbContext context, ILogger<LanguagesController> logger, ITranslationService translationService)
     {
         _context = context;
         _logger = logger;
+        _translationService = translationService;
     }
 
     /// <summary>
@@ -332,6 +335,274 @@ public class LanguagesController : ControllerBase
             return StatusCode(500, new { message = "Erro ao obter projetos", error = ex.Message });
         }
     }
+
+    /// <summary>
+    /// Traduz automaticamente um blog post de português para inglês.
+    /// Busca o conteúdo original em português, usa IA para traduzir e salva.
+    /// </summary>
+    /// <param name="id">ID do blog post</param>
+    [HttpPost("posts/{id}/auto-translate")]
+    [ProducesResponseType(typeof(AutoTranslatePostResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> AutoTranslatePost(int id)
+    {
+        try
+        {
+            _logger.LogInformation("Iniciando tradução automática do post {PostId}", id);
+
+            var post = await _context.BlogPosts.FindAsync(id);
+            if (post == null)
+            {
+                return NotFound(new { message = $"Post com ID {id} não encontrado" });
+            }
+
+            // Traduz os campos principais
+            var titleEn = await _translationService.TranslatePortugueseToEnglishAsync(post.Title ?? "");
+            var excerptEn = await _translationService.TranslatePortugueseToEnglishAsync(post.Excerpt ?? "");
+            var contentEn = await _translationService.TranslatePortugueseToEnglishAsync(post.Content ?? "");
+            
+            // Gera slug em inglês removendo acentos e convertendo para minúsculo
+            var slugEn = GenerateSlug(titleEn);
+
+            // Salva as traduções
+            post.TitleEn = titleEn;
+            post.ExcerptEn = excerptEn;
+            post.ContentEn = contentEn;
+            post.SlugEn = slugEn;
+
+            _context.BlogPosts.Update(post);
+            await _context.SaveChangesAsync();
+
+            _logger.LogInformation("Post {PostId} traduzido com sucesso", id);
+
+            return Ok(new AutoTranslatePostResponse
+            {
+                Success = true,
+                Message = $"Post {id} traduzido automaticamente com sucesso",
+                Data = new AutoTranslatePostData
+                {
+                    PostId = post.Id,
+                    TitleEn = titleEn,
+                    ExcerptEn = excerptEn,
+                    SlugEn = slugEn,
+                    ContentEn = contentEn
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Erro ao traduzir post {PostId}", id);
+            return StatusCode(500, new { message = "Erro ao traduzir post", error = ex.Message });
+        }
+    }
+
+    /// <summary>
+    /// Traduz automaticamente um projeto de português para inglês.
+    /// Busca o conteúdo original em português, usa IA para traduzir e salva.
+    /// </summary>
+    /// <param name="id">ID do projeto</param>
+    [HttpPost("projects/{id}/auto-translate")]
+    [ProducesResponseType(typeof(AutoTranslateProjectResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> AutoTranslateProject(int id)
+    {
+        try
+        {
+            _logger.LogInformation("Iniciando tradução automática do projeto {ProjectId}", id);
+
+            var project = await _context.Projects.FindAsync(id);
+            if (project == null)
+            {
+                return NotFound(new { message = $"Projeto com ID {id} não encontrado" });
+            }
+
+            // Traduz os campos principais
+            var titleEn = await _translationService.TranslatePortugueseToEnglishAsync(project.Title ?? "");
+            var descriptionEn = await _translationService.TranslatePortugueseToEnglishAsync(project.Description ?? "");
+
+            // Salva as traduções
+            project.TitleEn = titleEn;
+            project.DescriptionEn = descriptionEn;
+
+            _context.Projects.Update(project);
+            await _context.SaveChangesAsync();
+
+            _logger.LogInformation("Projeto {ProjectId} traduzido com sucesso", id);
+
+            return Ok(new AutoTranslateProjectResponse
+            {
+                Success = true,
+                Message = $"Projeto {id} traduzido automaticamente com sucesso",
+                Data = new AutoTranslateProjectData
+                {
+                    ProjectId = project.Id,
+                    TitleEn = titleEn,
+                    DescriptionEn = descriptionEn
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Erro ao traduzir projeto {ProjectId}", id);
+            return StatusCode(500, new { message = "Erro ao traduzir projeto", error = ex.Message });
+        }
+    }
+
+    /// <summary>
+    /// Traduz automaticamente TODOS os posts e projetos pendentes de tradução.
+    /// Processo em lote: detecta quais precisam de tradução e faz tudo de uma vez.
+    /// </summary>
+    [HttpPost("auto-translate-all")]
+    [ProducesResponseType(typeof(AutoTranslateAllResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> AutoTranslateAll()
+    {
+        try
+        {
+            _logger.LogInformation("Iniciando tradução automática em lote de todos os posts e projetos");
+
+            var postsTranslated = 0;
+            var projectsTranslated = 0;
+
+            // Traduz todos os posts que faltam tradução
+            var pendingPosts = await _context.BlogPosts
+                .Where(p => (p.TitleEn == null || p.TitleEn == "") && (p.Title != null && p.Title != ""))
+                .ToListAsync();
+
+            foreach (var post in pendingPosts)
+            {
+                try
+                {
+                    var titleEn = await _translationService.TranslatePortugueseToEnglishAsync(post.Title ?? "");
+                    var excerptEn = await _translationService.TranslatePortugueseToEnglishAsync(post.Excerpt ?? "");
+                    var contentEn = await _translationService.TranslatePortugueseToEnglishAsync(post.Content ?? "");
+                    var slugEn = GenerateSlug(titleEn);
+
+                    post.TitleEn = titleEn;
+                    post.ExcerptEn = excerptEn;
+                    post.ContentEn = contentEn;
+                    post.SlugEn = slugEn;
+
+                    _context.BlogPosts.Update(post);
+                    postsTranslated++;
+
+                    _logger.LogInformation("Post {PostId} traduzido em lote", post.Id);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Erro ao traduzir post {PostId} em lote", post.Id);
+                }
+            }
+
+            // Traduz todos os projetos que faltam tradução
+            var pendingProjects = await _context.Projects
+                .Where(p => (p.TitleEn == null || p.TitleEn == "") && (p.Title != null && p.Title != ""))
+                .ToListAsync();
+
+            foreach (var project in pendingProjects)
+            {
+                try
+                {
+                    var titleEn = await _translationService.TranslatePortugueseToEnglishAsync(project.Title ?? "");
+                    var descriptionEn = await _translationService.TranslatePortugueseToEnglishAsync(project.Description ?? "");
+
+                    project.TitleEn = titleEn;
+                    project.DescriptionEn = descriptionEn;
+
+                    _context.Projects.Update(project);
+                    projectsTranslated++;
+
+                    _logger.LogInformation("Projeto {ProjectId} traduzido em lote", project.Id);
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Erro ao traduzir projeto {ProjectId} em lote", project.Id);
+                }
+            }
+
+            await _context.SaveChangesAsync();
+
+            _logger.LogInformation("Tradução em lote concluída: {Posts} posts e {Projects} projetos", postsTranslated, projectsTranslated);
+
+            return Ok(new AutoTranslateAllResponse
+            {
+                Success = true,
+                Message = $"Tradução automática concluída: {postsTranslated} posts e {projectsTranslated} projetos traduzidos",
+                Data = new AutoTranslateAllData
+                {
+                    PostsTranslated = postsTranslated,
+                    ProjectsTranslated = projectsTranslated,
+                    TotalTranslated = postsTranslated + projectsTranslated
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Erro ao traduzir todos os posts e projetos");
+            return StatusCode(500, new { message = "Erro ao traduzir conteúdo", error = ex.Message });
+        }
+    }
+
+    /// <summary>
+    /// Verifica se o serviço de tradução automática está disponível.
+    /// </summary>
+    [HttpGet("auto-translate/status")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> GetAutoTranslateStatus()
+    {
+        try
+        {
+            var isAvailable = await _translationService.IsAvailableAsync();
+            return Ok(new
+            {
+                serviceAvailable = isAvailable,
+                message = isAvailable 
+                    ? "Serviço de tradução automática disponível" 
+                    : "Serviço de tradução automática indisponível"
+            });
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Erro ao verificar status do serviço de tradução");
+            return StatusCode(500, new { message = "Erro ao verificar status", error = ex.Message });
+        }
+    }
+
+    /// <summary>
+    /// Gera um slug válido em inglês a partir de um texto.
+    /// Remove acentos, converte para minúsculo e substitui espaços por hífens.
+    /// </summary>
+    private string GenerateSlug(string text)
+    {
+        if (string.IsNullOrWhiteSpace(text))
+            return "";
+
+        // Remove acentos
+        var normalizedString = text.Normalize(System.Text.NormalizationForm.FormD);
+        var stringBuilder = new System.Text.StringBuilder();
+
+        foreach (var c in normalizedString)
+        {
+            var unicodeCategory = System.Globalization.CharUnicodeInfo.GetUnicodeCategory(c);
+            if (unicodeCategory != System.Globalization.UnicodeCategory.NonSpacingMark)
+            {
+                stringBuilder.Append(c);
+            }
+        }
+
+        var slug = stringBuilder.ToString().Normalize(System.Text.NormalizationForm.FormC);
+
+        // Converte para minúsculo e substitui espaços por hífens
+        slug = slug.ToLower();
+        slug = System.Text.RegularExpressions.Regex.Replace(slug, @"[^\w\s-]", "");
+        slug = System.Text.RegularExpressions.Regex.Replace(slug, @"[\s_]+", "-");
+        slug = System.Text.RegularExpressions.Regex.Replace(slug, @"-+", "-");
+        slug = slug.Trim('-');
+
+        return slug;
+    }
 }
 
 // DTOs para requisições
@@ -432,4 +703,51 @@ public class PendingProject
     public int Id { get; set; }
     public string Title { get; set; } = string.Empty;
     public string? Description { get; set; }
+}
+// ============================================
+// AUTO-TRANSLATE RESPONSES
+// ============================================
+
+public class AutoTranslatePostResponse
+{
+    public bool Success { get; set; }
+    public string Message { get; set; } = string.Empty;
+    public AutoTranslatePostData? Data { get; set; }
+}
+
+public class AutoTranslatePostData
+{
+    public int PostId { get; set; }
+    public string TitleEn { get; set; } = string.Empty;
+    public string ExcerptEn { get; set; } = string.Empty;
+    public string SlugEn { get; set; } = string.Empty;
+    public string ContentEn { get; set; } = string.Empty;
+}
+
+public class AutoTranslateProjectResponse
+{
+    public bool Success { get; set; }
+    public string Message { get; set; } = string.Empty;
+    public AutoTranslateProjectData? Data { get; set; }
+}
+
+public class AutoTranslateProjectData
+{
+    public int ProjectId { get; set; }
+    public string TitleEn { get; set; } = string.Empty;
+    public string DescriptionEn { get; set; } = string.Empty;
+}
+
+public class AutoTranslateAllResponse
+{
+    public bool Success { get; set; }
+    public string Message { get; set; } = string.Empty;
+    public AutoTranslateAllData? Data { get; set; }
+}
+
+public class AutoTranslateAllData
+{
+    public int PostsTranslated { get; set; }
+    public int ProjectsTranslated { get; set; }
+    public int TotalTranslated { get; set; }
 }
