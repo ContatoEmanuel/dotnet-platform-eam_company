@@ -1,6 +1,7 @@
 @{
     ViewData["Title"] = "Blog";
     var posts = ViewBag.Posts;
+    var language = ViewBag.Language as string ?? "pt-BR";
 }
 
 <!-- Blog Header Section -->
@@ -74,7 +75,7 @@
                         }
                         <div class="absolute top-4 left-4">
                             <span class="px-3 py-1 bg-white text-xs font-semibold rounded-full" style="background-color: white; color: @(post.Category?.Color ?? "#3B82F6");">
-                                @(post.Category?.Name ?? "Geral")
+                                @(post.Category?.GetName(language) ?? "Geral")
                             </span>
                         </div>
                     </div>
@@ -93,13 +94,13 @@
                         <!-- Title -->
                         <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-3 line-clamp-2 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                             <a asp-controller="Blog" asp-action="Post" asp-route-id="@post.Id" asp-route-slug="@post.Slug">
-                                @post.Title
+                                @post.GetTitle(language)
                             </a>
                         </h2>
                         
                         <!-- Excerpt -->
                         <p class="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
-                            @post.Excerpt
+                            @post.GetExcerpt(language)
                         </p>
                         
                         <!-- Author & Read More -->

@@ -1,6 +1,7 @@
 @{
     ViewData["Title"] = "Post";
     var post = ViewBag.Post;
+    var language = ViewBag.Language as string ?? "pt-BR";
 }
 
 <!-- Post Header -->
@@ -8,14 +9,14 @@
     <div class="container mx-auto px-4 max-w-4xl">
         <!-- Category Badge -->
         <div class="mb-4">
-            <a href="/Blog?category=@(post.Category?.Name ?? "Geral")" class="px-3 py-1 text-sm font-semibold rounded-full inline-block hover:opacity-80 transition-opacity" style="background-color: rgba(255, 255, 255, 0.3); color: white; border: 1px solid rgba(255, 255, 255, 0.5);">
-                @(post.Category?.Name ?? "Geral")
+            <a href="/Blog?category=@(post.Category?.GetName(language) ?? "Geral")" class="px-3 py-1 text-sm font-semibold rounded-full inline-block hover:opacity-80 transition-opacity" style="background-color: rgba(255, 255, 255, 0.3); color: white; border: 1px solid rgba(255, 255, 255, 0.5);">
+                @(post.Category?.GetName(language) ?? "Geral")
             </a>
         </div>
         
         <!-- Title -->
         <h1 class="text-5xl font-bold text-white dark:text-white mb-6 animate-fade-in">
-            @post.Title
+            @post.GetTitle(language)
         </h1>
         
         <!-- Meta Info -->
@@ -44,7 +45,7 @@
 <section class="bg-white dark:bg-gray-900 border-b dark:border-gray-700">
     <div class="container mx-auto px-4 max-w-4xl -mt-8">
         <div class="aspect-video rounded-lg overflow-hidden shadow-2xl">
-            <img src="@post.ImageUrl" alt="@post.Title" class="w-full h-full object-cover">
+            <img src="@post.ImageUrl" alt="@post.GetTitle(language)" class="w-full h-full object-cover">
         </div>
     </div>
 </section>
@@ -53,7 +54,7 @@
 <article class="py-16 bg-white dark:bg-gray-900">
     <div class="container mx-auto px-4 max-w-3xl">
         <div class="prose prose-lg max-w-none dark:prose-invert">
-            @Html.Raw(post.Content)
+            @Html.Raw(post.GetContent(language))
         </div>
         
         <!-- Tags -->

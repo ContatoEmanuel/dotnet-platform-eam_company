@@ -3,6 +3,7 @@
     ViewData["Title"] = "Início";
     var featuredProjects = ViewBag.FeaturedProjects as IEnumerable<ProjectDto> ?? Enumerable.Empty<ProjectDto>();
     var otherProjects = ViewBag.OtherProjects as IEnumerable<ProjectDto> ?? Enumerable.Empty<ProjectDto>();
+    var language = ViewBag.Language as string ?? "pt-BR";
 }
 
 <!-- Hero Section -->
@@ -192,9 +193,9 @@
                             <div class="fs-1">@project.IconEmoji</div>
                         </div>
                         <div class="card-body">
-                            <h5 class="card-title fw-bold dark:text-white">@project.Title</h5>
+                            <h5 class="card-title fw-bold dark:text-white">@project.GetTitle(language)</h5>
                             <p class="card-text text-muted small dark:text-gray-300">
-                                @project.Description
+                                @project.GetDescription(language)
                             </p>
                             <div class="d-flex flex-wrap gap-2 mb-3">
                                 @foreach (var tech in project.Technologies)
@@ -231,9 +232,9 @@
                     <div class="card h-100 border-0 shadow hover-card dark:bg-gray-700 dark:border-gray-600">
                         <div class="card-body text-center">
                             <div class="fs-1 mb-3">@project.IconEmoji</div>
-                            <h6 class="card-title fw-bold dark:text-white">@project.Title</h6>
+                            <h6 class="card-title fw-bold dark:text-white">@project.GetTitle(language)</h6>
                             <p class="card-text small text-muted dark:text-gray-300">
-                                @project.Description
+                                @project.GetDescription(language)
                             </p>
                             <div class="d-flex flex-wrap gap-1 justify-content-center mb-2">
                                 @foreach (var tech in project.Technologies.Take(2))

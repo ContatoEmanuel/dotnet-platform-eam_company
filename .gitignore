@@ -67,6 +67,7 @@ yarn.lock
 
 ## Documentation (CONFIDENCIAL - projeto privado - NUNCA SUBIR)
 docs/
+scripts/
 *.md
 *.MD
 *.markdown

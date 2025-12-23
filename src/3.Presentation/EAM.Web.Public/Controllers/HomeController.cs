@@ -4,6 +4,7 @@ using EAM.Web.Public.Models;
 using EAM.Core.Application.Services.Interfaces;
 using Microsoft.Extensions.Options;
 using EAM.Web.Public.Configuration;
+using EAM.Web.Public.Helpers;
 
 namespace EAM.Web.Public.Controllers;
 
@@ -18,11 +19,13 @@ public class HomeController : BaseController
 
     public async Task<IActionResult> Index()
     {
+        var language = LanguageHelper.GetLanguageFromRequest(Request);
         var featuredProjects = await _projectService.GetFeaturedProjectsAsync();
         var otherProjects = await _projectService.GetOtherProjectsAsync();
 
         ViewBag.FeaturedProjects = featuredProjects;
         ViewBag.OtherProjects = otherProjects;
+        ViewBag.Language = language;
 
         return View();
     }

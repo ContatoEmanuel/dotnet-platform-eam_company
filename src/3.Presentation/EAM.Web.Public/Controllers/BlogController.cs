@@ -3,6 +3,8 @@ using EAM.Core.Application.DTOs.Blog;
 using System.Text.Json;
 using Microsoft.Extensions.Options;
 using EAM.Web.Public.Configuration;
+using EAM.Web.Public.Helpers;
+using EAM.Web.Public.Services;
 
 namespace EAM.Web.Public.Controllers;
 
@@ -22,7 +24,9 @@ public class BlogController : BaseController
     {
         try
         {
-            var response = await _httpClient.GetAsync("/api/blog/posts?publishedOnly=true");
+            var language = LanguageHelper.GetLanguageFromRequest(Request);
+            var apiUrl = ApiHelper.GetApiUrlWithLanguage("/api/blog/posts?publishedOnly=true", language);
+            var response = await _httpClient.GetAsync(apiUrl);
             
             if (response.IsSuccessStatusCode)
             {
@@ -54,7 +58,9 @@ public class BlogController : BaseController
     {
         try
         {
-            var response = await _httpClient.GetAsync($"/api/blog/posts/{id}");
+            var language = LanguageHelper.GetLanguageFromRequest(Request);
+            var apiUrl = ApiHelper.GetApiUrlWithLanguage($"/api/blog/posts/{id}", language);
+            var response = await _httpClient.GetAsync(apiUrl);
             
             if (response.IsSuccessStatusCode)
             {
@@ -77,7 +83,8 @@ public class BlogController : BaseController
                     // Get next post
                     try
                     {
-                        var allPostsResponse = await _httpClient.GetAsync("/api/blog/posts?publishedOnly=true");
+                        var allPostsApiUrl = ApiHelper.GetApiUrlWithLanguage("/api/blog/posts?publishedOnly=true", language);
+                        var allPostsResponse = await _httpClient.GetAsync(allPostsApiUrl);
                         if (allPostsResponse.IsSuccessStatusCode)
                         {
                             var allPostsJson = await allPostsResponse.Content.ReadAsStringAsync();
@@ -118,8 +125,11 @@ public class BlogController : BaseController
     {
         try
         {
+            var language = LanguageHelper.GetLanguageFromRequest(Request);
+            
             // Buscar categoria
-            var categoryResponse = await _httpClient.GetAsync($"/api/blog/categories/slug/{slug}");
+            var categoryApiUrl = ApiHelper.GetApiUrlWithLanguage($"/api/blog/categories/slug/{slug}", language);
+            var categoryResponse = await _httpClient.GetAsync(categoryApiUrl);
             if (!categoryResponse.IsSuccessStatusCode)
             {
                 return NotFound();
@@ -134,7 +144,8 @@ public class BlogController : BaseController
             if (category == null) return NotFound();
 
             // Buscar posts da categoria
-            var postsResponse = await _httpClient.GetAsync($"/api/blog/categories/{category.Id}/posts");
+            var postsApiUrl = ApiHelper.GetApiUrlWithLanguage($"/api/blog/categories/{category.Id}/posts", language);
+            var postsResponse = await _httpClient.GetAsync(postsApiUrl);
             var postsJson = await postsResponse.Content.ReadAsStringAsync();
             var posts = JsonSerializer.Deserialize<List<BlogPostDto>>(postsJson, new JsonSerializerOptions 
             { 

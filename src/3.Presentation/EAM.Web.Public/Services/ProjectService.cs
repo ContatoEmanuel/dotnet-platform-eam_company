@@ -115,7 +115,9 @@ public class ProjectService : IProjectService
         {
             Id = project.Id,
             Title = project.Title,
+            TitleEn = null, // Será preenchido quando houver dados em inglês no banco
             Description = project.Description,
+            DescriptionEn = null, // Será preenchido quando houver dados em inglês no banco
             Technologies = string.IsNullOrEmpty(project.Technologies) 
                 ? new List<string>() 
                 : JsonSerializer.Deserialize<List<string>>(project.Technologies) ?? new List<string>(),
@@ -124,8 +126,12 @@ public class ProjectService : IProjectService
             ThumbnailUrl = project.ThumbnailUrl,
             IconEmoji = project.IconEmoji,
             IsFeatured = project.IsFeatured,
+            ForSale = project.ForSale,
+            Price = project.Price,
             DisplayOrder = project.DisplayOrder,
-            CreatedAt = project.CreatedAt
+            CreatedAt = project.CreatedAt,
+            UpdatedAt = project.UpdatedAt,
+            IsActive = project.IsActive
         };
     }
 }

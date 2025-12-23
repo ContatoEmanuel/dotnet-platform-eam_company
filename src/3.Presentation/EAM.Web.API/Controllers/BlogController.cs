@@ -17,18 +17,22 @@ public class BlogController : ControllerBase
 
     // GET: api/blog/posts
     [HttpGet("posts")]
-    public async Task<ActionResult<IEnumerable<BlogPostDto>>> GetPosts([FromQuery] bool publishedOnly = true)
+    public async Task<ActionResult<IEnumerable<BlogPostDto>>> GetPosts([FromQuery] bool publishedOnly = true, [FromQuery] string? language = "pt-BR")
     {
         var posts = publishedOnly 
             ? await _blogService.GetPublishedPostsAsync()
             : await _blogService.GetAllPostsAsync();
+        
+        // Normaliza a linguagem
+        if (string.IsNullOrEmpty(language) || (language != "pt-BR" && language != "en-US"))
+            language = "pt-BR";
             
         return Ok(posts);
     }
 
     // GET: api/blog/posts/5
     [HttpGet("posts/{id:int}")]
-    public async Task<ActionResult<BlogPostDto>> GetPost(int id)
+    public async Task<ActionResult<BlogPostDto>> GetPost(int id, [FromQuery] string? language = "pt-BR")
     {
         var post = await _blogService.GetPostByIdAsync(id);
         
@@ -43,7 +47,7 @@ public class BlogController : ControllerBase
 
     // GET: api/blog/posts/slug/meu-post
     [HttpGet("posts/slug/{slug}")]
-    public async Task<ActionResult<BlogPostDto>> GetPostBySlug(string slug)
+    public async Task<ActionResult<BlogPostDto>> GetPostBySlug(string slug, [FromQuery] string? language = "pt-BR")
     {
         var post = await _blogService.GetPostBySlugAsync(slug);
         

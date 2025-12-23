@@ -24,7 +24,7 @@ public class ProjectsController : ControllerBase
     /// <returns>Lista de projetos</returns>
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<ProjectDto>), StatusCodes.Status200OK)]
-    public async Task<ActionResult<IEnumerable<ProjectDto>>> GetAll()
+    public async Task<ActionResult<IEnumerable<ProjectDto>>> GetAll([FromQuery] string? language = "pt-BR")
     {
         try
         {
@@ -44,7 +44,7 @@ public class ProjectsController : ControllerBase
     /// <returns>Lista de projetos em destaque</returns>
     [HttpGet("featured")]
     [ProducesResponseType(typeof(IEnumerable<ProjectDto>), StatusCodes.Status200OK)]
-    public async Task<ActionResult<IEnumerable<ProjectDto>>> GetFeatured()
+    public async Task<ActionResult<IEnumerable<ProjectDto>>> GetFeatured([FromQuery] string? language = "pt-BR")
     {
         try
         {
@@ -64,7 +64,7 @@ public class ProjectsController : ControllerBase
     /// <returns>Lista de outros projetos</returns>
     [HttpGet("other")]
     [ProducesResponseType(typeof(IEnumerable<ProjectDto>), StatusCodes.Status200OK)]
-    public async Task<ActionResult<IEnumerable<ProjectDto>>> GetOther()
+    public async Task<ActionResult<IEnumerable<ProjectDto>>> GetOther([FromQuery] string? language = "pt-BR")
     {
         try
         {
@@ -86,7 +86,7 @@ public class ProjectsController : ControllerBase
     [HttpGet("{id}")]
     [ProducesResponseType(typeof(ProjectDto), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public async Task<ActionResult<ProjectDto>> GetById(int id)
+    public async Task<ActionResult<ProjectDto>> GetById(int id, [FromQuery] string? language = "pt-BR")
     {
         try
         {

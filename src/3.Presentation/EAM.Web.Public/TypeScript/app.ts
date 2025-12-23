@@ -73,6 +73,10 @@ class EAMPublicSite {
                     console.log(`Select change event disparado: ${value}`);
                     if (value === 'pt-BR' || value === 'en-US') {
                         this.languageSwitcher?.setLang(value);
+                        // Recarrega a página para aplicar o novo idioma
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 200);
                     }
                 });
                 console.log(`✅ Event listener registrado para o select`);
