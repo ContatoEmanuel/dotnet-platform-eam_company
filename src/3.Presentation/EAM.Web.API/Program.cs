@@ -45,30 +45,31 @@ if (translationProvider.Equals("azure", StringComparison.OrdinalIgnoreCase))
             "Configure in appsettings.json or environment variable Translation__ApiKey");
     }
 
-    builder.Services.AddHttpClient<ITranslationService>((sp, client) =>
+    builder.Services.AddHttpClient("azure_translator");
+
+    builder.Services.AddScoped<ITranslationService>(sp =>
     {
+        var clientFactory = sp.GetRequiredService<IHttpClientFactory>();
+        var httpClient = clientFactory.CreateClient("azure_translator");
         var logger = sp.GetRequiredService<ILogger<AzureTranslatorService>>();
-        return new AzureTranslatorService(client, logger, translationApiKey, translationRegion);
+        return new AzureTranslatorService(httpClient, logger, translationApiKey, translationRegion);
     });
 }
 else if (translationProvider.Equals("google", StringComparison.OrdinalIgnoreCase))
 {
-    builder.Services.AddHttpClient<ITranslationService, GoogleTranslationService>()
-        .ConfigureHttpClient(client => 
+    builder.Services.AddHttpClient("google_translator", client =>
         {
             client.DefaultRequestHeaders.Add("User-Agent", "EAM-Platform/1.0");
         });
-    
-    // Registra a factory se tiver API key
-    if (!string.IsNullOrWhiteSpace(translationApiKey))
+
+    // Registra a factory para o serviço de tradução
+    builder.Services.AddScoped<ITranslationService>(sp =>
     {
-        builder.Services.AddScoped<ITranslationService>(sp =>
-        {
-            var httpClient = sp.GetRequiredService<HttpClient>();
-            var logger = sp.GetRequiredService<ILogger<GoogleTranslationService>>();
-            return new GoogleTranslationService(httpClient, logger, translationApiKey);
-        });
-    }
+        var clientFactory = sp.GetRequiredService<IHttpClientFactory>();
+        var httpClient = clientFactory.CreateClient("google_translator");
+        var logger = sp.GetRequiredService<ILogger<GoogleTranslationService>>();
+        return new GoogleTranslationService(httpClient, logger, translationApiKey);
+    });
 }
 else
 {

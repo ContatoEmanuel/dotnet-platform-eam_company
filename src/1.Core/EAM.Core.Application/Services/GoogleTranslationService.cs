@@ -91,19 +91,26 @@ namespace EAM.Core.Application.Services
                 format = "html" // Preserva HTML tags
             };
 
-            var uri = _apiKey != null 
-                ? $"{GoogleTranslateApiUrl}?key={_apiKey}" 
+            var uri = _apiKey != null
+                ? $"{GoogleTranslateApiUrl}?key={_apiKey}"
                 : GoogleTranslateApiUrl;
 
             var response = await _httpClient.PostAsJsonAsync(uri, request);
             response.EnsureSuccessStatusCode();
 
-            var jsonResponse = await response.Content.ReadAsAsync<dynamic>();
+            var jsonNode = await response.Content.ReadFromJsonAsync<System.Text.Json.Nodes.JsonObject>();
             var translations = new List<string>();
 
-            foreach (var data in jsonResponse["data"]["translations"])
+            if (jsonNode?["data"]?["translations"] is System.Text.Json.Nodes.JsonArray translationArray)
             {
-                translations.Add(data["translatedText"].ToString());
+                foreach (var translationNode in translationArray)
+                {
+                    var translatedText = translationNode?["translatedText"]?.GetValue<string>();
+                    if (!string.IsNullOrEmpty(translatedText))
+                    {
+                        translations.Add(translatedText);
+                    }
+                }
             }
 
             return translations;

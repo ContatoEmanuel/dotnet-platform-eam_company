@@ -4,9 +4,13 @@ public class BlogPost
 {
     public int Id { get; set; }
     public string Title { get; set; } = string.Empty;
+    public string? TitleEn { get; set; }
     public string Slug { get; set; } = string.Empty;
+    public string? SlugEn { get; set; }
     public string Excerpt { get; set; } = string.Empty;
+    public string? ExcerptEn { get; set; }
     public string Content { get; set; } = string.Empty;
+    public string? ContentEn { get; set; }
     public string? ImageUrl { get; set; }
     public string Author { get; set; } = "Emanuel Macêdo";
     public int ReadTimeMinutes { get; set; } = 5;
@@ -32,8 +36,11 @@ public class BlogCategory
 {
     public int Id { get; set; }
     public string Name { get; set; } = string.Empty;
+    public string? NameEn { get; set; }
     public string Slug { get; set; } = string.Empty;
+    public string? SlugEn { get; set; }
     public string? Description { get; set; }
+    public string? DescriptionEn { get; set; }
     public string Color { get; set; } = "#3B82F6"; // Cor em hex
     public int DisplayOrder { get; set; } = 0;
     
